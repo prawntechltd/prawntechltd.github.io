@@ -151,8 +151,7 @@
 	 width: 500px;
 	 top: 50%;
 	 position: absolute;
-	 left: 50%;
-	 margin-left: -250px;
+	 left: calc(50% - 300px);
 	 margin-top: -30px;
 }
  .bye {
@@ -161,8 +160,8 @@
  .sub-name {
 	 position: absolute;
 	 top: 50%;
-	 left: 50%;
-	 margin-top: 10px;
+left: calc(50% - 36px);
+	 margin-top: 18px;
 	 font-weight: 300;
 	 margin-left: 23px;
 	 color: #cf3b28;
