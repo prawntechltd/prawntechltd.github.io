@@ -356,3 +356,16 @@ left: calc(50% - 50px);
 	 border-bottom: 1px solid #eaeaea;
 }
  
+@media only screen and (max-width: 700px) {
+  .logo {
+		width: 150px;
+  }
+	.name {
+		font-size: 18px
+	}
+	.sub-name {
+		font-size: 14px;
+	}
+	
+	
+}
