@@ -370,7 +370,7 @@ left: calc(50% - 50px);
 	 position: relative;
 	 z-index: 1111;
 	 text-align: center;
-	 line-height: 10px;
+	 line-height: 17px;
 	 transition: all 0.5s;
 	 -webkit-transition: all 0.5s;
 	 -moz-transition: all 0.5s;
@@ -382,15 +382,15 @@ left: calc(50% - 50px);
  .logo {
 	 z-index: -1000;
 	 margin-left: -30px;
-	 margin-top: -80px;
+	 margin-top: -90px;
 	 position: absolute;
-	 width: 170px;
+	 width: 150px;
 }
  .name {
 	 width: 500px;
 	 top: 50%;
 	 position: absolute;
-	 left: calc(50% - 300px);
+	 left: calc(50% - 2px);
 	 margin-top: -30px;
 }
  .bye {
