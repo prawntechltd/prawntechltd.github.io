@@ -402,9 +402,9 @@ left: calc(50% - 50px);
 left: calc(50% - 20px);
 	 margin-top: 8px;
 	 font-weight: 300;
-	 margin-left: 16px;
+	 margin-left: 6px;
 	 color: #cf3b28;
-	 font-size: 2px;
+	 font-size: 20px;
 }
  .content-wrap {
 	 position: absolute;
