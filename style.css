@@ -379,38 +379,6 @@ left: calc(50% - 50px);
 	 height: 0vh;
 	 opacity: 0;
 }
- .down {
-	 width: 20px;
-	 height: 20px;
-	 opacity: 0.2;
-	 border-bottom: 5px solid #cf3b28;
-	 border-right: 5px solid #cf3b28;
-	 position: absolute;
-	 bottom: 13px;
-	 left: 50%;
-	 cursor: pointer;
-	 transform: rotate(45deg);
-	 -webkit-transform: rotate(45deg);
-	 -moz-transform: rotate(45deg);
-}
- .down:before {
-	 content: "scroll";
-	 opacity: 0;
-	 position: absolute;
-	 right: -10px;
-	 top: -10px;
-	 font-size: 15px;
-	 transform: rotate(-45deg);
-	 -webkit-transform: rotate(-45deg);
-	 transition: all 0.3s;
-	 -webkit-transition: all 0.3s;
-}
- .down:hover:before {
-	 opacity: 1;
-}
- .head span {
-	 font-weight: 900;
-}
  .logo {
 	 z-index: -1000;
 	 margin-left: -30px;
@@ -436,7 +404,7 @@ left: calc(50% - 20px);
 	 font-weight: 300;
 	 margin-left: 16px;
 	 color: #cf3b28;
-	 font-size: 20px;
+	 font-size: 2px;
 }
  .content-wrap {
 	 position: absolute;
