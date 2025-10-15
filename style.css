@@ -321,4 +321,38 @@ html, body {
   .intro h3 { font-size: 18px; }
   .name { width: 80vw; left: 10vw; }
   .sub-name { font-size: 24px; left: 50%; transform: translateX(-50%); margin-left: 0; }
+
+/* Make the wordmark big and left-anchored */
+  .head { font-size: 14vw; line-height: 1; }
+
+  /* Stop using the desktop absolute sizing */
+  .name {
+    position: absolute;
+    left: 6vw;                 /* wordmark left edge */
+    top: 44vh;                 /* roughly mid/low on the screen */
+    transform: translateY(-50%);
+    width: auto;
+  }
+
+  /* Keep “SOFTWARE & EDUCATION” on one line and offset it
+     below + to the right of PRAWNTECH */
+  .sub-name {
+    position: absolute;
+    white-space: nowrap;       /* one line */
+    top: calc(44vh + 6vw);     /* a bit below the wordmark */
+    left: 28vw;                /* shifted to the right of PRAWNTECH */
+    font-size: 5.2vw;          /* scales with screen */
+    margin: 0;
+  }
+
+  /* Place the prawn logo to the right and just above the subline */
+  .logo {
+    position: absolute;
+    right: 6vw;                /* align with right margin */
+    top: 42vh;                 /* slightly above the subline */
+    width: 36vw;               /* responsive size */
+    margin: 0;
+    z-index: 0;
+  }
+
 }
