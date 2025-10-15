@@ -321,6 +321,7 @@ html, body {
   .intro h3 { font-size: 18px; }
 
   .name { 
+    position: relative
     width: 100vw; 
     margin: auto;
     left: 0;
