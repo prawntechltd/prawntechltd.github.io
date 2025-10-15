@@ -354,6 +354,7 @@ html, body {
 
   .logo-mobile {
     width: 250px;
+    margin-left: 20px;
     position: static;      /* remove absolute positioning */
     margin: 0 auto;        /* center horizontally */
     display: block;
