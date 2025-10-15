@@ -319,8 +319,8 @@ html, body {
   .intro .text { width: 90%; }
   .intro h2 { font-size: 44px; }
   .intro h3 { font-size: 18px; }
-  .name { width: 80vw; left: 10vw; }
-  .sub-name { font-size: 24px; left: 50%; transform: translateX(-50%); margin-left: 0; }
+  .name { width: 100vw; margin: auto}
+  .sub-name { font-size: 24px; width: 100%; margin: auto;}
 
 /* Make the wordmark big and left-anchored */
   .head { font-size: 14vw; line-height: 1; }
