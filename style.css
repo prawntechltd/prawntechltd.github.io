@@ -320,7 +320,17 @@ html, body {
   .intro h2 { font-size: 44px; }
   .intro h3 { font-size: 18px; }
   .name { width: 100vw; margin: auto}
-  .sub-name { font-size: 24px; width: 100%; margin: auto;}
+  .sub-name { 
+    
+  position: relative;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 25px;
+    
+  }
 
 /* Make the wordmark big and left-anchored */
   .head { font-size: 14vw; line-height: 1; }
