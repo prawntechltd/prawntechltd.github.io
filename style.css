@@ -350,7 +350,7 @@ html, body {
   .logo {
     top: 30%;
     width: 30vw;
-    position: fixed;      /* remove absolute positioning */
+    position: static;      /* remove absolute positioning */
     margin: 0 auto;        /* center horizontally */
     display: block;
   }
