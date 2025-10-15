@@ -101,7 +101,7 @@ html, body {
   border-bottom: 5px solid #cf3b28;
   border-right: 5px solid #cf3b28;
   position: absolute;
-  bottom: 13px;
+  bottom: 24px;
   left: 50%;
   cursor: pointer;
   transform: translateX(-50%) rotate(45deg);
@@ -320,32 +320,32 @@ html, body {
   .intro h2 { font-size: 44px; }
   .intro h3 { font-size: 18px; }
 
-  .name { 
-    position: relative
-    width: 100vw; 
-    margin: auto;
-    left: 0;
-    right: 0;
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* horizontal centering */
+    justify-content: center; /* vertical centering */
+    text-align: center;
+    position: relative;    /* reset positioning context */
   }
 
-  .sub-name { 
-  position: relative;
-  top: 50%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 25px;
+  .name,
+  .sub-name,
+  .logo {
+    position: static;      /* remove absolute positioning */
+    margin: 0 auto;        /* center horizontally */
+    display: block;
   }
 
-/* Make the wordmark big and left-anchored */
-  .head { font-size: 14vw; line-height: 1; }
+  .name {
+    width: 100%;
+    font-size: 12vw;       /* scale for small screens */
+  }
 
-  /* Place the prawn logo to the right and just above the subline */
-  .logo {             /* responsive size */
-    margin: auto;
-    z-index: 0;
-    width: 50vw;
+  .sub-name {
+    font-size: 6vw;
+    color: #cf3b28;
+    margin-top: 1rem;
   }
 
 }
