@@ -347,8 +347,11 @@ html, body {
     margin-top: 1rem;
   }
   
-  .logo {
-    top: 30%;
+.logo {
+    height: 0px;
+  }
+
+  .logo-mobile {
     width: 30vw;
     position: static;      /* remove absolute positioning */
     margin: 0 auto;        /* center horizontally */
