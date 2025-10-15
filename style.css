@@ -330,8 +330,7 @@ html, body {
   }
 
   .name,
-  .sub-name,
-  .logo {
+  .sub-name {
     position: static;      /* remove absolute positioning */
     margin: 0 auto;        /* center horizontally */
     display: block;
@@ -348,4 +347,12 @@ html, body {
     margin-top: 1rem;
   }
 
+  .logo {
+
+    top: 20%;
+    width: 50vw;
+    position: static;      /* remove absolute positioning */
+    margin: 0 auto;        /* center horizontally */
+    display: block;
+  }
 }
