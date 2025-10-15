@@ -353,6 +353,7 @@ html, body {
   }
 
   .logo-mobile {
+    visibility: visible;
     width: 250px;
     margin-left: 20px;
     position: static;      /* remove absolute positioning */
