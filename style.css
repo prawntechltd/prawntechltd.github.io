@@ -349,8 +349,8 @@ html, body {
 
   .logo {
     top: 20%;
-    width: 50vw;
-    position: relative;      /* remove absolute positioning */
+    width: 5vw;
+    position: fixed;      /* remove absolute positioning */
     margin: 0 auto;        /* center horizontally */
     display: block;
   }
