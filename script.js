@@ -1,11 +1,5 @@
 $(document).ready(function () {
-  // Optional: slide in first side panel and hide the hero
-  $(".begin").on("click", function () {
-    $(".sec-A").addClass("showing");
-    $(".head").hide();
-  });
-
-  // Smooth-scroll to the content; optionally also fade/collapse the hero
+  // ▼ DOWN ARROW — smooth scroll and fade hero out
   $(".down").on("click", function () {
     const target =
       document.querySelector(".content-wrap") ||
@@ -18,20 +12,34 @@ $(document).ready(function () {
       window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     }
 
-    // Keep the aesthetic collapse if you like
-    $(".head").addClass("head-hide");
+    $(".head").addClass("head-hide"); // just fade out, not collapse
   });
 
-  // Home logo closes any open side panels
+  // ▲ When user scrolls back to top, fade hero back in
+  $(window).on("scroll", function () {
+    if ($(this).scrollTop() === 0) {
+      $(".head").removeClass("head-hide");
+    }
+  });
+
+  // 🏠 Home logo closes side panels
   $(".home").on("click", function () {
     $(".side").removeClass("showing");
   });
 
-  // Open/close second panel
+  // ▶ Open "Dev" side panel
   $(".code-btn").on("click", function () {
     $(".sec-B").addClass("showing");
   });
+
+  // ◀ Close "Dev" side panel
   $(".back-btn").on("click", function () {
     $(".sec-B").removeClass("showing");
+  });
+
+  // Optional: if you ever want to show side A panel
+  $(".begin").on("click", function () {
+    $(".sec-A").addClass("showing");
+    $(".head").addClass("head-hide");
   });
 });

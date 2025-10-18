@@ -89,10 +89,11 @@ html, body {
 }
 
 .head-hide {
-  max-height: 0;
   opacity: 0;
-  overflow: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
 }
+
 
 .down {
   width: 20px;
@@ -118,7 +119,8 @@ html, body {
 }
 .down:hover:before { opacity: 1; }
 
-.head span { font-weight: 900; }
+.head span { font-weight: 900;
+transition: opacity 0.5s ease; }
 
 .logo {
   z-index: -1000;
