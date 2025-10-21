@@ -363,3 +363,115 @@ transition: opacity 0.5s ease; }
     display: block;
   }
 }
+
+/* === ABOUT === */
+.sec.about {
+  background: #eaeaea;
+  color: #222;
+  display: block;
+}
+
+.sec.about .text-contain {
+  padding: 80px 10px 40px; /* matches .intro spacing */
+}
+
+.sec.about .text {
+  width: 60%;
+  max-width: 900px;
+  margin: 0 auto 24px;
+  text-align: center;
+}
+
+.sec.about h2 {
+  font-family: "Reenie Beanie", cursive;
+  font-size: 60px;
+  margin: -5px 0 4px;
+  color: #222;
+}
+
+.sec.about h3 {
+  font-weight: 300;
+  color: #444;
+  font-size: 22px;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+/* cards/grid */
+.about-grid {
+  width: 90%;
+  max-width: 1100px;
+  margin: 24px auto 8px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.about-card {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.about-card h4 {
+  margin: 0 0 8px 0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.about-card p,
+.about-card li { color: #333; }
+
+.about-card ul {
+  margin: 6px 0 0 1.25rem;
+  padding-left: 1rem;
+  list-style: disc;
+}
+
+/* team */
+.team { width: 90%; max-width: 1100px; margin: 24px auto 0; }
+.team h3 { font-weight: 300; margin: 0 0 10px 0; color: #222; }
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.team-card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 12px;
+  align-items: start;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.team-card img {
+  width: 72px; height: 72px; border-radius: 50%;
+  object-fit: cover; border: 1px solid rgba(0,0,0,0.1);
+}
+
+.team-card .team-meta { line-height: 1.2; }
+.team-card .team-meta strong { font-weight: 700; }
+.team-card .team-meta span { color: #666; font-size: 0.95rem; margin-top: 2px; }
+.team-card p { grid-column: 1 / -1; margin: 4px 0 0 0; color: #333; }
+
+/* responsive */
+@media (max-width: 640px) {
+  .sec.about .text { width: 90%; }
+  .sec.about h2 { font-size: 44px; }
+  .sec.about h3 { font-size: 18px; }
+}
+
+@media (min-width: 720px) {
+  .about-grid { grid-template-columns: repeat(3, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1100px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}

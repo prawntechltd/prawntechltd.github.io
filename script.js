@@ -1,4 +1,17 @@
 $(document).ready(function () {
+  // Smooth scroll for in-page anchors (accounts for fixed 50px menu)
+$(document).on("click", 'a[href^="#"]', function (e) {
+  var $target = $($(this).attr("href"));
+  if ($target.length) {
+    e.preventDefault();
+    $("html, body").animate({ scrollTop: $target.offset().top - 60 }, 450);
+    // fade hero out if we're leaving the top
+    if ($target.attr("id") !== undefined) {
+      $(".head").addClass("head-hide");
+    }
+  }
+});
+
   // ▼ DOWN ARROW — smooth scroll and fade hero out
   $(".down").on("click", function () {
     const target =
