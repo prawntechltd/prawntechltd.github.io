@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phototropism – Fill in the Gaps</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b5820a;
+    --light-gold: #f0b429;
+    --pale: #fef9e7;
+    --amber: #fde68a;
+    --text: #2c2410;
+    --correct: #2d6a4f;
+    --wrong: #c0392b;
+    --neutral: #e0d4a8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #fffbea 0%, #fef3c7 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: var(--text);
+  }
+
+  .card {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    padding: 48px 52px;
+    box-shadow: 0 8px 40px rgba(181,130,10,0.13);
+    border-top: 6px solid var(--gold);
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--pale);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    border: 1px solid var(--amber);
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #8a6d1a;
+    margin-bottom: 32px;
+  }
+
+  .word-bank {
+    background: var(--pale);
+    border: 1.5px solid var(--amber);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+  }
+
+  .word-bank h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .word-chip {
+    background: white;
+    border: 1.5px solid var(--light-gold);
+    color: var(--gold);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .word-chip.used {
+    opacity: 0.35;
+    text-decoration: line-through;
+  }
+
+  .paragraph {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    line-height: 2.2;
+    color: var(--text);
+    margin-bottom: 36px;
+  }
+
+  .gap {
+    display: inline-block;
+    position: relative;
+  }
+
+  .gap input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2.5px solid var(--neutral);
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    padding: 2px 6px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: 4px 4px 0 0;
+    min-width: 110px;
+  }
+
+  .gap input:focus {
+    border-bottom-color: var(--light-gold);
+    background: #fffbea;
+  }
+
+  .gap input.correct {
+    border-bottom-color: var(--correct);
+    color: var(--correct);
+    background: #eafaf1;
+  }
+
+  .gap input.wrong {
+    border-bottom-color: var(--wrong);
+    color: var(--wrong);
+    background: #fdf2f2;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  button:active { transform: scale(0.97); }
+
+  .btn-check {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 4px 16px rgba(181,130,10,0.25);
+  }
+
+  .btn-check:hover { box-shadow: 0 6px 20px rgba(181,130,10,0.35); }
+
+  .btn-reset {
+    background: white;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+  }
+
+  .btn-reveal {
+    background: white;
+    color: #888;
+    border: 2px solid #ddd;
+  }
+
+  .score-bar {
+    display: none;
+    margin-bottom: 28px;
+    background: var(--pale);
+    border: 1.5px solid var(--amber);
+    border-radius: 12px;
+    padding: 16px 22px;
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .score-bar.show { display: block; }
+  .score-bar span { font-size: 22px; }
+
+  @media (max-width: 540px) {
+    .card { padding: 30px 24px; }
+    h1 { font-size: 22px; }
+    .paragraph { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="badge">GCSE Biology</div>
+  <h1>Phototropism &amp; Auxins</h1>
+  <p class="subtitle">Fill in every gap using the words from the word bank below.</p>
+
+  <div class="word-bank">
+    <h3>Word Bank</h3>
+    <div class="words" id="wordBank"></div>
+  </div>
+
+  <div class="score-bar" id="scoreBar"></div>
+
+  <div class="paragraph" id="paragraph"></div>
+
+  <div class="actions">
+    <button class="btn-check" onclick="checkAnswers()">Check Answers</button>
+    <button class="btn-reset" onclick="resetAll()">Reset</button>
+    <button class="btn-reveal" onclick="revealAll()">Reveal Answers</button>
+  </div>
+</div>
+
+<script>
+const answers = [
+  "light",
+  "phototropism",
+  "tip",
+  "auxin",
+  "shaded",
+  "elongate",
+  "positive",
+  "roots",
+  "away",
+  "negative",
+  "survival",
+  "photosynthesis"
+];
+
+const wordBankWords = [...answers].sort(() => Math.random() - 0.5);
+
+const template = `
+Plants are able to detect and respond to the direction of <gap/> through a process called <gap/>. 
+The stimulus is detected at the <gap/> of the shoot, where the hormone <gap/> is produced. 
+When light strikes a shoot from one side, auxin moves away from the light and accumulates on the <gap/> side of the shoot. 
+This higher concentration of auxin causes cells on the shaded side to <gap/> more than those on the illuminated side, 
+causing the shoot to bend towards the light. This is known as <gap/> phototropism. 
+In <gap/>, the response is different — auxin similarly accumulates on the shaded side, but in roots, high concentrations 
+of auxin inhibit cell elongation. This means root cells on the shaded side grow less, causing the root to bend <gap/> from the light, 
+showing <gap/> phototropism. Together, these responses have clear <gap/> advantages: shoots grow towards light to maximise 
+<gap/>, while roots grow away from light and deeper into the soil to absorb water and minerals.
+`;
+
+let gapIndex = 0;
+
+function buildParagraph() {
+  gapIndex = 0;
+  const parts = template.split('<gap/>');
+  let html = '';
+  parts.forEach((part, i) => {
+    html += part;
+    if (i < parts.length - 1) {
+      const idx = gapIndex++;
+      const w = answers[idx];
+      const width = Math.max(80, w.length * 11 + 20);
+      html += `<span class="gap"><input type="text" id="gap${idx}" data-answer="${w}" style="width:${width}px" autocomplete="off" spellcheck="false" oninput="onInput(${idx})"></span>`;
+    }
+  });
+  document.getElementById('paragraph').innerHTML = html;
+}
+
+function buildWordBank() {
+  const wb = document.getElementById('wordBank');
+  wb.innerHTML = '';
+  wordBankWords.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.id = 'chip-' + w;
+    chip.textContent = w;
+    wb.appendChild(chip);
+  });
+}
+
+function onInput(idx) {
+  const input = document.getElementById('gap' + idx);
+  input.classList.remove('correct', 'wrong');
+  updateChips();
+}
+
+function updateChips() {
+  wordBankWords.forEach(w => {
+    const chip = document.getElementById('chip-' + w);
+    if (!chip) return;
+    let used = false;
+    answers.forEach((ans, i) => {
+      if (ans === w) {
+        const inp = document.getElementById('gap' + i);
+        if (inp && inp.value.trim().toLowerCase() === w.toLowerCase()) used = true;
+      }
+    });
+    chip.classList.toggle('used', used);
+  });
+}
+
+function checkAnswers() {
+  let correct = 0;
+  answers.forEach((ans, i) => {
+    const inp = document.getElementById('gap' + i);
+    if (!inp) return;
+    const val = inp.value.trim().toLowerCase();
+    if (val === ans.toLowerCase()) {
+      inp.classList.add('correct'); inp.classList.remove('wrong'); correct++;
+    } else if (val === '') {
+      inp.classList.remove('correct', 'wrong');
+    } else {
+      inp.classList.add('wrong'); inp.classList.remove('correct');
+    }
+  });
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  const emoji = correct === answers.length ? '☀️ Perfect!' : correct >= answers.length * 0.7 ? '👍 Good effort!' : '🔁 Keep trying!';
+  bar.innerHTML = `<span>${correct}/${answers.length}</span> correct &nbsp;&nbsp; ${emoji}`;
+}
+
+function resetAll() {
+  answers.forEach((_, i) => {
+    const inp = document.getElementById('gap' + i);
+    if (inp) { inp.value = ''; inp.classList.remove('correct', 'wrong'); }
+  });
+  document.getElementById('scoreBar').classList.remove('show');
+  updateChips();
+}
+
+function revealAll() {
+  answers.forEach((ans, i) => {
+    const inp = document.getElementById('gap' + i);
+    if (inp) { inp.value = ans; inp.classList.add('correct'); inp.classList.remove('wrong'); }
+  });
+  updateChips();
+  checkAnswers();
+}
+
+buildParagraph();
+buildWordBank();
+</script>
+</body>
+</html>
