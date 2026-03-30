@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Human Eye – Fill in the Gaps</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #0d6e75;
+    --light-teal: #1aabb5;
+    --pale: #e6f7f8;
+    --mint: #b2e8eb;
+    --text: #0a2b2e;
+    --correct: #2d6a4f;
+    --wrong: #c0392b;
+    --neutral: #9fd4d8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(160deg, #dff6f8 0%, #c8eff2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: var(--text);
+  }
+
+  .card {
+    max-width: 840px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 20px;
+    padding: 48px 52px;
+    box-shadow: 0 8px 40px rgba(13,110,117,0.13);
+    border-top: 6px solid var(--teal);
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--pale);
+    color: var(--teal);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    border: 1px solid var(--mint);
+  }
+
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    color: var(--teal);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #2a8a90;
+    margin-bottom: 32px;
+  }
+
+  .word-bank {
+    background: var(--pale);
+    border: 1.5px solid var(--mint);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 32px;
+  }
+
+  .word-bank h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 12px;
+  }
+
+  .words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .word-chip {
+    background: white;
+    border: 1.5px solid var(--light-teal);
+    color: var(--teal);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+
+  .word-chip.used {
+    opacity: 0.35;
+    text-decoration: line-through;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--light-teal);
+    margin-bottom: 6px;
+    margin-top: 32px;
+  }
+
+  .section-label:first-of-type { margin-top: 0; }
+
+  .paragraph {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    line-height: 2.3;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .gap { display: inline-block; position: relative; }
+
+  .gap input {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-bottom: 2.5px solid var(--neutral);
+    background: transparent;
+    color: var(--text);
+    outline: none;
+    padding: 2px 6px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+    border-radius: 4px 4px 0 0;
+    min-width: 110px;
+  }
+
+  .gap input:focus {
+    border-bottom-color: var(--light-teal);
+    background: #edfafa;
+  }
+
+  .gap input.correct {
+    border-bottom-color: var(--correct);
+    color: var(--correct);
+    background: #eafaf1;
+  }
+
+  .gap input.wrong {
+    border-bottom-color: var(--wrong);
+    color: var(--wrong);
+    background: #fdf2f2;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1.5px dashed var(--mint);
+    margin: 28px 0 20px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 36px;
+  }
+
+  button {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+
+  button:active { transform: scale(0.97); }
+
+  .btn-check {
+    background: var(--teal);
+    color: white;
+    box-shadow: 0 4px 16px rgba(13,110,117,0.25);
+  }
+
+  .btn-check:hover { box-shadow: 0 6px 20px rgba(13,110,117,0.35); }
+
+  .btn-reset {
+    background: white;
+    color: var(--teal);
+    border: 2px solid var(--teal);
+  }
+
+  .btn-reveal {
+    background: white;
+    color: #888;
+    border: 2px solid #ddd;
+  }
+
+  .score-bar {
+    display: none;
+    margin-bottom: 28px;
+    background: var(--pale);
+    border: 1.5px solid var(--mint);
+    border-radius: 12px;
+    padding: 16px 22px;
+    font-size: 15px;
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .score-bar.show { display: block; }
+  .score-bar span { font-size: 22px; }
+
+  @media (max-width: 540px) {
+    .card { padding: 30px 24px; }
+    h1 { font-size: 22px; }
+    .paragraph { font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="badge">GCSE Triple Science · Biology</div>
+  <h1>The Human Eye</h1>
+  <p class="subtitle">Fill in every gap using the words from the word bank below.</p>
+
+  <div class="word-bank">
+    <h3>Word Bank</h3>
+    <div class="words" id="wordBank"></div>
+  </div>
+
+  <div class="score-bar" id="scoreBar"></div>
+  <div id="paragraphs"></div>
+
+  <div class="actions">
+    <button class="btn-check" onclick="checkAnswers()">Check Answers</button>
+    <button class="btn-reset" onclick="resetAll()">Reset</button>
+    <button class="btn-reveal" onclick="revealAll()">Reveal Answers</button>
+  </div>
+</div>
+
+<script>
+const sections = [
+  {
+    label: "Part 1 — Structure of the Eye",
+    template: `Light enters the eye through the transparent outer layer called the <gap/>. It then passes through the <gap/>, which controls how much light enters by changing the size of the central opening, the <gap/>. The light is then focused by the <gap/>, a flexible, transparent structure that bends light to form a sharp image. This bending of light as it passes from one medium to another is called <gap/>. The focused image is formed on the <gap/> at the back of the eye, which contains two types of light-sensitive receptor cells: <gap/>, which detect colour in bright light, and <gap/>, which are sensitive to dim light but cannot distinguish colour.`,
+    answers: ["cornea", "iris", "pupil", "lens", "refraction", "retina", "cones", "rods"]
+  },
+  {
+    label: "Part 2 — Accommodation",
+    template: `The ability of the eye to change focus between near and distant objects is called <gap/>. This is controlled by the <gap/> muscles that surround the lens and the <gap/> ligaments that connect the ciliary muscles to the lens. To focus on a <gap/> object, the ciliary muscles <gap/>, which causes the suspensory ligaments to go <gap/>. This allows the lens to become more <gap/> in shape, increasing its power to refract light more strongly. To focus on a <gap/> object, the ciliary muscles <gap/>, pulling the suspensory ligaments <gap/>. This stretches the lens into a thinner, more <gap/> shape, reducing the degree of refraction needed.`,
+    answers: ["accommodation", "ciliary", "suspensory", "near", "contract", "slack", "convex", "distant", "relax", "taut", "concave"]
+  },
+  {
+    label: "Part 3 — Controlling Light: The Iris Reflex",
+    template: `The iris contains two types of muscle that control pupil size in response to light intensity. In bright light, the <gap/> muscles contract, making the pupil <gap/> and reducing the amount of light entering the eye. In dim light, the <gap/> muscles contract, making the pupil <gap/> and allowing more light to reach the retina. This response is an automatic <gap/> reaction and does not require conscious thought.`,
+    answers: ["circular", "smaller", "radial", "larger", "reflex"]
+  },
+  {
+    label: "Part 4 — Defects of Vision",
+    template: `Two common vision defects are <gap/> (short-sightedness) and <gap/> (long-sightedness). In myopia, the eyeball is too <gap/> or the cornea is too curved, causing distant objects to be focused in <gap/> of the retina. This is corrected using a <gap/> lens, which diverges light before it enters the eye. In hyperopia, the eyeball is too <gap/> or the cornea is too flat, meaning near objects are focused <gap/> the retina. This is corrected using a <gap/> lens, which converges light to bring the focal point forward. Both conditions can also be treated with <gap/> surgery, which permanently reshapes the cornea to correct the refraction.`,
+    answers: ["myopia", "hyperopia", "long", "in front", "concave", "short", "behind", "convex", "laser"]
+  }
+];
+
+const allAnswers = sections.flatMap(s => s.answers);
+const wordBankWords = [...new Set(allAnswers)].sort(() => Math.random() - 0.5);
+
+let gapCounter = 0;
+const gapAnswerMap = {};
+
+function buildContent() {
+  const container = document.getElementById('paragraphs');
+  container.innerHTML = '';
+  gapCounter = 0;
+
+  sections.forEach((sec, si) => {
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = sec.label;
+    container.appendChild(label);
+
+    const para = document.createElement('div');
+    para.className = 'paragraph';
+
+    const parts = sec.template.split('<gap/>');
+    let html = '';
+    parts.forEach((part, i) => {
+      html += part;
+      if (i < parts.length - 1) {
+        const idx = gapCounter;
+        const ans = sec.answers[i];
+        gapAnswerMap[idx] = ans;
+        const width = Math.max(90, ans.length * 11 + 24);
+        html += `<span class="gap"><input type="text" id="gap${idx}" style="width:${width}px" autocomplete="off" spellcheck="false" oninput="onInput(${idx})"></span>`;
+        gapCounter++;
+      }
+    });
+
+    para.innerHTML = html;
+    container.appendChild(para);
+
+    if (si < sections.length - 1) {
+      const hr = document.createElement('hr');
+      hr.className = 'divider';
+      container.appendChild(hr);
+    }
+  });
+}
+
+function buildWordBank() {
+  const wb = document.getElementById('wordBank');
+  wb.innerHTML = '';
+  wordBankWords.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.id = 'chip-' + CSS.escape(w);
+    chip.textContent = w;
+    wb.appendChild(chip);
+  });
+}
+
+function onInput(idx) {
+  document.getElementById('gap' + idx).classList.remove('correct', 'wrong');
+  updateChips();
+}
+
+function updateChips() {
+  wordBankWords.forEach(w => {
+    const chip = document.getElementById('chip-' + CSS.escape(w));
+    if (!chip) return;
+    let usedCount = 0, expectedCount = 0;
+    Object.entries(gapAnswerMap).forEach(([idx, ans]) => {
+      if (ans === w) {
+        expectedCount++;
+        const inp = document.getElementById('gap' + idx);
+        if (inp && inp.value.trim().toLowerCase() === w.toLowerCase()) usedCount++;
+      }
+    });
+    chip.classList.toggle('used', usedCount >= expectedCount && expectedCount > 0);
+  });
+}
+
+function checkAnswers() {
+  let correct = 0;
+  const total = Object.keys(gapAnswerMap).length;
+  Object.entries(gapAnswerMap).forEach(([idx, ans]) => {
+    const inp = document.getElementById('gap' + idx);
+    if (!inp) return;
+    const val = inp.value.trim().toLowerCase();
+    if (val === ans.toLowerCase()) {
+      inp.classList.add('correct'); inp.classList.remove('wrong'); correct++;
+    } else if (val === '') {
+      inp.classList.remove('correct', 'wrong');
+    } else {
+      inp.classList.add('wrong'); inp.classList.remove('correct');
+    }
+  });
+  const bar = document.getElementById('scoreBar');
+  bar.classList.add('show');
+  const emoji = correct === total ? '👁️ Perfect!' : correct >= total * 0.7 ? '👍 Good effort!' : '🔁 Keep trying!';
+  bar.innerHTML = `<span>${correct}/${total}</span> correct &nbsp;&nbsp; ${emoji}`;
+}
+
+function resetAll() {
+  Object.keys(gapAnswerMap).forEach(idx => {
+    const inp = document.getElementById('gap' + idx);
+    if (inp) { inp.value = ''; inp.classList.remove('correct', 'wrong'); }
+  });
+  document.getElementById('scoreBar').classList.remove('show');
+  updateChips();
+}
+
+function revealAll() {
+  Object.entries(gapAnswerMap).forEach(([idx, ans]) => {
+    const inp = document.getElementById('gap' + idx);
+    if (inp) { inp.value = ans; inp.classList.add('correct'); inp.classList.remove('wrong'); }
+  });
+  updateChips();
+  checkAnswers();
+}
+
+buildContent();
+buildWordBank();
+</script>
+</body>
+</html>
