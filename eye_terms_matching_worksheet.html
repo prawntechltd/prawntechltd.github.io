@@ -1,0 +1,254 @@
+
+<style>
+  .term-item, .def-item {
+    transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  }
+  .term-item:hover, .def-item:hover { transform: translateX(1px); }
+  .term-item.selected {
+    background: var(--color-background-info) !important;
+    border-color: var(--color-border-info) !important;
+    border-width: 1.5px !important;
+    color: var(--color-text-info) !important;
+  }
+</style>
+
+<div style="padding: 1.25rem 0; font-family: var(--font-sans);">
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--color-border-tertiary);">
+    <div>
+      <p style="font-size: 11px; color: var(--color-text-tertiary); margin: 0 0 3px; letter-spacing: 0.08em; text-transform: uppercase;">Year 11 · triple science · the eye</p>
+      <h2 style="font-size: 19px; font-weight: 500; margin: 0; color: var(--color-text-primary);">Key terms — matching activity</h2>
+    </div>
+    <div style="font-size: 12px; color: var(--color-text-secondary); white-space: nowrap;">Name: _____________________</div>
+  </div>
+
+  <p style="font-size: 13px; color: var(--color-text-secondary); margin: 0 0 1.25rem; line-height: 1.5;">Click a term on the left to select it, then click the matching definition on the right to draw a connecting line. Click any connected item to remove its line.</p>
+
+  <div id="matching-area" style="position: relative;">
+    <svg id="lines-svg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; z-index: 0;"></svg>
+    <div style="display: grid; grid-template-columns: minmax(0,2fr) minmax(0,3fr); gap: 0 40px; position: relative; z-index: 1;">
+      <div id="terms-col" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      <div id="defs-col" style="display: flex; flex-direction: column; gap: 10px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 10px; align-items: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--color-border-tertiary);">
+    <button onclick="checkAnswers()">Check answers</button>
+    <button onclick="resetAll()">Reset</button>
+    <span id="score" style="font-size: 14px; color: var(--color-text-secondary); margin-left: 4px;"></span>
+  </div>
+
+</div>
+
+<script>
+const TERMS = [
+  { id: 'lens',            label: 'Lens' },
+  { id: 'suspensory',      label: 'Suspensory ligaments' },
+  { id: 'ciliary',         label: 'Ciliary muscles' },
+  { id: 'radial',          label: 'Radial muscles' },
+  { id: 'circular',        label: 'Circular muscles' },
+];
+
+const DEFS = [
+  { id: 'ciliary',    text: 'Contract to release tension in the suspensory ligaments, allowing the lens to become more curved and increase its focusing power for near objects; relax for distant vision.' },
+  { id: 'circular',  text: 'Contract in bright light to constrict (narrow) the pupil, reducing the amount of light that enters the eye.' },
+  { id: 'lens',      text: 'Refracts (bends) light so it focuses as a sharp image on the retina; changes shape to allow the eye to focus on objects at different distances.' },
+  { id: 'suspensory',text: 'Connect the lens to the ciliary muscles; become taut to pull the lens flat for distant vision, or go slack so the lens can bulge for near vision.' },
+  { id: 'radial',    text: 'Contract in dim light to dilate (widen) the pupil, allowing more light to enter the eye.' },
+];
+
+const COLORS = ['#7F77DD','#1D9E75','#D85A30','#378ADD','#D4537E'];
+
+let selectedTermId = null;
+let connections = {};
+let defConnections = {};
+let colorIndex = 0;
+let termEls = {};
+let defEls = {};
+
+function buildUI() {
+  const termsCol = document.getElementById('terms-col');
+  const defsCol  = document.getElementById('defs-col');
+
+  TERMS.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'term-item';
+    el.dataset.id = t.id;
+    el.style.cssText = 'padding:13px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;font-weight:500;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-primary);user-select:none;line-height:1.4;';
+    el.textContent = t.label;
+    el.onclick = () => handleTermClick(t.id);
+    termsCol.appendChild(el);
+    termEls[t.id] = el;
+  });
+
+  DEFS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'def-item';
+    el.dataset.id = d.id;
+    el.style.cssText = 'padding:12px 16px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-secondary);user-select:none;line-height:1.55;';
+    el.textContent = d.text;
+    el.onclick = () => handleDefClick(d.id);
+    defsCol.appendChild(el);
+    defEls[d.id] = el;
+  });
+}
+
+function handleTermClick(termId) {
+  if (connections[termId]) { removeConnection(termId); return; }
+  if (selectedTermId) {
+    termEls[selectedTermId].classList.remove('selected');
+    resetTermBorder(selectedTermId);
+  }
+  if (selectedTermId === termId) { selectedTermId = null; return; }
+  selectedTermId = termId;
+  termEls[termId].classList.add('selected');
+}
+
+function handleDefClick(defId) {
+  if (!selectedTermId) {
+    if (defConnections[defId]) removeConnection(defConnections[defId]);
+    return;
+  }
+  if (connections[selectedTermId]) removeConnection(selectedTermId);
+  if (defConnections[defId]) removeConnection(defConnections[defId]);
+
+  const color = COLORS[colorIndex % COLORS.length];
+  colorIndex++;
+
+  const line = drawPath(termEls[selectedTermId], defEls[defId], color);
+  connections[selectedTermId] = { defId, lineEl: line, color };
+  defConnections[defId] = selectedTermId;
+
+  termEls[selectedTermId].classList.remove('selected');
+  styleConnected(termEls[selectedTermId], color);
+  styleConnected(defEls[defId], color);
+
+  selectedTermId = null;
+  document.getElementById('score').textContent = '';
+}
+
+function removeConnection(termId) {
+  if (!connections[termId]) return;
+  const { defId, lineEl } = connections[termId];
+  if (lineEl && lineEl.parentNode) lineEl.parentNode.removeChild(lineEl);
+  resetTermBorder(termId);
+  resetDefBorder(defId);
+  delete defConnections[defId];
+  delete connections[termId];
+  if (selectedTermId === termId) selectedTermId = null;
+  document.getElementById('score').textContent = '';
+}
+
+function styleConnected(el, color) {
+  el.style.borderColor = color;
+  el.style.borderWidth = '1.5px';
+  el.style.borderStyle = 'solid';
+}
+
+function resetTermBorder(id) {
+  const el = termEls[id];
+  el.style.borderColor = 'var(--color-border-secondary)';
+  el.style.borderWidth = '0.5px';
+  el.style.background = 'var(--color-background-primary)';
+  el.style.color = 'var(--color-text-primary)';
+  el.classList.remove('selected');
+}
+
+function resetDefBorder(id) {
+  const el = defEls[id];
+  el.style.borderColor = 'var(--color-border-tertiary)';
+  el.style.borderWidth = '0.5px';
+  el.style.background = 'var(--color-background-secondary)';
+}
+
+function getAnchor(el, container, side) {
+  const r  = el.getBoundingClientRect();
+  const cr = container.getBoundingClientRect();
+  return {
+    x: side === 'right' ? r.right - cr.left : r.left - cr.left,
+    y: r.top - cr.top + r.height / 2
+  };
+}
+
+function drawPath(termEl, defEl, color) {
+  const container = document.getElementById('matching-area');
+  const svg = document.getElementById('lines-svg');
+  const s = getAnchor(termEl, container, 'right');
+  const e = getAnchor(defEl,  container, 'left');
+  const cx = (e.x - s.x) * 0.45;
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d', `M ${s.x} ${s.y} C ${s.x+cx} ${s.y} ${e.x-cx} ${e.y} ${e.x} ${e.y}`);
+  path.setAttribute('stroke', color);
+  path.setAttribute('stroke-width', '2.5');
+  path.setAttribute('stroke-linecap', 'round');
+  path.setAttribute('fill', 'none');
+  path.setAttribute('opacity', '0.85');
+  svg.appendChild(path);
+
+  [s, e].forEach(pt => {
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
+    dot.setAttribute('r', '4');
+    dot.setAttribute('fill', color);
+    dot.setAttribute('opacity', '0.75');
+    svg.appendChild(dot);
+    path._dots = path._dots || [];
+    path._dots.push(dot);
+  });
+
+  return path;
+}
+
+function removeDots(lineEl) {
+  if (lineEl._dots) lineEl._dots.forEach(d => d.parentNode && d.parentNode.removeChild(d));
+}
+
+function recomputeLines() {
+  const container = document.getElementById('matching-area');
+  Object.entries(connections).forEach(([termId, conn]) => {
+    const { defId, lineEl } = conn;
+    const s = getAnchor(termEls[termId], container, 'right');
+    const e = getAnchor(defEls[defId],   container, 'left');
+    const cx = (e.x - s.x) * 0.45;
+    lineEl.setAttribute('d', `M ${s.x} ${s.y} C ${s.x+cx} ${s.y} ${e.x-cx} ${e.y} ${e.x} ${e.y}`);
+    if (lineEl._dots && lineEl._dots.length === 2) {
+      lineEl._dots[0].setAttribute('cx', s.x); lineEl._dots[0].setAttribute('cy', s.y);
+      lineEl._dots[1].setAttribute('cx', e.x); lineEl._dots[1].setAttribute('cy', e.y);
+    }
+  });
+}
+
+function checkAnswers() {
+  let correct = 0;
+  const total = TERMS.length;
+  Object.entries(connections).forEach(([termId, conn]) => {
+    const ok = conn.defId === termId;
+    if (ok) correct++;
+    const col = ok ? '#1D9E75' : '#E24B4A';
+    conn.lineEl.setAttribute('stroke', col);
+    conn.lineEl.setAttribute('stroke-dasharray', ok ? 'none' : '7 4');
+    if (conn.lineEl._dots) conn.lineEl._dots.forEach(d => d.setAttribute('fill', col));
+    styleConnected(termEls[termId], col);
+    styleConnected(defEls[conn.defId], col);
+  });
+  const s = document.getElementById('score');
+  s.textContent = `${correct} / ${total} correct${correct === total ? ' — well done!' : ''}`;
+  s.style.color = correct === total ? 'var(--color-text-success)' : 'var(--color-text-danger)';
+}
+
+function resetAll() {
+  Object.keys(connections).forEach(termId => {
+    const { lineEl, defId } = connections[termId];
+    removeDots(lineEl);
+    if (lineEl && lineEl.parentNode) lineEl.parentNode.removeChild(lineEl);
+    resetTermBorder(termId);
+    resetDefBorder(defId);
+  });
+  connections = {}; defConnections = {}; selectedTermId = null; colorIndex = 0;
+  document.getElementById('score').textContent = '';
+}
+
+buildUI();
+window.addEventListener('resize', recomputeLines);
+</script>
