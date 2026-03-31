@@ -1,0 +1,243 @@
+
+<style>
+  .term-item, .def-item { transition: border-color 0.15s, background 0.15s, transform 0.1s; }
+  .term-item:hover { transform: translateX(2px); }
+  .def-item:hover  { transform: translateX(-2px); }
+  .term-item.selected {
+    background: var(--color-background-info) !important;
+    border-color: var(--color-border-info) !important;
+    border-width: 1.5px !important;
+    color: var(--color-text-info) !important;
+  }
+</style>
+
+<div style="padding: 1.25rem 0; font-family: var(--font-sans);">
+
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1rem; padding-bottom:1rem; border-bottom:0.5px solid var(--color-border-tertiary);">
+    <div>
+      <p style="font-size:11px; color:var(--color-text-tertiary); margin:0 0 3px; letter-spacing:0.08em; text-transform:uppercase;">A Level biology · biological molecules</p>
+      <h2 style="font-size:19px; font-weight:500; margin:0; color:var(--color-text-primary);">Key terms — matching activity</h2>
+    </div>
+    <div style="font-size:12px; color:var(--color-text-secondary); white-space:nowrap;">Name: _____________________</div>
+  </div>
+
+  <p style="font-size:13px; color:var(--color-text-secondary); margin:0 0 1.25rem; line-height:1.5;">Click a term to select it, then click the matching structural description. Click a connected item to remove its line.</p>
+
+  <div id="matching-area" style="position:relative;">
+    <svg id="lines-svg" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:visible; z-index:0;"></svg>
+    <div style="display:grid; grid-template-columns:minmax(0,1.6fr) minmax(0,3fr); gap:0 44px; position:relative; z-index:1;">
+      <div id="terms-col" style="display:flex; flex-direction:column; gap:8px;"></div>
+      <div id="defs-col"  style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:10px; align-items:center; margin-top:1.25rem; padding-top:1rem; border-top:0.5px solid var(--color-border-tertiary);">
+    <button onclick="checkAnswers()">Check answers</button>
+    <button onclick="resetAll()">Reset</button>
+    <span id="score" style="font-size:14px; color:var(--color-text-secondary); margin-left:4px;"></span>
+  </div>
+
+</div>
+
+<script>
+const TERMS = [
+  { id:'glucose',       label:'Glucose' },
+  { id:'galactose',     label:'Galactose' },
+  { id:'fructose',      label:'Fructose' },
+  { id:'ribose',        label:'Ribose' },
+  { id:'alpha_glucose', label:'Alpha glucose' },
+  { id:'beta_glucose',  label:'Beta glucose' },
+  { id:'lactose',       label:'Lactose' },
+  { id:'maltose',       label:'Maltose' },
+  { id:'sucrose',       label:'Sucrose' },
+  { id:'amylose',       label:'Amylose' },
+  { id:'amylopectin',   label:'Amylopectin' },
+  { id:'starch',        label:'Starch' },
+  { id:'cellulose',     label:'Cellulose' },
+  { id:'glycogen',      label:'Glycogen' },
+];
+
+const DEFS = [
+  { id:'cellulose',     text:'Polysaccharide of β-glucose monomers linked by β(1→4) glycosidic bonds; alternate monomers rotated 180°; forms straight, unbranched chains that hydrogen-bond into microfibrils.' },
+  { id:'maltose',       text:'Disaccharide formed from two α-glucose units joined by an α(1→4) glycosidic bond; produced during starch hydrolysis.' },
+  { id:'alpha_glucose', text:'Hexose monosaccharide in ring form; the -OH group on carbon 1 is orientated below the plane of the ring.' },
+  { id:'glycogen',      text:'Highly branched polysaccharide of α-glucose; α(1→4) bonds along chains with frequent α(1→6) bonds at branch points; more branched than amylopectin; the main carbohydrate store in animals and fungi.' },
+  { id:'ribose',        text:'5-carbon monosaccharide (pentose sugar); forms a 5-membered furanose ring; a structural component of RNA and ATP.' },
+  { id:'sucrose',       text:'Disaccharide formed from one α-glucose and one β-fructose joined by an α,β(1↔2) glycosidic bond; a non-reducing sugar.' },
+  { id:'amylopectin',   text:'Branched polysaccharide of α-glucose; α(1→4) glycosidic bonds along each chain and α(1→6) bonds at branch points; one of the two components of starch.' },
+  { id:'glucose',       text:'6-carbon monosaccharide (hexose); forms a 6-membered pyranose ring; exists as alpha or beta isomers depending on the orientation of the -OH group on C1.' },
+  { id:'lactose',       text:'Disaccharide formed from one glucose and one galactose joined by a β(1→4) glycosidic bond; the principal sugar in mammalian milk.' },
+  { id:'beta_glucose',  text:'Hexose monosaccharide in ring form; the -OH group on carbon 1 is orientated above the plane of the ring.' },
+  { id:'starch',        text:'Plant storage polysaccharide consisting of two molecules: an unbranched helical component and a branched component; both built entirely from α-glucose monomers.' },
+  { id:'fructose',      text:'6-carbon monosaccharide; structural isomer of glucose; forms a 5-membered furanose ring; found in fruit and honey.' },
+  { id:'galactose',     text:'Hexose monosaccharide; structural isomer of glucose; differs only in the orientation of the -OH group on carbon 4 (axial rather than equatorial).' },
+  { id:'amylose',       text:'Unbranched polysaccharide of α-glucose monomers joined by α(1→4) glycosidic bonds only; coils into a regular helix; one of the two components of starch.' },
+];
+
+const COLORS = [
+  '#7F77DD','#1D9E75','#D85A30','#378ADD','#D4537E',
+  '#639922','#BA7517','#E24B4A','#888780','#AFA9EC',
+  '#5DCAA5','#F0997B','#85B7EB','#ED93B1'
+];
+
+let selectedTermId = null;
+let connections = {};
+let defConnections = {};
+let colorIdx = 0;
+let termEls = {};
+let defEls  = {};
+
+function buildUI() {
+  const tc = document.getElementById('terms-col');
+  const dc = document.getElementById('defs-col');
+
+  TERMS.forEach(t => {
+    const el = document.createElement('div');
+    el.className = 'term-item';
+    el.dataset.id = t.id;
+    el.style.cssText = 'padding:10px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13.5px;font-weight:500;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-primary);user-select:none;line-height:1.4;';
+    el.textContent = t.label;
+    el.onclick = () => handleTermClick(t.id);
+    tc.appendChild(el);
+    termEls[t.id] = el;
+  });
+
+  DEFS.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'def-item';
+    el.dataset.id = d.id;
+    el.style.cssText = 'padding:9px 13px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:12.5px;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-secondary);user-select:none;line-height:1.55;';
+    el.textContent = d.text;
+    el.onclick = () => handleDefClick(d.id);
+    dc.appendChild(el);
+    defEls[d.id] = el;
+  });
+}
+
+function handleTermClick(id) {
+  if (connections[id]) { removeConnection(id); return; }
+  if (selectedTermId) termEls[selectedTermId].classList.remove('selected');
+  if (selectedTermId === id) { selectedTermId = null; return; }
+  selectedTermId = id;
+  termEls[id].classList.add('selected');
+}
+
+function handleDefClick(defId) {
+  if (!selectedTermId) { if (defConnections[defId]) removeConnection(defConnections[defId]); return; }
+  if (connections[selectedTermId]) removeConnection(selectedTermId);
+  if (defConnections[defId]) removeConnection(defConnections[defId]);
+
+  const color = COLORS[colorIdx % COLORS.length]; colorIdx++;
+  const line = drawPath(termEls[selectedTermId], defEls[defId], color);
+  connections[selectedTermId] = { defId, lineEl: line, color };
+  defConnections[defId] = selectedTermId;
+
+  termEls[selectedTermId].classList.remove('selected');
+  styleConn(termEls[selectedTermId], color);
+  styleConn(defEls[defId], color);
+  selectedTermId = null;
+  document.getElementById('score').textContent = '';
+}
+
+function removeConnection(termId) {
+  if (!connections[termId]) return;
+  const { defId, lineEl } = connections[termId];
+  removeDots(lineEl);
+  if (lineEl.parentNode) lineEl.parentNode.removeChild(lineEl);
+  resetTerm(termId); resetDef(defId);
+  delete defConnections[defId]; delete connections[termId];
+  if (selectedTermId === termId) selectedTermId = null;
+  document.getElementById('score').textContent = '';
+}
+
+function styleConn(el, color) {
+  el.style.borderColor = color; el.style.borderWidth = '1.5px'; el.style.borderStyle = 'solid';
+}
+function resetTerm(id) {
+  const el = termEls[id];
+  el.style.borderColor = 'var(--color-border-secondary)'; el.style.borderWidth = '0.5px';
+  el.style.background = 'var(--color-background-primary)'; el.style.color = 'var(--color-text-primary)';
+  el.classList.remove('selected');
+}
+function resetDef(id) {
+  const el = defEls[id];
+  el.style.borderColor = 'var(--color-border-tertiary)'; el.style.borderWidth = '0.5px';
+  el.style.background = 'var(--color-background-secondary)';
+}
+
+function anchor(el, container, side) {
+  const r = el.getBoundingClientRect(), cr = container.getBoundingClientRect();
+  return { x: side==='right' ? r.right-cr.left : r.left-cr.left, y: r.top-cr.top+r.height/2 };
+}
+
+function drawPath(tEl, dEl, color) {
+  const cont = document.getElementById('matching-area');
+  const svg  = document.getElementById('lines-svg');
+  const s = anchor(tEl, cont, 'right');
+  const e = anchor(dEl, cont, 'left');
+  const cx = (e.x - s.x) * 0.42;
+
+  const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+  path.setAttribute('d',`M ${s.x} ${s.y} C ${s.x+cx} ${s.y} ${e.x-cx} ${e.y} ${e.x} ${e.y}`);
+  path.setAttribute('stroke', color); path.setAttribute('stroke-width','2.5');
+  path.setAttribute('stroke-linecap','round'); path.setAttribute('fill','none');
+  path.setAttribute('opacity','0.8');
+  svg.appendChild(path);
+
+  path._dots = [s,e].map(pt => {
+    const d = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    d.setAttribute('cx',pt.x); d.setAttribute('cy',pt.y);
+    d.setAttribute('r','4'); d.setAttribute('fill',color); d.setAttribute('opacity','0.75');
+    svg.appendChild(d); return d;
+  });
+  return path;
+}
+
+function removeDots(p) { if (p._dots) p._dots.forEach(d => d.parentNode && d.parentNode.removeChild(d)); }
+
+function recomputeLines() {
+  const cont = document.getElementById('matching-area');
+  Object.entries(connections).forEach(([tid, conn]) => {
+    const s = anchor(termEls[tid], cont, 'right');
+    const e = anchor(defEls[conn.defId], cont, 'left');
+    const cx = (e.x-s.x)*0.42;
+    conn.lineEl.setAttribute('d',`M ${s.x} ${s.y} C ${s.x+cx} ${s.y} ${e.x-cx} ${e.y} ${e.x} ${e.y}`);
+    if (conn.lineEl._dots && conn.lineEl._dots.length===2) {
+      conn.lineEl._dots[0].setAttribute('cx',s.x); conn.lineEl._dots[0].setAttribute('cy',s.y);
+      conn.lineEl._dots[1].setAttribute('cx',e.x); conn.lineEl._dots[1].setAttribute('cy',e.y);
+    }
+  });
+}
+
+function checkAnswers() {
+  let correct = 0;
+  const total = TERMS.length;
+  Object.entries(connections).forEach(([tid, conn]) => {
+    const ok = conn.defId === tid;
+    if (ok) correct++;
+    const col = ok ? '#1D9E75' : '#E24B4A';
+    conn.lineEl.setAttribute('stroke', col);
+    conn.lineEl.setAttribute('stroke-dasharray', ok ? 'none' : '7 4');
+    if (conn.lineEl._dots) conn.lineEl._dots.forEach(d => d.setAttribute('fill', col));
+    styleConn(termEls[tid], col);
+    styleConn(defEls[conn.defId], col);
+  });
+  const s = document.getElementById('score');
+  s.textContent = `${correct} / ${total} correct${correct===total ? ' — well done!' : ''}`;
+  s.style.color = correct===total ? 'var(--color-text-success)' : 'var(--color-text-danger)';
+}
+
+function resetAll() {
+  Object.keys(connections).forEach(tid => {
+    const { lineEl, defId } = connections[tid];
+    removeDots(lineEl);
+    if (lineEl.parentNode) lineEl.parentNode.removeChild(lineEl);
+    resetTerm(tid); resetDef(defId);
+  });
+  connections={}; defConnections={}; selectedTermId=null; colorIdx=0;
+  document.getElementById('score').textContent='';
+}
+
+buildUI();
+window.addEventListener('resize', recomputeLines);
+</script>
