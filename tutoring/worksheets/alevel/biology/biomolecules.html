@@ -1,0 +1,306 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .sheet { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem; }
+  h1 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 1.5rem; }
+  .section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1.25rem; }
+  .section-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .section-instr { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1rem; }
+  .word-bank { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 13px; }
+  .word-bank strong { font-weight: 500; color: var(--color-text-primary); display: block; margin-bottom: 6px; }
+  .words { display: flex; flex-wrap: wrap; gap: 8px; }
+  .word-tag { background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 4px 10px; font-size: 13px; color: var(--color-text-primary); cursor: pointer; user-select: none; transition: background 0.15s; }
+  .word-tag:hover { background: var(--color-background-info); }
+  .word-tag.used { opacity: 0.4; text-decoration: line-through; }
+  .gap { display: inline-block; border-bottom: 1.5px solid var(--color-text-secondary); min-width: 120px; margin: 0 4px; vertical-align: bottom; text-align: center; font-size: 14px; color: var(--color-text-primary); cursor: pointer; }
+  .gap.filled { color: var(--color-text-info); border-bottom-color: var(--color-border-info); }
+  .gap.correct { color: var(--color-text-success); border-bottom-color: var(--color-border-success); }
+  .gap.incorrect { color: var(--color-text-danger); border-bottom-color: var(--color-border-danger); }
+  p.q { font-size: 14px; color: var(--color-text-primary); line-height: 2; margin-bottom: 0.6rem; }
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .match-col { display: flex; flex-direction: column; gap: 8px; }
+  .match-item { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 8px 12px; font-size: 13px; color: var(--color-text-primary); min-height: 44px; display: flex; align-items: center; }
+  .match-term { background: var(--color-background-secondary); font-weight: 500; }
+  .match-def { background: var(--color-background-primary); cursor: pointer; user-select: none; }
+  .match-def:hover { background: var(--color-background-info); color: var(--color-text-info); }
+  .match-def.selected { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); }
+  .match-def.correct { background: var(--color-background-success); color: var(--color-text-success); border-color: var(--color-border-success); }
+  .match-def.incorrect { background: var(--color-background-danger); color: var(--color-text-danger); border-color: var(--color-border-danger); }
+  .match-term .num { font-size: 11px; color: var(--color-text-secondary); margin-right: 6px; }
+  .match-connect { display: flex; align-items: center; gap: 8px; }
+  .match-connect select { flex: 1; font-size: 13px; padding: 6px 8px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-primary); }
+  .match-connect select.correct { border-color: var(--color-border-success); background: var(--color-background-success); color: var(--color-text-success); }
+  .match-connect select.incorrect { border-color: var(--color-border-danger); background: var(--color-background-danger); color: var(--color-text-danger); }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; }
+  button.check { font-size: 13px; padding: 7px 18px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-primary); cursor: pointer; }
+  button.check:hover { background: var(--color-background-secondary); }
+  button.reset { font-size: 13px; padding: 7px 18px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+  .score-badge { display: inline-block; font-size: 13px; padding: 6px 14px; border-radius: var(--border-radius-md); background: var(--color-background-secondary); color: var(--color-text-secondary); }
+  .score-badge.good { background: var(--color-background-success); color: var(--color-text-success); }
+  .score-badge.bad { background: var(--color-background-danger); color: var(--color-text-danger); }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 1rem 0; }
+</style>
+
+<div class="sheet">
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Biomolecules worksheet for Edexcel B A Level biology with matching and fill-in-the-gap exercises</h2>
+
+  <h1>Biomolecules</h1>
+  <p class="subtitle">Edexcel B &nbsp;·&nbsp; A Level Biology &nbsp;·&nbsp; Topic 1: Biological Molecules</p>
+
+  <!-- SECTION 1: FILL IN THE GAPS -->
+  <div class="section" id="sec-fitg">
+    <p class="section-title">Section A — Fill in the gaps</p>
+    <p class="section-instr">Click a word from the word bank, then click a gap to place it. Click a filled gap to remove the word.</p>
+
+    <div class="word-bank">
+      <strong>Word bank</strong>
+      <div class="words" id="wb1"></div>
+    </div>
+
+    <p class="q" id="q1"></p>
+    <p class="q" id="q2"></p>
+    <p class="q" id="q3"></p>
+    <p class="q" id="q4"></p>
+    <p class="q" id="q5"></p>
+
+    <div class="btn-row">
+      <button class="check" onclick="checkFitg()">Check answers</button>
+      <button class="reset" onclick="resetFitg()">Reset</button>
+      <span class="score-badge" id="fitg-score" style="display:none"></span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 2: MATCHING -->
+  <div class="section" id="sec-match">
+    <p class="section-title">Section B — Matching</p>
+    <p class="section-instr">Use the dropdown next to each term to select the correct description.</p>
+
+    <div id="match-rows"></div>
+
+    <div class="btn-row">
+      <button class="check" onclick="checkMatch()">Check answers</button>
+      <button class="reset" onclick="resetMatch()">Reset</button>
+      <span class="score-badge" id="match-score" style="display:none"></span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SECTION 3: SECOND FITG -->
+  <div class="section" id="sec-fitg2">
+    <p class="section-title">Section C — Fill in the gaps: lipids &amp; proteins</p>
+    <p class="section-instr">Click a word from the word bank, then click a gap to place it.</p>
+
+    <div class="word-bank">
+      <strong>Word bank</strong>
+      <div class="words" id="wb2"></div>
+    </div>
+
+    <p class="q" id="q6"></p>
+    <p class="q" id="q7"></p>
+    <p class="q" id="q8"></p>
+    <p class="q" id="q9"></p>
+
+    <div class="btn-row">
+      <button class="check" onclick="checkFitg2()">Check answers</button>
+      <button class="reset" onclick="resetFitg2()">Reset</button>
+      <span class="score-badge" id="fitg2-score" style="display:none"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+const FITG1 = [
+  { id:'q1', template: 'Carbohydrates are made up of monomers called [monosaccharides]. Two monosaccharides join together via a [condensation] reaction to form a [disaccharide], releasing a molecule of [water].', answers: ['monosaccharides','condensation','disaccharide','water'] },
+  { id:'q2', template: 'Glucose exists in two isomeric forms: [alpha]-glucose and [beta]-glucose, which differ in the orientation of the [hydroxyl] group on carbon 1.', answers: ['alpha','beta','hydroxyl'] },
+  { id:'q3', template: 'Starch is a [polysaccharide] found in plants. It is made of [amylose] and amylopectin. The bond between glucose units is called a [glycosidic] bond.', answers: ['polysaccharide','amylose','glycosidic'] },
+  { id:'q4', template: 'Cellulose is built from [beta]-glucose monomers. The chains are held together by [hydrogen] bonds to form [microfibrils], which provide structural support in plant [cell walls].', answers: ['beta','hydrogen','microfibrils','cell walls'] },
+  { id:'q5', template: 'The [Benedict\'s] test is used to detect reducing sugars. A positive result gives a [brick-red] precipitate when heated. Non-reducing sugars must first be [hydrolysed] with acid before testing.', answers: ['Benedict\'s','brick-red','hydrolysed'] }
+];
+
+const WB1_WORDS = ['monosaccharides','condensation','disaccharide','water','alpha','beta','hydroxyl','polysaccharide','amylose','glycosidic','hydrogen','microfibrils','cell walls','Benedict\'s','brick-red','hydrolysed'];
+
+const MATCH_DATA = [
+  { term: 'Glycogen', def: 'A branched polysaccharide used as an energy store in animal liver and muscle cells' },
+  { term: 'Triglyceride', def: 'A lipid formed from one glycerol molecule and three fatty acid chains via ester bonds' },
+  { term: 'Phospholipid', def: 'A lipid with a hydrophilic phosphate head and two hydrophobic fatty acid tails, key to membrane structure' },
+  { term: 'Primary structure', def: 'The specific sequence of amino acids in a polypeptide chain, held together by peptide bonds' },
+  { term: 'Tertiary structure', def: 'The overall 3D folding of a single polypeptide chain, stabilised by hydrogen bonds, ionic bonds and disulfide bridges' },
+  { term: 'Globular protein', def: 'A spherical, water-soluble protein such as haemoglobin or enzymes, with a functional shape' },
+  { term: 'Fibrous protein', def: 'An insoluble, structurally important protein such as collagen or keratin' },
+  { term: 'Induced fit model', def: 'The enzyme active site changes shape slightly upon substrate binding to form a more complementary fit' },
+];
+
+const FITG2 = [
+  { id:'q6', template: 'Fatty acids can be [saturated] (no C=C double bonds) or [unsaturated] (containing one or more C=C double bonds). In [cis] unsaturated fatty acids, both hydrogen atoms are on the same side of the double bond.', answers: ['saturated','unsaturated','cis'] },
+  { id:'q7', template: 'Amino acids are the monomers of proteins. They share a common structure: an amino group ([NH2]), a [carboxyl] group (COOH), a hydrogen atom, and a variable [R group], all bonded to a central [carbon] atom.', answers: ['NH2','carboxyl','R group','carbon'] },
+  { id:'q8', template: 'A [peptide] bond forms between the amino group of one amino acid and the carboxyl group of another during a [condensation] reaction. Many amino acids joined together form a [polypeptide].', answers: ['peptide','condensation','polypeptide'] },
+  { id:'q9', template: 'The [quaternary] structure of a protein describes how two or more polypeptide chains are held together. Haemoglobin has [four] polypeptide chains and contains a [haem] group, which carries [oxygen].', answers: ['quaternary','four','haem','oxygen'] }
+];
+
+const WB2_WORDS = ['saturated','unsaturated','cis','NH2','carboxyl','R group','carbon','peptide','condensation','polypeptide','quaternary','four','haem','oxygen'];
+
+let selectedWord = null;
+let fitgState = {};
+let fitg2State = {};
+
+function buildFitg(questions, bankId, stateObj) {
+  questions.forEach(q => {
+    const el = document.getElementById(q.id);
+    let i = 0;
+    let html = q.template.replace(/\[([^\]]+)\]/g, (_, ans) => {
+      return `<span class="gap" data-q="${q.id}" data-i="${i++}" data-ans="${ans}" onclick="fillGap(this)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+    });
+    el.innerHTML = html;
+  });
+}
+
+function buildWordBank(words, containerId) {
+  const wb = document.getElementById(containerId);
+  wb.innerHTML = '';
+  words.forEach(w => {
+    const tag = document.createElement('span');
+    tag.className = 'word-tag';
+    tag.textContent = w;
+    tag.dataset.word = w;
+    tag.onclick = () => selectWord(tag);
+    wb.appendChild(tag);
+  });
+}
+
+function selectWord(tag) {
+  document.querySelectorAll('.word-tag').forEach(t => t.style.outline = '');
+  selectedWord = tag.dataset.word;
+  tag.style.outline = '2px solid var(--color-border-info)';
+}
+
+function fillGap(gap) {
+  if (gap.classList.contains('correct')) return;
+  if (gap.classList.contains('filled') || gap.textContent.trim()) {
+    const prev = gap.textContent.trim();
+    gap.textContent = '';
+    gap.className = 'gap';
+    gap.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    const qid = gap.dataset.q;
+    const wb = qid.startsWith('q') && parseInt(qid.replace('q','')) <= 5 ? 'wb1' : 'wb2';
+    const tag = document.querySelector(`#${wb} .word-tag[data-word="${prev}"]`);
+    if (tag) tag.classList.remove('used');
+    selectedWord = null;
+    document.querySelectorAll('.word-tag').forEach(t => t.style.outline = '');
+    return;
+  }
+  if (!selectedWord) return;
+  gap.textContent = selectedWord;
+  gap.className = 'gap filled';
+  const qid = gap.dataset.q;
+  const wb = qid.startsWith('q') && parseInt(qid.replace('q','')) <= 5 ? 'wb1' : 'wb2';
+  const tag = document.querySelector(`#${wb} .word-tag[data-word="${selectedWord}"]`);
+  if (tag) tag.classList.add('used');
+  selectedWord = null;
+  document.querySelectorAll('.word-tag').forEach(t => t.style.outline = '');
+}
+
+function checkFitgSection(questions, scoreId) {
+  let correct = 0, total = 0;
+  questions.forEach(q => {
+    document.querySelectorAll(`.gap[data-q="${q.id}"]`).forEach(gap => {
+      total++;
+      const ans = gap.dataset.ans.toLowerCase();
+      const given = gap.textContent.trim().toLowerCase();
+      if (given === ans) { gap.className = 'gap correct'; correct++; }
+      else if (given) { gap.className = 'gap incorrect'; }
+    });
+  });
+  const badge = document.getElementById(scoreId);
+  badge.style.display = 'inline-block';
+  badge.textContent = `${correct} / ${total}`;
+  badge.className = 'score-badge ' + (correct === total ? 'good' : correct >= total/2 ? '' : 'bad');
+}
+
+function checkFitg() { checkFitgSection(FITG1, 'fitg-score'); }
+function checkFitg2() { checkFitgSection(FITG2, 'fitg2-score'); }
+
+function resetFitgSection(questions, bankId, scoreId, words) {
+  questions.forEach(q => {
+    document.querySelectorAll(`.gap[data-q="${q.id}"]`).forEach(gap => {
+      gap.className = 'gap';
+      gap.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+    });
+  });
+  buildWordBank(words, bankId);
+  document.getElementById(scoreId).style.display = 'none';
+  selectedWord = null;
+}
+
+function resetFitg() { resetFitgSection(FITG1, 'wb1', 'fitg-score', WB1_WORDS); }
+function resetFitg2() { resetFitgSection(FITG2, 'wb2', 'fitg2-score', WB2_WORDS); }
+
+function buildMatch() {
+  const container = document.getElementById('match-rows');
+  const defs = MATCH_DATA.map(d => d.def);
+  const shuffled = [...defs].sort(() => Math.random() - 0.5);
+  container.innerHTML = '';
+  MATCH_DATA.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:8px;';
+    const termEl = document.createElement('div');
+    termEl.className = 'match-item match-term';
+    termEl.style.flex = '0 0 200px';
+    termEl.innerHTML = `<span class="num">${i+1}.</span>${item.term}`;
+    const sel = document.createElement('select');
+    sel.dataset.idx = i;
+    sel.style.cssText = 'flex:1;font-size:13px;padding:6px 8px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-primary);';
+    const blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = '— select a description —';
+    sel.appendChild(blank);
+    shuffled.forEach(def => {
+      const opt = document.createElement('option');
+      opt.value = def;
+      opt.textContent = def.length > 80 ? def.slice(0,80)+'…' : def;
+      opt.title = def;
+      sel.appendChild(opt);
+    });
+    row.appendChild(termEl);
+    row.appendChild(sel);
+    container.appendChild(row);
+  });
+}
+
+function checkMatch() {
+  let correct = 0, total = MATCH_DATA.length;
+  MATCH_DATA.forEach((item, i) => {
+    const sel = document.querySelector(`select[data-idx="${i}"]`);
+    if (!sel) return;
+    if (sel.value === item.def) {
+      sel.style.borderColor = 'var(--color-border-success)';
+      sel.style.background = 'var(--color-background-success)';
+      sel.style.color = 'var(--color-text-success)';
+      correct++;
+    } else if (sel.value) {
+      sel.style.borderColor = 'var(--color-border-danger)';
+      sel.style.background = 'var(--color-background-danger)';
+      sel.style.color = 'var(--color-text-danger)';
+    }
+  });
+  const badge = document.getElementById('match-score');
+  badge.style.display = 'inline-block';
+  badge.textContent = `${correct} / ${total}`;
+  badge.className = 'score-badge ' + (correct === total ? 'good' : correct >= total/2 ? '' : 'bad');
+}
+
+function resetMatch() {
+  buildMatch();
+  document.getElementById('match-score').style.display = 'none';
+}
+
+buildWordBank(WB1_WORDS, 'wb1');
+buildFitg(FITG1, 'wb1', fitgState);
+buildWordBank(WB2_WORDS, 'wb2');
+buildFitg(FITG2, 'wb2', fitg2State);
+buildMatch();
+</script>
