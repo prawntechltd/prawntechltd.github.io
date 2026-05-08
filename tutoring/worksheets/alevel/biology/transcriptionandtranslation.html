@@ -3,318 +3,831 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transcription & Translation Worksheet — A-Level Biology</title>
+<title>Transcription & Translation — A-Level Biology</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 13px;
-    color: #1a1a1a;
-    background: #fff;
-    padding: 40px 52px;
-    max-width: 860px;
-    margin: auto;
-  }
-  .header {
-    border-bottom: 3px solid #185FA5;
-    padding-bottom: 12px;
-    margin-bottom: 18px;
-  }
-  .header h1 {
-    font-size: 20px;
-    font-weight: bold;
-    color: #0C447C;
-  }
-  .header p {
-    font-size: 11px;
-    color: #666;
-    margin-top: 4px;
-  }
-  .meta {
-    display: flex;
-    gap: 28px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-  .meta-item {
-    font-size: 12px;
-    color: #555;
-  }
-  .meta-item span {
-    display: inline-block;
-    border-bottom: 1.5px solid #333;
-    min-width: 140px;
-    margin-left: 4px;
-  }
-  h2 {
-    font-size: 13px;
-    font-weight: bold;
-    color: #fff;
-    background: #185FA5;
-    padding: 7px 14px;
-    border-radius: 4px;
-    margin: 24px 0 14px;
-    letter-spacing: 0.3px;
-  }
-  .word-bank {
-    background: #f0f5fb;
-    border: 1px solid #c5d9ee;
-    border-radius: 5px;
-    padding: 10px 14px;
-    margin-bottom: 16px;
-    font-size: 12px;
-    line-height: 1.9;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .word-bank strong {
-    color: #185FA5;
-  }
-  .fitb-item {
-    margin-bottom: 10px;
-    line-height: 2.2;
-    font-size: 13px;
-  }
-  .blank {
-    display: inline-block;
-    border-bottom: 1.5px solid #333;
-    min-width: 120px;
-    margin: 0 3px;
-    vertical-align: bottom;
-  }
-  /* Matching */
-  .match-grid {
-    display: table;
-    width: 100%;
-    border: 1px solid #c5d9ee;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 14px;
-    border-collapse: collapse;
-  }
-  .match-grid-row {
-    display: table-row;
-  }
-  .match-grid-row:first-child .match-cell {
-    background: #dce9f5;
-    font-weight: bold;
-    font-size: 11px;
-    color: #185FA5;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 7px 14px;
-    border-bottom: 1px solid #c5d9ee;
-  }
-  .match-cell {
-    display: table-cell;
-    width: 50%;
-    padding: 7px 14px;
-    border-top: 1px solid #e8f0f9;
-    font-size: 12px;
-    line-height: 1.5;
-    vertical-align: top;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .match-cell:first-child {
-    border-right: 1px solid #c5d9ee;
-  }
-  .match-blank {
-    display: inline-block;
-    border-bottom: 1.5px solid #333;
-    width: 24px;
-    margin-right: 6px;
-    vertical-align: bottom;
-  }
-  /* Short answer */
-  .sa-item {
-    margin-bottom: 22px;
-    font-size: 13px;
-  }
-  .sa-item p {
-    line-height: 1.6;
-  }
-  .marks {
-    float: right;
-    font-size: 11px;
-    color: #888;
-    font-style: italic;
-  }
-  .sa-num {
-    font-weight: bold;
-    color: #185FA5;
-    margin-right: 5px;
-  }
-  .lines {
-    margin-top: 8px;
-    padding-left: 20px;
-  }
-  .line {
-    border-bottom: 1px solid #aaa;
-    height: 22px;
-    margin-bottom: 6px;
-  }
-  .footer {
-    margin-top: 32px;
-    border-top: 2px solid #185FA5;
-    padding-top: 8px;
-    font-size: 10px;
-    color: #888;
-    display: flex;
-    justify-content: space-between;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  @media print {
-    body { padding: 20px 28px; }
-    h2 { break-after: avoid; }
-    .print-btn { display: none; }
-  }
-  .print-btn {
-    text-align: right;
-    margin-bottom: 12px;
-  }
-  .print-btn button {
-    cursor: pointer;
-    font-size: 12px;
-    padding: 6px 16px;
-    border-radius: 4px;
-    border: 1px solid #185FA5;
-    background: transparent;
-    color: #185FA5;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  .print-btn button:hover { background: #e8f0fa; }
+:root {
+  --navy: #0f2d52;
+  --blue: #1a5fa8;
+  --blue-light: #e8f1fb;
+  --blue-mid: #c2d9f5;
+  --green: #1a7a4a;
+  --green-light: #e6f7ee;
+  --red: #b91c1c;
+  --red-light: #fef2f2;
+  --amber: #b45309;
+  --amber-light: #fffbeb;
+  --text: #1c1c1e;
+  --muted: #6b7280;
+  --border: #d1d9e6;
+  --bg: #f7f8fc;
+  --card: #ffffff;
+  --radius: 8px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 32px 16px 60px;
+}
+
+.page {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.ws-header {
+  background: var(--navy);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.ws-header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 50%;
+}
+.ws-header h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: #fff;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.ws-header .sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.5px;
+}
+.meta-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.meta-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.meta-field label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.meta-field input {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 6px 10px;
+  min-width: 160px;
+  outline: none;
+}
+.meta-field input::placeholder { color: rgba(255,255,255,0.35); }
+.meta-field input:focus { border-color: rgba(255,255,255,0.5); }
+
+/* ── Section ── */
+.section-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.section-head {
+  background: var(--navy);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.section-head h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: #fff;
+  font-weight: 400;
+}
+.section-head .pts {
+  font-size: 11px;
+  color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.1);
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+.section-body { padding: 24px; }
+
+/* ── Word Bank ── */
+.word-bank-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.word-bank {
+  background: var(--blue-light);
+  border: 1px dashed var(--blue-mid);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  min-height: 52px;
+}
+.word-chip {
+  background: #fff;
+  border: 1.5px solid var(--blue);
+  color: var(--blue);
+  border-radius: 20px;
+  padding: 4px 13px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.word-chip:hover { background: var(--blue); color: #fff; }
+.word-chip.selected { background: var(--blue); color: #fff; box-shadow: 0 0 0 3px rgba(26,95,168,0.3); }
+.word-chip.used { opacity: 0.3; pointer-events: none; }
+.word-chip.correct-chip { background: var(--green); border-color: var(--green); color: #fff; opacity: 1; pointer-events: none; }
+.word-chip.wrong-chip { background: var(--red); border-color: var(--red); color: #fff; opacity: 1; pointer-events: none; }
+
+/* ── Fill-in blanks ── */
+.fitb-list { list-style: none; }
+.fitb-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  line-height: 2;
+  font-size: 14px;
+  align-items: flex-start;
+}
+.fitb-item .q-num {
+  font-weight: 600;
+  color: var(--blue);
+  min-width: 22px;
+  padding-top: 2px;
+}
+.fitb-item p { flex: 1; }
+.blank-slot {
+  display: inline-block;
+  border-bottom: 2px solid var(--navy);
+  min-width: 120px;
+  height: 22px;
+  margin: 0 4px;
+  vertical-align: bottom;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s;
+}
+.blank-slot:hover, .blank-slot.active-target {
+  border-color: var(--blue);
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.blank-slot .slot-word {
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.blank-slot.filled { border-color: #94a3b8; }
+.blank-slot.filled:hover { border-color: var(--red); }
+.blank-slot.correct { border-color: var(--green) !important; border-bottom-width: 2px; }
+.blank-slot.correct .slot-word { color: var(--green); }
+.blank-slot.wrong { border-color: var(--red) !important; }
+.blank-slot.wrong .slot-word { color: var(--red); }
+
+/* ── Matching ── */
+.match-instructions {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  background: var(--amber-light);
+  border: 1px solid #fde68a;
+  border-radius: 6px;
+  padding: 8px 14px;
+}
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.match-col-head {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--muted);
+  padding: 0 0 6px 4px;
+  border-bottom: 1px solid var(--border);
+}
+.match-col { display: flex; flex-direction: column; gap: 6px; padding-top: 10px; }
+.match-term, .match-desc {
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: all 0.15s;
+  position: relative;
+  line-height: 1.4;
+  background: #fff;
+}
+.match-term:hover, .match-desc:hover { border-color: var(--blue); background: var(--blue-light); }
+.match-term.selected { border-color: var(--blue); background: var(--blue); color: #fff; }
+.match-term .answer-badge {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-right: 8px;
+}
+.match-term.matched { border-color: var(--border); cursor: default; }
+.match-term.matched:hover { border-color: var(--border); background: #fff; color: var(--text); }
+.match-desc.highlighted { border-color: var(--blue-mid); background: var(--blue-light); }
+.match-desc.matched { pointer-events: none; }
+.match-term.correct-match { border-color: var(--green) !important; background: var(--green-light) !important; color: var(--green) !important; }
+.match-term.wrong-match { border-color: var(--red) !important; background: var(--red-light) !important; color: var(--red) !important; }
+.match-desc.used-desc {
+  opacity: 0.45;
+  pointer-events: none;
+}
+.term-num { font-weight: 600; color: var(--blue); margin-right: 6px; }
+.desc-letter {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 7px;
+  flex-shrink: 0;
+}
+.match-desc { display: flex; align-items: flex-start; }
+
+/* ── Short Answer ── */
+.sa-item {
+  margin-bottom: 22px;
+}
+.sa-q {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: flex-start;
+}
+.sa-q .q-num { font-weight: 600; color: var(--blue); min-width: 22px; }
+.sa-q .q-text { font-size: 14px; flex: 1; line-height: 1.55; }
+.marks-badge {
+  font-size: 11px;
+  color: var(--navy);
+  background: var(--blue-light);
+  border: 1px solid var(--blue-mid);
+  padding: 2px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.sa-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  color: var(--text);
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  background: #fafbfe;
+  transition: border-color 0.15s;
+  line-height: 1.6;
+}
+.sa-textarea:focus { border-color: var(--blue); background: #fff; }
+.sa-note {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 6px;
+  font-style: italic;
+}
+
+/* ── Check button & score ── */
+.check-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+.btn-check {
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 0.2px;
+}
+.btn-check:hover { background: var(--blue); }
+.btn-reset {
+  background: transparent;
+  color: var(--muted);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-reset:hover { border-color: var(--navy); color: var(--navy); }
+
+#score-panel {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  text-align: center;
+}
+#score-panel.show { display: block; }
+.score-big {
+  font-family: 'DM Serif Display', serif;
+  font-size: 52px;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.score-label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.score-breakdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.score-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  min-width: 120px;
+}
+.score-box .sb-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.score-box .sb-val { font-size: 20px; font-weight: 600; color: var(--navy); }
+.score-sa-note {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 14px;
+  font-style: italic;
+}
+.progress-bar-wrap {
+  background: var(--border);
+  border-radius: 20px;
+  height: 8px;
+  margin: 12px auto 4px;
+  max-width: 300px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--blue), #4fa3e0);
+  transition: width 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  width: 0%;
+}
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="print-btn">
-  <button onclick="window.print()">&#128438; Print / Save as PDF</button>
-</div>
-
-<div class="header">
-  <h1>Transcription &amp; Translation — A-Level Biology Worksheet</h1>
-  <p>Topic: Gene Expression &nbsp;|&nbsp; AS / A Level Biology</p>
-</div>
-
-<div class="meta">
-  <div class="meta-item">Name: <span>&nbsp;</span></div>
-  <div class="meta-item">Date: <span>&nbsp;</span></div>
-  <div class="meta-item">Score: <span style="min-width:80px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ 40</span></div>
-</div>
-
-
-<!-- ═══════════════ SECTION A ═══════════════ -->
-<h2>Section A — Fill in the Blanks &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(20 marks)</span></h2>
-
-<div class="word-bank">
-  <strong>Word bank:</strong>&nbsp;
-  RNA polymerase &nbsp;·&nbsp; mRNA &nbsp;·&nbsp; tRNA &nbsp;·&nbsp; ribosome &nbsp;·&nbsp; codon &nbsp;·&nbsp; anticodon &nbsp;·&nbsp;
-  peptide bond &nbsp;·&nbsp; promoter &nbsp;·&nbsp; template strand &nbsp;·&nbsp; complementary base pairing &nbsp;·&nbsp;
-  amino acid &nbsp;·&nbsp; start codon &nbsp;·&nbsp; stop codon &nbsp;·&nbsp; nucleus &nbsp;·&nbsp; cytoplasm &nbsp;·&nbsp;
-  polypeptide &nbsp;·&nbsp; uracil &nbsp;·&nbsp; transcription &nbsp;·&nbsp; translation &nbsp;·&nbsp; splicing
-</div>
-
-<div class="fitb-item">1.&nbsp; The process by which a complementary mRNA strand is produced from a DNA template is called <span class="blank"></span>. This takes place in the <span class="blank"></span> of eukaryotic cells.</div>
-
-<div class="fitb-item">2.&nbsp; The enzyme <span class="blank"></span> binds to the <span class="blank"></span> sequence on the DNA and unwinds the double helix to begin this process.</div>
-
-<div class="fitb-item">3.&nbsp; Only one strand of DNA — the <span class="blank"></span> — is read during transcription. New RNA nucleotides are added using <span class="blank"></span>.</div>
-
-<div class="fitb-item">4.&nbsp; In RNA, the base <span class="blank"></span> replaces thymine and pairs with adenine.</div>
-
-<div class="fitb-item">5.&nbsp; In eukaryotes, introns are removed and exons are joined together in a process called <span class="blank"></span>.</div>
-
-<div class="fitb-item">6.&nbsp; The process of <span class="blank"></span> occurs on a <span class="blank"></span> in the <span class="blank"></span> of the cell.</div>
-
-<div class="fitb-item">7.&nbsp; Each three-base sequence on mRNA is called a <span class="blank"></span>; the corresponding three-base sequence on tRNA is the <span class="blank"></span>.</div>
-
-<div class="fitb-item">8.&nbsp; Each <span class="blank"></span> molecule carries a specific <span class="blank"></span> to the ribosome.</div>
-
-<div class="fitb-item">9.&nbsp; The <span class="blank"></span> (AUG) signals the start of translation; a <span class="blank"></span> signals termination.</div>
-
-<div class="fitb-item">10. Adjacent amino acids are joined by a <span class="blank"></span> to form a growing <span class="blank"></span> chain.</div>
-
-
-<!-- ═══════════════ SECTION B ═══════════════ -->
-<h2>Section B — Matching &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(10 marks)</span></h2>
-
-<p style="font-size:12px;color:#555;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif;">Match each term in Column A to the correct description in Column B. Write the letter in the space provided.</p>
-
-<div class="match-grid">
-  <div class="match-grid-row">
-    <div class="match-cell">Column A — Terms</div>
-    <div class="match-cell">Column B — Descriptions</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">1. <span class="match-blank"></span> RNA polymerase</div>
-    <div class="match-cell">A. A sequence of three bases on mRNA coding for one amino acid</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">2. <span class="match-blank"></span> Ribosome</div>
-    <div class="match-cell">B. Organelle made of rRNA and protein where translation occurs</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">3. <span class="match-blank"></span> tRNA</div>
-    <div class="match-cell">C. Enzyme that synthesises mRNA from a DNA template</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">4. <span class="match-blank"></span> Codon</div>
-    <div class="match-cell">D. Non-coding sequence removed from pre-mRNA</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">5. <span class="match-blank"></span> Intron</div>
-    <div class="match-cell">E. Covalent bond formed between two adjacent amino acids</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">6. <span class="match-blank"></span> Exon</div>
-    <div class="match-cell">F. Processing of pre-mRNA to produce mature mRNA</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">7. <span class="match-blank"></span> Peptide bond</div>
-    <div class="match-cell">G. Chain of amino acids joined by peptide bonds</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">8. <span class="match-blank"></span> Promoter</div>
-    <div class="match-cell">H. Adaptor molecule that carries amino acids to the ribosome</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">9. <span class="match-blank"></span> Polypeptide</div>
-    <div class="match-cell">I. DNA sequence where RNA polymerase binds to begin transcription</div>
-  </div>
-  <div class="match-grid-row">
-    <div class="match-cell">10. <span class="match-blank"></span> Post-transcriptional modification</div>
-    <div class="match-cell">J. Coding sequence retained in the mature mRNA</div>
+<!-- Header -->
+<div class="ws-header">
+  <h1>Transcription &amp; Translation</h1>
+  <div class="sub">A-LEVEL BIOLOGY &nbsp;·&nbsp; GENE EXPRESSION</div>
+  <div class="meta-row">
+    <div class="meta-field"><label>Name</label><input type="text" placeholder="Your name"></div>
+    <div class="meta-field"><label>Date</label><input type="date"></div>
   </div>
 </div>
 
-
-<!-- ═══════════════ SECTION C ═══════════════ -->
-<h2>Section C — Short Answer &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(10 marks)</span></h2>
-
-<div class="sa-item">
-  <p><span class="marks">[2 marks]</span><span class="sa-num">1.</span> Describe <strong>two</strong> structural differences between DNA and mRNA.</p>
-  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+<!-- ══ SECTION A ══ -->
+<div class="section-card">
+  <div class="section-head">
+    <h2>Section A — Fill in the Blanks</h2>
+    <span class="pts">20 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="word-bank-label">Word Bank — click a word, then click a blank</div>
+    <div class="word-bank" id="word-bank"></div>
+    <ul class="fitb-list" id="fitb-list"></ul>
+  </div>
 </div>
 
-<div class="sa-item">
-  <p><span class="marks">[3 marks]</span><span class="sa-num">2.</span> Outline the main stages of transcription in eukaryotes.</p>
-  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+<!-- ══ SECTION B ══ -->
+<div class="section-card">
+  <div class="section-head">
+    <h2>Section B — Matching</h2>
+    <span class="pts">10 marks</span>
+  </div>
+  <div class="section-body">
+    <p class="match-instructions">&#128161; Click a term in Column A to select it, then click its matching description in Column B.</p>
+    <div class="match-grid">
+      <div><div class="match-col-head">Column A — Terms</div><div class="match-col" id="col-terms"></div></div>
+      <div><div class="match-col-head">Column B — Descriptions</div><div class="match-col" id="col-descs"></div></div>
+    </div>
+  </div>
 </div>
 
-<div class="sa-item">
-  <p><span class="marks">[3 marks]</span><span class="sa-num">3.</span> Explain the role of tRNA in translation, including how it ensures the correct amino acid is incorporated into the polypeptide.</p>
-  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+<!-- ══ SECTION C ══ -->
+<div class="section-card">
+  <div class="section-head">
+    <h2>Section C — Short Answer</h2>
+    <span class="pts">10 marks</span>
+  </div>
+  <div class="section-body">
+    <div class="sa-item">
+      <div class="sa-q">
+        <span class="q-num">1.</span>
+        <span class="q-text">Describe <strong>two</strong> structural differences between DNA and mRNA.</span>
+        <span class="marks-badge">2 marks</span>
+      </div>
+      <textarea class="sa-textarea" id="sa1" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="sa-item">
+      <div class="sa-q">
+        <span class="q-num">2.</span>
+        <span class="q-text">Outline the main stages of transcription in eukaryotes.</span>
+        <span class="marks-badge">3 marks</span>
+      </div>
+      <textarea class="sa-textarea" id="sa2" placeholder="Write your answer here..." style="min-height:100px"></textarea>
+    </div>
+    <div class="sa-item">
+      <div class="sa-q">
+        <span class="q-num">3.</span>
+        <span class="q-text">Explain the role of tRNA in translation, including how it ensures the correct amino acid is incorporated into the polypeptide.</span>
+        <span class="marks-badge">3 marks</span>
+      </div>
+      <textarea class="sa-textarea" id="sa3" placeholder="Write your answer here..." style="min-height:100px"></textarea>
+    </div>
+    <div class="sa-item">
+      <div class="sa-q">
+        <span class="q-num">4.</span>
+        <span class="q-text">Explain why the genetic code is described as <em>degenerate</em>.</span>
+        <span class="marks-badge">2 marks</span>
+      </div>
+      <textarea class="sa-textarea" id="sa4" placeholder="Write your answer here..."></textarea>
+    </div>
+    <p class="sa-note">&#128221; Short answer questions are not auto-marked — review your answers against the mark scheme.</p>
+  </div>
 </div>
 
-<div class="sa-item">
-  <p><span class="marks">[2 marks]</span><span class="sa-num">4.</span> Explain why the genetic code is described as <em>degenerate</em>.</p>
-  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+<!-- Check / Score -->
+<div class="check-bar">
+  <button class="btn-check" onclick="checkAnswers()">&#10003; Check Answers</button>
+  <button class="btn-reset" onclick="resetAll()">&#8635; Reset</button>
 </div>
 
-
-<div class="footer">
-  <span>A-Level Biology — Transcription &amp; Translation</span>
-  <span>Total: &nbsp;&nbsp;&nbsp;/ 40</span>
+<div id="score-panel">
+  <div class="score-big" id="score-num">0</div>
+  <div class="score-label">out of 30 auto-marked marks</div>
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="score-bar"></div></div>
+  <div class="score-breakdown">
+    <div class="score-box"><div class="sb-label">Section A</div><div class="sb-val" id="sc-a">—</div></div>
+    <div class="score-box"><div class="sb-label">Section B</div><div class="sb-val" id="sc-b">—</div></div>
+    <div class="score-box"><div class="sb-label">Section C</div><div class="sb-val" id="sc-c">Self-mark</div></div>
+  </div>
+  <p class="score-sa-note">Section C (10 marks) requires teacher or self-marking against the mark scheme.</p>
 </div>
 
+</div><!-- /page -->
+<script>
+// ── DATA ──
+const words = [
+  'RNA polymerase','mRNA','tRNA','ribosome','codon','anticodon',
+  'peptide bond','promoter','template strand','complementary base pairing',
+  'amino acid','start codon','stop codon','nucleus','cytoplasm',
+  'polypeptide','uracil','transcription','translation','splicing'
+];
+
+// Each question: array of sentence fragments and blank definitions
+// blank: { id, answer }
+const questions = [
+  { num:1, parts:['The process by which a complementary mRNA strand is produced from a DNA template is called ',{id:'b1',ans:'transcription'},'. This takes place in the ',{id:'b2',ans:'nucleus'},' of eukaryotic cells.'] },
+  { num:2, parts:['The enzyme ',{id:'b3',ans:'RNA polymerase'},' binds to the ',{id:'b4',ans:'promoter'},' sequence on the DNA and unwinds the double helix to begin this process.'] },
+  { num:3, parts:['Only one strand of DNA — the ',{id:'b5',ans:'template strand'},' — is read during transcription. New RNA nucleotides are added using ',{id:'b6',ans:'complementary base pairing'},'.'] },
+  { num:4, parts:['In RNA, the base ',{id:'b7',ans:'uracil'},' replaces thymine and pairs with adenine.'] },
+  { num:5, parts:['In eukaryotes, introns are removed and exons are joined together in a process called ',{id:'b8',ans:'splicing'},'.'] },
+  { num:6, parts:['The process of ',{id:'b9',ans:'translation'},' occurs on a ',{id:'b10',ans:'ribosome'},' in the ',{id:'b11',ans:'cytoplasm'},' of the cell.'] },
+  { num:7, parts:['Each three-base sequence on mRNA is called a ',{id:'b12',ans:'codon'},'; the corresponding three-base sequence on tRNA is the ',{id:'b13',ans:'anticodon'},'.'] },
+  { num:8, parts:['Each ',{id:'b14',ans:'tRNA'},' molecule carries a specific ',{id:'b15',ans:'amino acid'},' to the ribosome.'] },
+  { num:9, parts:['The ',{id:'b16',ans:'start codon'},' (AUG) signals the start of translation; a ',{id:'b17',ans:'stop codon'},' signals termination.'] },
+  { num:10, parts:['Adjacent amino acids are joined by a ',{id:'b18',ans:'peptide bond'},' to form a growing ',{id:'b19',ans:'polypeptide'},' chain.'] },
+];
+
+const matchTerms = [
+  {id:'t1', label:'RNA polymerase', answer:'C'},
+  {id:'t2', label:'Ribosome', answer:'B'},
+  {id:'t3', label:'tRNA', answer:'H'},
+  {id:'t4', label:'Codon', answer:'A'},
+  {id:'t5', label:'Intron', answer:'D'},
+  {id:'t6', label:'Exon', answer:'J'},
+  {id:'t7', label:'Peptide bond', answer:'E'},
+  {id:'t8', label:'Promoter', answer:'I'},
+  {id:'t9', label:'Polypeptide', answer:'G'},
+  {id:'t10', label:'Post-transcriptional modification', answer:'F'},
+];
+const matchDescs = [
+  {letter:'A', text:'A sequence of three bases on mRNA coding for one amino acid'},
+  {letter:'B', text:'Organelle made of rRNA and protein where translation occurs'},
+  {letter:'C', text:'Enzyme that synthesises mRNA from a DNA template'},
+  {letter:'D', text:'Non-coding sequence removed from pre-mRNA'},
+  {letter:'E', text:'Covalent bond formed between two adjacent amino acids'},
+  {letter:'F', text:'Processing of pre-mRNA to produce mature mRNA'},
+  {letter:'G', text:'Chain of amino acids joined by peptide bonds'},
+  {letter:'H', text:'Adaptor molecule that carries amino acids to the ribosome'},
+  {letter:'I', text:'DNA sequence where RNA polymerase binds to begin transcription'},
+  {letter:'J', text:'Coding sequence retained in the mature mRNA'},
+];
+
+// ── STATE ──
+let selectedWord = null;   // currently selected word chip
+let selectedTerm = null;   // currently selected match term id
+let termMatches = {};      // termId -> letter chosen
+let slotContents = {};     // blankId -> word placed
+
+// ── BUILD WORD BANK ──
+function buildWordBank() {
+  const bank = document.getElementById('word-bank');
+  bank.innerHTML = '';
+  words.forEach(w => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.dataset.word = w;
+    chip.onclick = () => selectWord(w, chip);
+    bank.appendChild(chip);
+  });
+}
+
+function selectWord(word, chip) {
+  if (chip.classList.contains('used')) return;
+  document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('selected'));
+  if (selectedWord === word) { selectedWord = null; return; }
+  selectedWord = word;
+  chip.classList.add('selected');
+}
+
+// ── BUILD FILL-IN BLANKS ──
+function buildFITB() {
+  const list = document.getElementById('fitb-list');
+  list.innerHTML = '';
+  questions.forEach(q => {
+    const li = document.createElement('li');
+    li.className = 'fitb-item';
+    const numSpan = document.createElement('span');
+    numSpan.className = 'q-num';
+    numSpan.textContent = q.num + '.';
+    const p = document.createElement('p');
+    q.parts.forEach(part => {
+      if (typeof part === 'string') {
+        p.appendChild(document.createTextNode(part));
+      } else {
+        const slot = document.createElement('span');
+        slot.className = 'blank-slot';
+        slot.dataset.id = part.id;
+        slot.dataset.ans = part.ans;
+        const inner = document.createElement('span');
+        inner.className = 'slot-word';
+        slot.appendChild(inner);
+        slot.onclick = () => handleSlotClick(slot, part.id);
+        p.appendChild(slot);
+        // approximate width by answer length
+        slot.style.minWidth = Math.max(80, part.ans.length * 8) + 'px';
+      }
+    });
+    li.appendChild(numSpan);
+    li.appendChild(p);
+    list.appendChild(li);
+  });
+}
+
+function handleSlotClick(slot, id) {
+  if (selectedWord) {
+    // if slot already filled, return old word to bank
+    if (slotContents[id]) {
+      returnWordToBank(slotContents[id]);
+    }
+    slotContents[id] = selectedWord;
+    slot.querySelector('.slot-word').textContent = selectedWord;
+    slot.classList.add('filled');
+    // mark word as used
+    markWordUsed(selectedWord, true);
+    selectedWord = null;
+    document.querySelectorAll('.word-chip').forEach(c => c.classList.remove('selected'));
+  } else if (slotContents[id]) {
+    // no word selected — clicking a filled slot returns it
+    returnWordToBank(slotContents[id]);
+    delete slotContents[id];
+    slot.querySelector('.slot-word').textContent = '';
+    slot.classList.remove('filled');
+  }
+}
+
+function markWordUsed(word, used) {
+  document.querySelectorAll('.word-chip').forEach(c => {
+    if (c.dataset.word === word) {
+      if (used) c.classList.add('used'); else c.classList.remove('used');
+    }
+  });
+}
+
+function returnWordToBank(word) {
+  // only un-use if not used in another slot
+  const usedElsewhere = Object.values(slotContents).includes(word);
+  if (!usedElsewhere) markWordUsed(word, false);
+}
+
+// ── BUILD MATCHING ──
+function buildMatching() {
+  const colT = document.getElementById('col-terms');
+  const colD = document.getElementById('col-descs');
+  colT.innerHTML = '';
+  colD.innerHTML = '';
+
+  matchTerms.forEach(t => {
+    const div = document.createElement('div');
+    div.className = 'match-term';
+    div.id = 'term-' + t.id;
+    div.dataset.id = t.id;
+    div.innerHTML = '<span class="term-num">' + matchTerms.indexOf(t)+1 + '.</span><span class="answer-badge" id="badge-'+t.id+'" style="display:none"></span>' + t.label;
+    div.onclick = () => selectTerm(t.id, div);
+    colT.appendChild(div);
+  });
+
+  matchDescs.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'match-desc';
+    div.id = 'desc-' + d.letter;
+    div.dataset.letter = d.letter;
+    div.innerHTML = '<span class="desc-letter">' + d.letter + '</span>' + d.text;
+    div.onclick = () => selectDesc(d.letter);
+    colD.appendChild(div);
+  });
+}
+
+function selectTerm(id, el) {
+  if (el.classList.contains('matched')) {
+    // allow re-selecting to change answer
+    const prev = termMatches[id];
+    if (prev) {
+      document.getElementById('desc-' + prev).classList.remove('used-desc');
+      const badge = document.getElementById('badge-'+id);
+      badge.style.display = 'none';
+      delete termMatches[id];
+      el.classList.remove('matched');
+    }
+    return;
+  }
+  document.querySelectorAll('.match-term').forEach(t => t.classList.remove('selected'));
+  document.querySelectorAll('.match-desc').forEach(d => d.classList.remove('highlighted'));
+  if (selectedTerm === id) { selectedTerm = null; return; }
+  selectedTerm = id;
+  el.classList.add('selected');
+  // highlight unmatched descs
+  document.querySelectorAll('.match-desc:not(.used-desc)').forEach(d => d.classList.add('highlighted'));
+}
+
+function selectDesc(letter) {
+  if (!selectedTerm) return;
+  // check if this desc is already used
+  if (document.getElementById('desc-'+letter).classList.contains('used-desc')) return;
+  termMatches[selectedTerm] = letter;
+  // update badge
+  const badge = document.getElementById('badge-' + selectedTerm);
+  badge.textContent = letter;
+  badge.style.display = 'inline-block';
+  // mark desc used
+  document.getElementById('desc-'+letter).classList.add('used-desc');
+  // mark term matched
+  const termEl = document.getElementById('term-' + selectedTerm);
+  termEl.classList.remove('selected');
+  termEl.classList.add('matched');
+  // clear highlights
+  document.querySelectorAll('.match-desc').forEach(d => d.classList.remove('highlighted'));
+  selectedTerm = null;
+}
+
+// ── CHECK ANSWERS ──
+function checkAnswers() {
+  let scoreA = 0, scoreB = 0;
+
+  // Section A
+  document.querySelectorAll('.blank-slot').forEach(slot => {
+    const id = slot.dataset.id;
+    const ans = slot.dataset.ans.toLowerCase().trim();
+    const given = (slotContents[id] || '').toLowerCase().trim();
+    slot.classList.remove('correct','wrong');
+    if (!given) { slot.classList.add('wrong'); return; }
+    if (given === ans) { slot.classList.add('correct'); scoreA++; }
+    else { slot.classList.add('wrong'); }
+  });
+
+  // Colour word chips
+  document.querySelectorAll('.word-chip').forEach(chip => {
+    chip.classList.remove('correct-chip','wrong-chip');
+  });
+  Object.entries(slotContents).forEach(([id, word]) => {
+    const slot = document.querySelector('.blank-slot[data-id="'+id+'"]');
+    const ans = slot ? slot.dataset.ans.toLowerCase().trim() : '';
+    document.querySelectorAll('.word-chip').forEach(chip => {
+      if (chip.dataset.word === word) {
+        if (word.toLowerCase() === ans) chip.classList.add('correct-chip');
+        else chip.classList.add('wrong-chip');
+      }
+    });
+  });
+
+  // Section B
+  matchTerms.forEach(t => {
+    const termEl = document.getElementById('term-' + t.id);
+    termEl.classList.remove('correct-match','wrong-match');
+    const given = termMatches[t.id];
+    if (!given) return;
+    if (given === t.answer) { termEl.classList.add('correct-match'); scoreB++; }
+    else { termEl.classList.add('wrong-match'); }
+  });
+
+  // Score panel
+  const total = scoreA + scoreB;
+  const panel = document.getElementById('score-panel');
+  panel.classList.add('show');
+  document.getElementById('score-num').textContent = total;
+  document.getElementById('sc-a').textContent = scoreA + ' / 20';
+  document.getElementById('sc-b').textContent = scoreB + ' / 10';
+  document.getElementById('score-bar').style.width = Math.round((total/30)*100) + '%';
+  panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ── RESET ──
+function resetAll() {
+  slotContents = {};
+  termMatches = {};
+  selectedWord = null;
+  selectedTerm = null;
+  buildWordBank();
+  buildFITB();
+  buildMatching();
+  document.querySelectorAll('.sa-textarea').forEach(t => t.value = '');
+  document.getElementById('score-panel').classList.remove('show');
+}
+
+// ── INIT ──
+buildWordBank();
+buildFITB();
+buildMatching();
+</script>
 </body>
 </html>
