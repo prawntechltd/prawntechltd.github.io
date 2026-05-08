@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transcription & Translation Worksheet — A-Level Biology</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #fff;
+    padding: 40px 52px;
+    max-width: 860px;
+    margin: auto;
+  }
+  .header {
+    border-bottom: 3px solid #185FA5;
+    padding-bottom: 12px;
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0C447C;
+  }
+  .header p {
+    font-size: 11px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .meta {
+    display: flex;
+    gap: 28px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    font-size: 12px;
+    color: #555;
+  }
+  .meta-item span {
+    display: inline-block;
+    border-bottom: 1.5px solid #333;
+    min-width: 140px;
+    margin-left: 4px;
+  }
+  h2 {
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    background: #185FA5;
+    padding: 7px 14px;
+    border-radius: 4px;
+    margin: 24px 0 14px;
+    letter-spacing: 0.3px;
+  }
+  .word-bank {
+    background: #f0f5fb;
+    border: 1px solid #c5d9ee;
+    border-radius: 5px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    line-height: 1.9;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .word-bank strong {
+    color: #185FA5;
+  }
+  .fitb-item {
+    margin-bottom: 10px;
+    line-height: 2.2;
+    font-size: 13px;
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 1.5px solid #333;
+    min-width: 120px;
+    margin: 0 3px;
+    vertical-align: bottom;
+  }
+  /* Matching */
+  .match-grid {
+    display: table;
+    width: 100%;
+    border: 1px solid #c5d9ee;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 14px;
+    border-collapse: collapse;
+  }
+  .match-grid-row {
+    display: table-row;
+  }
+  .match-grid-row:first-child .match-cell {
+    background: #dce9f5;
+    font-weight: bold;
+    font-size: 11px;
+    color: #185FA5;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 7px 14px;
+    border-bottom: 1px solid #c5d9ee;
+  }
+  .match-cell {
+    display: table-cell;
+    width: 50%;
+    padding: 7px 14px;
+    border-top: 1px solid #e8f0f9;
+    font-size: 12px;
+    line-height: 1.5;
+    vertical-align: top;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .match-cell:first-child {
+    border-right: 1px solid #c5d9ee;
+  }
+  .match-blank {
+    display: inline-block;
+    border-bottom: 1.5px solid #333;
+    width: 24px;
+    margin-right: 6px;
+    vertical-align: bottom;
+  }
+  /* Short answer */
+  .sa-item {
+    margin-bottom: 22px;
+    font-size: 13px;
+  }
+  .sa-item p {
+    line-height: 1.6;
+  }
+  .marks {
+    float: right;
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+  }
+  .sa-num {
+    font-weight: bold;
+    color: #185FA5;
+    margin-right: 5px;
+  }
+  .lines {
+    margin-top: 8px;
+    padding-left: 20px;
+  }
+  .line {
+    border-bottom: 1px solid #aaa;
+    height: 22px;
+    margin-bottom: 6px;
+  }
+  .footer {
+    margin-top: 32px;
+    border-top: 2px solid #185FA5;
+    padding-top: 8px;
+    font-size: 10px;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  @media print {
+    body { padding: 20px 28px; }
+    h2 { break-after: avoid; }
+    .print-btn { display: none; }
+  }
+  .print-btn {
+    text-align: right;
+    margin-bottom: 12px;
+  }
+  .print-btn button {
+    cursor: pointer;
+    font-size: 12px;
+    padding: 6px 16px;
+    border-radius: 4px;
+    border: 1px solid #185FA5;
+    background: transparent;
+    color: #185FA5;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .print-btn button:hover { background: #e8f0fa; }
+</style>
+</head>
+<body>
+
+<div class="print-btn">
+  <button onclick="window.print()">&#128438; Print / Save as PDF</button>
+</div>
+
+<div class="header">
+  <h1>Transcription &amp; Translation — A-Level Biology Worksheet</h1>
+  <p>Topic: Gene Expression &nbsp;|&nbsp; AS / A Level Biology</p>
+</div>
+
+<div class="meta">
+  <div class="meta-item">Name: <span>&nbsp;</span></div>
+  <div class="meta-item">Date: <span>&nbsp;</span></div>
+  <div class="meta-item">Score: <span style="min-width:80px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/ 40</span></div>
+</div>
+
+
+<!-- ═══════════════ SECTION A ═══════════════ -->
+<h2>Section A — Fill in the Blanks &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(20 marks)</span></h2>
+
+<div class="word-bank">
+  <strong>Word bank:</strong>&nbsp;
+  RNA polymerase &nbsp;·&nbsp; mRNA &nbsp;·&nbsp; tRNA &nbsp;·&nbsp; ribosome &nbsp;·&nbsp; codon &nbsp;·&nbsp; anticodon &nbsp;·&nbsp;
+  peptide bond &nbsp;·&nbsp; promoter &nbsp;·&nbsp; template strand &nbsp;·&nbsp; complementary base pairing &nbsp;·&nbsp;
+  amino acid &nbsp;·&nbsp; start codon &nbsp;·&nbsp; stop codon &nbsp;·&nbsp; nucleus &nbsp;·&nbsp; cytoplasm &nbsp;·&nbsp;
+  polypeptide &nbsp;·&nbsp; uracil &nbsp;·&nbsp; transcription &nbsp;·&nbsp; translation &nbsp;·&nbsp; splicing
+</div>
+
+<div class="fitb-item">1.&nbsp; The process by which a complementary mRNA strand is produced from a DNA template is called <span class="blank"></span>. This takes place in the <span class="blank"></span> of eukaryotic cells.</div>
+
+<div class="fitb-item">2.&nbsp; The enzyme <span class="blank"></span> binds to the <span class="blank"></span> sequence on the DNA and unwinds the double helix to begin this process.</div>
+
+<div class="fitb-item">3.&nbsp; Only one strand of DNA — the <span class="blank"></span> — is read during transcription. New RNA nucleotides are added using <span class="blank"></span>.</div>
+
+<div class="fitb-item">4.&nbsp; In RNA, the base <span class="blank"></span> replaces thymine and pairs with adenine.</div>
+
+<div class="fitb-item">5.&nbsp; In eukaryotes, introns are removed and exons are joined together in a process called <span class="blank"></span>.</div>
+
+<div class="fitb-item">6.&nbsp; The process of <span class="blank"></span> occurs on a <span class="blank"></span> in the <span class="blank"></span> of the cell.</div>
+
+<div class="fitb-item">7.&nbsp; Each three-base sequence on mRNA is called a <span class="blank"></span>; the corresponding three-base sequence on tRNA is the <span class="blank"></span>.</div>
+
+<div class="fitb-item">8.&nbsp; Each <span class="blank"></span> molecule carries a specific <span class="blank"></span> to the ribosome.</div>
+
+<div class="fitb-item">9.&nbsp; The <span class="blank"></span> (AUG) signals the start of translation; a <span class="blank"></span> signals termination.</div>
+
+<div class="fitb-item">10. Adjacent amino acids are joined by a <span class="blank"></span> to form a growing <span class="blank"></span> chain.</div>
+
+
+<!-- ═══════════════ SECTION B ═══════════════ -->
+<h2>Section B — Matching &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(10 marks)</span></h2>
+
+<p style="font-size:12px;color:#555;margin-bottom:12px;font-family:Arial,Helvetica,sans-serif;">Match each term in Column A to the correct description in Column B. Write the letter in the space provided.</p>
+
+<div class="match-grid">
+  <div class="match-grid-row">
+    <div class="match-cell">Column A — Terms</div>
+    <div class="match-cell">Column B — Descriptions</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">1. <span class="match-blank"></span> RNA polymerase</div>
+    <div class="match-cell">A. A sequence of three bases on mRNA coding for one amino acid</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">2. <span class="match-blank"></span> Ribosome</div>
+    <div class="match-cell">B. Organelle made of rRNA and protein where translation occurs</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">3. <span class="match-blank"></span> tRNA</div>
+    <div class="match-cell">C. Enzyme that synthesises mRNA from a DNA template</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">4. <span class="match-blank"></span> Codon</div>
+    <div class="match-cell">D. Non-coding sequence removed from pre-mRNA</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">5. <span class="match-blank"></span> Intron</div>
+    <div class="match-cell">E. Covalent bond formed between two adjacent amino acids</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">6. <span class="match-blank"></span> Exon</div>
+    <div class="match-cell">F. Processing of pre-mRNA to produce mature mRNA</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">7. <span class="match-blank"></span> Peptide bond</div>
+    <div class="match-cell">G. Chain of amino acids joined by peptide bonds</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">8. <span class="match-blank"></span> Promoter</div>
+    <div class="match-cell">H. Adaptor molecule that carries amino acids to the ribosome</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">9. <span class="match-blank"></span> Polypeptide</div>
+    <div class="match-cell">I. DNA sequence where RNA polymerase binds to begin transcription</div>
+  </div>
+  <div class="match-grid-row">
+    <div class="match-cell">10. <span class="match-blank"></span> Post-transcriptional modification</div>
+    <div class="match-cell">J. Coding sequence retained in the mature mRNA</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ SECTION C ═══════════════ -->
+<h2>Section C — Short Answer &nbsp;<span style="font-weight:normal;font-size:11px;opacity:0.85">(10 marks)</span></h2>
+
+<div class="sa-item">
+  <p><span class="marks">[2 marks]</span><span class="sa-num">1.</span> Describe <strong>two</strong> structural differences between DNA and mRNA.</p>
+  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</div>
+
+<div class="sa-item">
+  <p><span class="marks">[3 marks]</span><span class="sa-num">2.</span> Outline the main stages of transcription in eukaryotes.</p>
+  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</div>
+
+<div class="sa-item">
+  <p><span class="marks">[3 marks]</span><span class="sa-num">3.</span> Explain the role of tRNA in translation, including how it ensures the correct amino acid is incorporated into the polypeptide.</p>
+  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</div>
+
+<div class="sa-item">
+  <p><span class="marks">[2 marks]</span><span class="sa-num">4.</span> Explain why the genetic code is described as <em>degenerate</em>.</p>
+  <div class="lines"><div class="line"></div><div class="line"></div><div class="line"></div></div>
+</div>
+
+
+<div class="footer">
+  <span>A-Level Biology — Transcription &amp; Translation</span>
+  <span>Total: &nbsp;&nbsp;&nbsp;/ 40</span>
+</div>
+
+</body>
+</html>
