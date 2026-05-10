@@ -549,15 +549,15 @@ const words = [
   'RNA polymerase','mRNA','tRNA','ribosome','codon','anticodon',
   'peptide bond','promoter','template strand','complementary base pairing',
   'amino acid','start codon','stop codon','nucleus','cytoplasm',
-  'polypeptide','uracil','transcription','translation','splicing'
+  'polypeptide','uracil','transcription','translation','splicing','helicase'
 ];
 
 // Each question: array of sentence fragments and blank definitions
 // blank: { id, answer }
 const questions = [
   { num:1, parts:['The process by which a complementary mRNA strand is produced from a DNA template is called ',{id:'b1',ans:'transcription'},'. This takes place in the ',{id:'b2',ans:'nucleus'},' of eukaryotic cells.'] },
-  { num:2, parts:['The enzyme ',{id:'b3',ans:'RNA polymerase'},' binds to the ',{id:'b4',ans:'promoter'},' sequence on the DNA and unwinds the double helix to begin this process.'] },
-  { num:3, parts:['Only one strand of DNA — the ',{id:'b5',ans:'template strand'},' — is read during transcription. New RNA nucleotides are added using ',{id:'b6',ans:'complementary base pairing'},'.'] },
+  { num:2, parts:['The enzyme ',{id:'b3',ans:'helicase'},' unwinds the DNA double helix by breaking hydrogen bonds between base pairs. ',{id:'b4',ans:'RNA polymerase'},' then binds to the ',{id:'b5a',ans:'promoter'},' sequence to begin synthesis of mRNA.'] },
+  { num:3, parts:['Only one strand of DNA — the ',{id:'b5b',ans:'template strand'},' — is read during transcription. New RNA nucleotides are added using ',{id:'b6',ans:'complementary base pairing'},'.'] },
   { num:4, parts:['In RNA, the base ',{id:'b7',ans:'uracil'},' replaces thymine and pairs with adenine.'] },
   { num:5, parts:['In eukaryotes, introns are removed and exons are joined together in a process called ',{id:'b8',ans:'splicing'},'.'] },
   { num:6, parts:['The process of ',{id:'b9',ans:'translation'},' occurs on a ',{id:'b10',ans:'ribosome'},' in the ',{id:'b11',ans:'cytoplasm'},' of the cell.'] },
