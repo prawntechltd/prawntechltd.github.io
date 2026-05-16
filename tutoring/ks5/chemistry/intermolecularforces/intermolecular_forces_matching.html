@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermolecular Forces — Matching Exercise</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #f5f5f3;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e0ddd5;
+      padding: 2rem 2.5rem;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      .page { padding: 1.25rem; }
+    }
+
+    .term-item, .def-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #f0ede6;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: #555;
+    }
+
+    .term-box, .def-box {
+      background: #fff;
+      border: 1px solid #e0ddd5;
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: 14px;
+      line-height: 1.5;
+      flex: 1;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .term-box.matched, .def-box.matched {
+      border-color: #1D9E75;
+      background: #E1F5EE;
+      color: #085041;
+    }
+
+    .term-box.wrong, .def-box.wrong {
+      border-color: #D85A30;
+      background: #FAECE7;
+      color: #4A1B0C;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #e8e5de;
+      margin: 1.75rem 0;
+    }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 2rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 500px) {
+      .answer-grid { grid-template-columns: 1fr; }
+    }
+
+    .answer-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .answer-row label {
+      min-width: 30px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .answer-row select {
+      flex: 1;
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      color: #1a1a1a;
+      cursor: pointer;
+      appearance: auto;
+    }
+
+    .answer-row select:focus {
+      outline: 2px solid #378ADD;
+      outline-offset: 1px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 1.25rem;
+    }
+
+    button {
+      padding: 8px 20px;
+      font-size: 14px;
+      font-family: inherit;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      background: #fff;
+      color: #1a1a1a;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    button:hover { background: #f0ede6; }
+    button:active { transform: scale(0.98); }
+
+    button.primary {
+      background: #1a1a1a;
+      color: #fff;
+      border-color: #1a1a1a;
+    }
+
+    button.primary:hover { background: #333; }
+
+    .score-box {
+      margin-top: 1.25rem;
+      padding: 14px 18px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      background: #f8f7f3;
+      display: none;
+    }
+
+    .score-box.show { display: block; }
+
+    .score-num {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .score-msg { font-size: 13px; color: #666; }
+
+    .answer-key { display: none; margin-top: 1.5rem; }
+    .answer-key.show { display: block; }
+
+    .ak-item {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 7px;
+      align-items: flex-start;
+      line-height: 1.5;
+    }
+
+    .ak-letter {
+      color: #888;
+      min-width: 28px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .show-key-btn {
+      margin-top: 1rem;
+      font-size: 13px;
+      color: #555;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .show-key-btn:hover { color: #1a1a1a; background: none; transform: none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>Intermolecular forces — matching exercise</h1>
+    <p class="subtitle">Match each description (1–12) to the correct term (A–L) using the drop-downs below.</p>
+
+    <div class="grid">
+      <div>
+        <div class="section-label">Terms</div>
+        <div class="term-item"><div class="badge">A</div><div class="term-box" id="t-A">London dispersion forces</div></div>
+        <div class="term-item"><div class="badge">B</div><div class="term-box" id="t-B">Dipole–dipole interactions</div></div>
+        <div class="term-item"><div class="badge">C</div><div class="term-box" id="t-C">Hydrogen bonding</div></div>
+        <div class="term-item"><div class="badge">D</div><div class="term-box" id="t-D">Instantaneous dipole</div></div>
+        <div class="term-item"><div class="badge">E</div><div class="term-box" id="t-E">Induced dipole</div></div>
+        <div class="term-item"><div class="badge">F</div><div class="term-box" id="t-F">Permanent dipole</div></div>
+        <div class="term-item"><div class="badge">G</div><div class="term-box" id="t-G">δ+ (partial positive charge)</div></div>
+        <div class="term-item"><div class="badge">H</div><div class="term-box" id="t-H">δ− (partial negative charge)</div></div>
+        <div class="term-item"><div class="badge">I</div><div class="term-box" id="t-I">Electronegativity</div></div>
+        <div class="term-item"><div class="badge">J</div><div class="term-box" id="t-J">Lone pair</div></div>
+        <div class="term-item"><div class="badge">K</div><div class="term-box" id="t-K">Polar covalent bond</div></div>
+        <div class="term-item"><div class="badge">L</div><div class="term-box" id="t-L">N, O, or F</div></div>
+      </div>
+
+      <div>
+        <div class="section-label">Descriptions</div>
+        <div class="def-item"><div class="badge">1</div><div class="def-box" id="d-1">Present in all atoms and molecules, both polar and nonpolar</div></div>
+        <div class="def-item"><div class="badge">2</div><div class="def-box" id="d-2">Requires molecules to have permanent dipoles in order to occur</div></div>
+        <div class="def-item"><div class="badge">3</div><div class="def-box" id="d-3">The strongest of the three common intermolecular forces</div></div>
+        <div class="def-item"><div class="badge">4</div><div class="def-box" id="d-4">A momentary uneven distribution of electrons that creates a temporary charge separation</div></div>
+        <div class="def-item"><div class="badge">5</div><div class="def-box" id="d-5">A dipole triggered by a nearby temporary dipole in a neighbouring particle</div></div>
+        <div class="def-item"><div class="badge">6</div><div class="def-box" id="d-6">Results from unequal electron sharing in a covalent bond; does not disappear over time</div></div>
+        <div class="def-item"><div class="badge">7</div><div class="def-box" id="d-7">The label given to the hydrogen end of a polar bond because electrons are pulled away from it</div></div>
+        <div class="def-item"><div class="badge">8</div><div class="def-box" id="d-8">The label given to the more electronegative end of a polar bond</div></div>
+        <div class="def-item"><div class="badge">9</div><div class="def-box" id="d-9">An atom's ability to attract bonding electrons toward itself</div></div>
+        <div class="def-item"><div class="badge">10</div><div class="def-box" id="d-10">A pair of valence electrons not involved in bonding; the target of attraction in hydrogen bonds</div></div>
+        <div class="def-item"><div class="badge">11</div><div class="def-box" id="d-11">A bond in which electrons are shared unequally between two atoms of different electronegativity</div></div>
+        <div class="def-item"><div class="badge">12</div><div class="def-box" id="d-12">The three elements whose high electronegativity makes hydrogen bonding possible</div></div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="section-label" style="margin-bottom: 12px;">Your answers</div>
+
+    <div class="answer-grid">
+      <div class="answer-row"><label>1</label><select id="s1"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>2</label><select id="s2"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>3</label><select id="s3"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>4</label><select id="s4"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>5</label><select id="s5"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>6</label><select id="s6"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>7</label><select id="s7"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>8</label><select id="s8"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>9</label><select id="s9"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>10</label><select id="s10"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>11</label><select id="s11"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+      <div class="answer-row"><label>12</label><select id="s12"><option value="">— choose —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option><option>I</option><option>J</option><option>K</option><option>L</option></select></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="primary" onclick="checkAnswers()">Check answers</button>
+      <button onclick="resetAll()">Reset</button>
+    </div>
+
+    <div class="score-box" id="score-box">
+      <div class="score-num" id="score-num"></div>
+      <div class="score-msg" id="score-msg"></div>
+    </div>
+
+    <button class="show-key-btn" id="show-key-btn" onclick="toggleKey()" style="display:none;">Show answer key</button>
+
+    <div class="answer-key" id="answer-key">
+      <hr>
+      <div class="section-label" style="margin-bottom: 10px;">Answer key</div>
+      <div class="ak-item"><span class="ak-letter">1 → A</span> London dispersion forces are the only intermolecular force present in all substances</div>
+      <div class="ak-item"><span class="ak-letter">2 → B</span> Dipole–dipole interactions occur only between polar molecules</div>
+      <div class="ak-item"><span class="ak-letter">3 → C</span> Hydrogen bonding is the strongest common intermolecular force</div>
+      <div class="ak-item"><span class="ak-letter">4 → D</span> An instantaneous dipole forms when electrons temporarily shift to one side</div>
+      <div class="ak-item"><span class="ak-letter">5 → E</span> An induced dipole is caused by a neighbouring temporary dipole</div>
+      <div class="ak-item"><span class="ak-letter">6 → F</span> A permanent dipole results from unequal electron sharing and persists</div>
+      <div class="ak-item"><span class="ak-letter">7 → G</span> δ+ marks the hydrogen (or less electronegative) end of a polar bond</div>
+      <div class="ak-item"><span class="ak-letter">8 → H</span> δ− marks the more electronegative end of a polar bond</div>
+      <div class="ak-item"><span class="ak-letter">9 → I</span> Electronegativity is the tendency of an atom to attract bonding electrons</div>
+      <div class="ak-item"><span class="ak-letter">10 → J</span> A lone pair is the electron pair targeted in hydrogen bonding</div>
+      <div class="ak-item"><span class="ak-letter">11 → K</span> A polar covalent bond involves unequal electron sharing</div>
+      <div class="ak-item"><span class="ak-letter">12 → L</span> N, O, and F are the three elements that enable hydrogen bonding</div>
+    </div>
+  </div>
+
+  <script>
+    const correct = { s1:'A', s2:'B', s3:'C', s4:'D', s5:'E', s6:'F', s7:'G', s8:'H', s9:'I', s10:'J', s11:'K', s12:'L' };
+    const letters = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+
+    function checkAnswers() {
+      let score = 0;
+      const termMatched = {}, termWrong = {}, defMatched = {}, defWrong = {};
+
+      for (let n = 1; n <= 12; n++) {
+        const val = document.getElementById('s' + n).value;
+        const isCorrect = val === correct['s' + n];
+        if (isCorrect) { score++; defMatched[n] = true; termMatched[val] = true; }
+        else if (val) { defWrong[n] = true; termWrong[val] = true; }
+      }
+
+      letters.forEach(l => {
+        document.getElementById('t-' + l).className = 'term-box' + (termMatched[l] ? ' matched' : termWrong[l] ? ' wrong' : '');
+      });
+      for (let n = 1; n <= 12; n++) {
+        document.getElementById('d-' + n).className = 'def-box' + (defMatched[n] ? ' matched' : defWrong[n] ? ' wrong' : '');
+      }
+
+      const box = document.getElementById('score-box');
+      box.className = 'score-box show';
+      document.getElementById('score-num').textContent = score + ' / 12';
+      const msgs = ['Keep going — review the terms and try again.', 'Good start — a few more to go!', 'Nearly there!', 'Perfect score — well done!'];
+      document.getElementById('score-msg').textContent = msgs[score < 6 ? 0 : score < 10 ? 1 : score < 12 ? 2 : 3];
+
+      const keyBtn = document.getElementById('show-key-btn');
+      if (score === 12) {
+        document.getElementById('answer-key').className = 'answer-key show';
+        keyBtn.style.display = 'none';
+      } else {
+        keyBtn.style.display = 'inline';
+        keyBtn.textContent = document.getElementById('answer-key').classList.contains('show') ? 'Hide answer key' : 'Show answer key';
+      }
+    }
+
+    function toggleKey() {
+      const key = document.getElementById('answer-key');
+      const btn = document.getElementById('show-key-btn');
+      const showing = key.classList.contains('show');
+      key.className = 'answer-key' + (showing ? '' : ' show');
+      btn.textContent = showing ? 'Show answer key' : 'Hide answer key';
+    }
+
+    function resetAll() {
+      for (let n = 1; n <= 12; n++) {
+        document.getElementById('s' + n).value = '';
+        document.getElementById('d-' + n).className = 'def-box';
+      }
+      letters.forEach(l => { document.getElementById('t-' + l).className = 'term-box'; });
+      document.getElementById('score-box').className = 'score-box';
+      document.getElementById('answer-key').className = 'answer-key';
+      document.getElementById('show-key-btn').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
