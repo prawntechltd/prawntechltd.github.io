@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCSE Biology quiz: food tests and the digestive system</title>
+<style>
+/* Standalone page background. Remove this rule if you paste the quiz into an existing page. */
+body{margin:0;background:#eef3f6}
+
+/* Everything below is scoped to .bq so it will not clash with your site's styles. */
+.bq{
+  --page:#eef3f6; --surface:#fff; --ink:#13222c; --muted:#556873; --line:#d3dde4;
+  --brand:#1e5fc0; --brand-d:#154794; --tint:#e6effb; --liquid:#3a79d6;
+  --ok:#237a4d; --ok-bg:#e3f3ea; --bad:#b0362a; --bad-bg:#fbe9e6; --warn-bg:#fff3d6; --warn-ink:#6b4700;
+  --focus:#0b57d0;
+  --p0:#b5412f; --p1:#2f3f8f; --p2:#7b4bb0; --p3:#1b8a6e; --p4:#b97a06; --p5:#c2467a; --p6:#5b7f2b; --p7:#2a7fa8;
+  font-family:"Avenir Next","Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color:var(--ink); line-height:1.55; max-width:920px; margin:0 auto; padding:22px 16px 56px; box-sizing:border-box;
+}
+.bq *,.bq *::before,.bq *::after{box-sizing:border-box}
+.bq [hidden]{display:none!important}
+.bq :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+
+.bq-head{margin:0 0 18px}
+.bq h1,.bq h2,.bq h3{font-family:"Avenir Next","Segoe UI Variable Display","Segoe UI",Roboto,Arial,sans-serif;letter-spacing:-.02em;line-height:1.15}
+.bq h1{font-size:clamp(1.7rem,5vw,2.5rem);font-weight:800;margin:0 0 .3em}
+.bq-sub{margin:0;color:var(--muted);max-width:60ch}
+
+/* Test-tube rack: each tube is an activity, and fills as you score. */
+.rack{display:flex;gap:14px;padding:12px 14px 8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;margin-bottom:16px}
+.grp{min-width:0}
+.grp-name{font-size:.8rem;color:var(--muted);padding-bottom:4px;border-bottom:2px solid var(--line);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.grp-name .short{display:none}
+.tubes{display:flex}
+.tube{flex:1;min-width:0;background:none;border:0;padding:6px 2px 4px;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--muted);cursor:pointer;font:inherit}
+.tube:hover{background:var(--tint)}
+.tube.current{background:var(--tint);color:var(--brand-d)}
+.tube-svg{overflow:visible}
+.tlabel{display:flex;align-items:center;gap:5px;font-size:.75rem;max-width:100%}
+.tlabel b{display:inline-grid;place-items:center;min-width:1.5em;height:1.5em;border-radius:999px;font-size:.78rem;background:#e1e8ed;color:var(--ink)}
+.tube.current .tlabel b{background:var(--brand);color:#fff}
+.tname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px clamp(16px,3vw,30px) 24px}
+.kicker{margin:0;color:var(--muted);font-size:.9rem}
+.card h2{font-size:1.5rem;font-weight:800;margin:.15em 0 .3em}
+.card h2:focus{outline:none}
+.instr{color:var(--muted);margin:0 0 18px;max-width:64ch}
+
+/* Matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(10px,4vw,44px);align-items:start}
+.col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.col-h{font-size:.85rem;font-weight:700;color:var(--muted);padding:0 2px 2px}
+.item{display:flex;align-items:center;gap:9px;width:100%;text-align:left;font:inherit;font-size:.95rem;line-height:1.35;padding:9px 12px;min-height:50px;border:2px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);cursor:pointer;transition:border-color .12s,background-color .12s}
+.item:hover{border-color:#a9b9c4}
+.item .num{flex:none;width:24px;height:24px;border-radius:50%;background:#8797a1;color:#fff;font-size:.78rem;font-weight:700;display:grid;place-items:center}
+.item .txt{flex:1;min-width:0}
+.item .mark{flex:none;font-weight:800;color:var(--pc)}
+.item.paired{border-color:var(--pc);background:#f3f6fa;background:color-mix(in srgb,var(--pc) 11%,#fff)}
+.item.paired .num{background:var(--pc)}
+.item.sel{border-color:var(--ink);background:#eef2f5;box-shadow:0 0 0 3px rgba(19,34,44,.14)}
+.item.bad{border-style:dashed}
+.item.miss{border:2px dashed var(--bad)}
+.item.ok,.item.rev{cursor:default}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Fill in the blank */
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:.9rem;color:var(--muted);margin:0 0 12px;cursor:pointer}
+.toggle input{width:18px;height:18px;accent-color:var(--brand)}
+.bank{background:#f4f7f9;border:1px dashed #9db0bc;border-radius:12px;padding:12px 14px;margin-bottom:20px}
+.bank-label{font-size:.85rem;font-weight:700;color:var(--muted);margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.92rem;padding:5px 13px;border-radius:999px;border:1.5px solid var(--brand);background:#fff;color:var(--brand-d);cursor:pointer}
+.chip:hover{background:var(--tint)}
+.chip.used{opacity:.4;text-decoration:line-through;cursor:default}
+.fill-list{margin:0;padding-left:1.5em;display:flex;flex-direction:column;gap:12px;font-size:1.03rem;line-height:2.25;max-width:70ch}
+.fill-list li::marker{color:var(--muted);font-weight:700}
+.bw{display:inline-flex;align-items:center;gap:3px;white-space:nowrap;max-width:100%}
+.blank{font:inherit;font-size:.98rem;padding:1px 8px;border:0;border-bottom:2px solid var(--ink);border-radius:6px 6px 0 0;background:#eaf0f4;color:var(--ink);text-align:center;min-width:5ch;max-width:100%}
+.blank:focus{background:#fff}
+.blank.ok{border-color:var(--ok);background:var(--ok-bg)}
+.blank.bad{border-color:var(--bad);background:var(--bad-bg)}
+.blank.rev{border-color:var(--brand);background:var(--tint)}
+.bmark{display:inline-block;width:1.1em;font-weight:800}
+.blank.ok+.bmark,.blank.rev+.bmark{color:var(--ok)}
+.blank.bad+.bmark{color:var(--bad)}
+
+/* Buttons and messages */
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{font:inherit;font-weight:700;font-size:.95rem;padding:10px 20px;border-radius:10px;border:2px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer}
+.btn:hover{background:var(--brand-d);border-color:var(--brand-d)}
+.btn.ghost{background:#fff;color:var(--brand-d)}
+.btn.ghost:hover{background:var(--tint)}
+.btn.small{padding:6px 14px;font-size:.88rem}
+.btn:disabled{opacity:.45;cursor:not-allowed;background:#fff;color:var(--muted);border-color:var(--line)}
+.feedback{display:none;margin-top:16px;padding:11px 15px;border-radius:10px;font-weight:600}
+.feedback.show{display:block}
+.feedback.good{background:var(--ok-bg);color:#175a37}
+.feedback.warn{background:var(--warn-bg);color:var(--warn-ink)}
+.feedback.info{background:var(--tint);color:var(--brand-d)}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:16px}
+
+/* Results */
+.res-top{display:flex;align-items:center;gap:clamp(16px,4vw,34px);margin:6px 0 22px}
+.res-flask{flex:none}
+.res-pct{font-size:clamp(2.6rem,9vw,4rem);font-weight:800;letter-spacing:-.03em;line-height:1}
+.res-msg{margin:.4em 0 0;color:var(--muted);max-width:44ch}
+.res-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.res-row{display:grid;grid-template-columns:1fr auto auto;gap:6px 14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.res-title{font-weight:700}
+.res-note{grid-column:1;font-size:.88rem;color:var(--muted)}
+.res-score{font-weight:800;font-variant-numeric:tabular-nums}
+.bar{grid-column:1;height:8px;border-radius:99px;background:#e1e8ed;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--liquid);border-radius:99px}
+.bar span.full{background:var(--ok)}
+
+@media (max-width:640px){
+  .tname{display:none}
+  .grp-name .full{display:none}
+  .grp-name .short{display:inline}
+  .rack{gap:8px;padding:10px 8px 6px}
+}
+@media (max-width:520px){
+  .item{font-size:.86rem;padding:8px 8px;gap:6px;min-height:48px}
+  .item .num{width:22px;height:22px;font-size:.72rem}
+  .fill-list{font-size:.98rem}
+  .res-row{grid-template-columns:1fr auto}
+  .res-row .btn{grid-column:1 / -1;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){.item{transition:none}}
+</style>
+</head>
+<body>
+<div class="bq" id="bq-top">
+  <header class="bq-head">
+    <h1>Food tests and the digestive system</h1>
+    <p class="bq-sub">GCSE Biology revision with four matching activities and three fill-in-the-blank activities. Each test tube fills as you score.</p>
+  </header>
+  <nav class="rack" id="bq-rack" aria-label="Quiz activities"></nav>
+  <main id="bq-main"></main>
+  <noscript>This quiz needs JavaScript to run.</noscript>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     CONTENT. Edit this section to change questions.
+     Matching:  pairs = [ [left, right], ... ]
+     Fill:      write blanks as {{answer|alternative|alternative}}.
+                The first answer is shown in the word bank.
+                Spelling counts, but capitals, spaces and punctuation don't.
+     ------------------------------------------------------------------ */
+  var ACTS = [
+    {
+      id: 'm1', type: 'match', short: 'Nutrients',
+      title: 'Food tests and the nutrients they detect',
+      instr: 'Select a test on the left, then select the nutrient it detects on the right. Select a matched item to undo it.',
+      heads: ['Test', 'Detects'],
+      tip: 'the five food tests and what each one detects',
+      pairs: [
+        ["Benedict's test", 'Reducing sugars (e.g. glucose)'],
+        ['Iodine test', 'Starch'],
+        ['Biuret test', 'Protein'],
+        ['Ethanol emulsion test', 'Lipids (fats and oils)'],
+        ['DCPIP test', 'Vitamin C']
+      ]
+    },
+    {
+      id: 'm2', type: 'match', short: 'Conclusions',
+      title: 'Food tests: what can you conclude?',
+      instr: 'Match each observation to the conclusion you can draw from it.',
+      heads: ['Observation', 'Conclusion'],
+      tip: 'how to read positive and negative food test results',
+      pairs: [
+        ['Iodine solution turns blue-black', 'Starch is present'],
+        ['Iodine solution stays orange-brown', 'No starch is present'],
+        ["Benedict's solution turns green when heated", 'Low concentration of reducing sugar'],
+        ["Benedict's solution turns brick red when heated", 'High concentration of reducing sugar'],
+        ['Biuret solution turns purple', 'Protein is present'],
+        ['A cloudy white layer forms when the ethanol mixture is added to water', 'Lipids are present'],
+        ['DCPIP stays blue', 'No vitamin C is present']
+      ]
+    },
+    {
+      id: 'm3', type: 'match', short: 'Organs',
+      title: 'Parts of the digestive system',
+      instr: 'Match each part of the digestive system to its job.',
+      heads: ['Part', 'Job'],
+      tip: 'the organs of the digestive system and what each one does',
+      pairs: [
+        ['Salivary glands', 'Make saliva containing amylase to start digesting starch'],
+        ['Oesophagus', 'Muscular tube that squeezes food to the stomach (peristalsis)'],
+        ['Stomach', 'Churns food and adds acid and protease enzymes'],
+        ['Liver', 'Makes bile'],
+        ['Gall bladder', 'Stores bile until it is needed'],
+        ['Pancreas', 'Makes amylase, protease and lipase enzymes'],
+        ['Small intestine', 'Where digested food is absorbed into the blood'],
+        ['Large intestine', 'Absorbs water from undigested food']
+      ]
+    },
+    {
+      id: 'm4', type: 'match', short: 'Enzymes',
+      title: 'Enzymes, acid and bile',
+      instr: 'Match each substance to what it does in digestion.',
+      heads: ['Substance', 'What it does'],
+      tip: 'what amylase, protease, lipase, stomach acid and bile each do',
+      pairs: [
+        ['Amylase', 'Breaks down starch into sugars (maltose)'],
+        ['Protease', 'Breaks down proteins into amino acids'],
+        ['Lipase', 'Breaks down lipids into fatty acids and glycerol'],
+        ['Bile', 'Not an enzyme: alkaline, neutralises acid and emulsifies fats'],
+        ['Hydrochloric acid', 'Kills bacteria and gives the stomach a low pH']
+      ]
+    },
+    {
+      id: 'f1', type: 'fill', short: 'Methods',
+      title: 'Food tests: methods and results',
+      instr: 'Type the missing words, or select a word from the word bank to drop it into a blank. Press Enter to jump to the next blank.',
+      tip: 'the method and colour change for each food test',
+      distract: ['green', 'cold water', 'sulfuric acid'],
+      items: [
+        'Iodine solution is used to test for {{starch}}. It changes from orange-brown to {{blue-black|black|blue black}} if starch is present.',
+        "Benedict's solution tests for {{reducing sugars|reducing sugar|sugars|sugar|glucose}}. The mixture must be heated in a {{water bath|waterbath|hot water bath}} for a few minutes. A positive result goes from blue through green, yellow and orange to {{brick red|red}}.",
+        'The {{biuret}} test detects {{protein|proteins}}. After sodium hydroxide and copper sulfate are added, a positive result is a colour change from blue to {{purple|lilac|violet|mauve}}.',
+        'In the emulsion test, the food is shaken with {{ethanol|alcohol}} and the liquid is poured into water. A {{cloudy|milky|white|cloudy white}} emulsion forms if {{lipids|lipid|fats|fat|oils}} are present.',
+        'DCPIP is a blue dye. It turns {{colourless|colorless|clear}} when {{vitamin C|ascorbic acid}} is present.'
+      ]
+    },
+    {
+      id: 'f2', type: 'fill', short: 'Digestion',
+      title: 'The digestive system',
+      instr: 'Type the missing words, or select a word from the word bank to drop it into a blank. Press Enter to jump to the next blank.',
+      tip: 'the route food takes and where key substances are made or absorbed',
+      distract: ['chemical', 'kidney', 'alkaline'],
+      items: [
+        'Teeth carry out {{mechanical}} digestion by breaking food into smaller pieces, which increases its {{surface area}}.',
+        'Food travels down the {{oesophagus|esophagus|gullet}} by waves of muscle contraction called {{peristalsis}}.',
+        'The stomach produces {{hydrochloric acid|hydrochloric|hcl}}, which kills bacteria and provides the acidic conditions needed by the enzyme {{protease|pepsin}}.',
+        'Bile is made in the {{liver}} and stored in the {{gall bladder|gallbladder}}.',
+        'The {{pancreas}} makes amylase, protease and lipase, which are released into the small intestine.',
+        'Most digested food is absorbed into the blood in the {{small intestine}}. The {{large intestine|colon}} absorbs water from the remaining waste, which is stored in the {{rectum}} before leaving the body through the anus.'
+      ]
+    },
+    {
+      id: 'f3', type: 'fill', short: 'Bile',
+      title: 'Enzymes and bile',
+      instr: 'Type the missing words, or select a word from the word bank to drop it into a blank. Press Enter to jump to the next blank.',
+      tip: 'enzyme products, how bile works, and what denaturing means',
+      distract: ['acidic', 'hormones', 'neutral'],
+      items: [
+        'Digestive enzymes are biological {{catalysts|catalyst}} that speed up the breakdown of large, insoluble molecules into small, {{soluble}} molecules that can be absorbed.',
+        '{{Amylase}} breaks down starch into {{maltose|glucose|sugar|sugars}}.',
+        '{{Protease}} enzymes break down proteins into {{amino acids|amino acid}}.',
+        '{{Lipase}} enzymes break down lipids into fatty acids and {{glycerol}}.',
+        'Bile is {{alkaline}}, so it neutralises the acid that enters the small intestine from the stomach. This creates the right {{pH}} for the enzymes to work.',
+        'Bile also {{emulsifies|emulsify|emulsification}} fats, breaking large droplets into smaller ones. This increases the {{surface area}} for lipase to work on.',
+        'Enzymes work best at their {{optimum|optimal}} temperature. If it gets too hot, the active site changes shape and the enzyme is {{denatured|denatures}}.'
+      ]
+    }
+  ];
+
+  /* ------------------------------------------------------------------ helpers */
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  var norm = function (s) {
+    return String(s == null ? '' : s).toLowerCase().normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+  };
+  var shuffle = function (a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  };
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ------------------------------------------------------------------ parse fill items */
+  ACTS.forEach(function (a) {
+    if (a.type === 'match') { a.total = a.pairs.length; return; }
+    a.blanks = [];
+    a.parsed = a.items.map(function (str) {
+      var segs = [], last = 0, m, re = /\{\{(.+?)\}\}/g;
+      while ((m = re.exec(str))) {
+        if (m.index > last) segs.push({ t: str.slice(last, m.index) });
+        var alts = m[1].split('|').map(function (s) { return s.trim(); });
+        var b = { k: a.blanks.length, alts: alts, primary: alts[0], w: Math.min(22, Math.max(6, alts[0].length + 2)) };
+        a.blanks.push(b);
+        segs.push({ b: b });
+        last = re.lastIndex;
+      }
+      if (last < str.length) segs.push({ t: str.slice(last) });
+      return segs;
+    });
+    a.total = a.blanks.length;
+  });
+
+  /* ------------------------------------------------------------------ state */
+  var state = { cur: 0, view: 'quiz', hard: false, acts: {} };
+
+  function initAct(a) {
+    var base = { checked: false, revealed: false, score: 0, fb: null, status: {} };
+    if (a.type === 'match') {
+      var order = a.pairs.map(function (_, i) { return i; });
+      if (order.length > 1) {
+        var tries = 0;
+        do { order = shuffle(order); tries++; }
+        while (order.every(function (v, i) { return v === i; }) && tries < 10);
+      }
+      base.order = order; base.pairs = {}; base.selL = null; base.selR = null;
+    } else {
+      base.bank = shuffle(a.blanks.map(function (b) { return b.primary; }).concat(a.distract || []));
+      base.values = a.blanks.map(function () { return ''; });
+      base.last = null;
+    }
+    return base;
+  }
+  ACTS.forEach(function (a) { state.acts[a.id] = initAct(a); });
+
+  var rack = $('#bq-rack'), main = $('#bq-main');
+
+  /* ------------------------------------------------------------------ test-tube rack */
+  function tubeSvg(uid, level, full) {
+    var y = 56 - 50 * level;
+    return '<svg class="tube-svg" viewBox="0 0 28 64" width="28" height="64" aria-hidden="true" focusable="false">' +
+      '<defs><clipPath id="bq-c' + uid + '"><path d="M4 6v40a10 10 0 0 0 20 0V6z"/></clipPath></defs>' +
+      (level > 0 ? '<rect x="0" y="' + y + '" width="28" height="' + (64 - y) + '" style="fill:' + (full ? 'var(--ok)' : 'var(--liquid)') + '" clip-path="url(#bq-c' + uid + ')"/>' : '') +
+      '<path d="M4 6v40a10 10 0 0 0 20 0V6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M2 6h24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+  function flaskSvg(uid, level, full, scale) {
+    var y = 60 - 36 * level, w = 28 * scale, h = 64 * scale;
+    var body = 'M10 4h8v18l8 30q1.5 8-6 8H8q-7.5 0-6-8l8-30z';
+    return '<svg class="flask-svg" viewBox="0 0 28 64" width="' + w + '" height="' + h + '" aria-hidden="true" focusable="false">' +
+      '<defs><clipPath id="bq-f' + uid + '"><path d="' + body + '"/></clipPath></defs>' +
+      (level > 0 ? '<rect x="0" y="' + y + '" width="28" height="' + (64 - y) + '" style="fill:' + (full ? 'var(--ok)' : 'var(--liquid)') + '" clip-path="url(#bq-f' + uid + ')"/>' : '') +
+      '<path d="' + body + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' +
+      '<path d="M8 4h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+  function totals() {
+    var got = 0, tot = 0;
+    ACTS.forEach(function (a) { got += state.acts[a.id].score; tot += a.total; });
+    return { got: got, tot: tot, pct: tot ? got / tot : 0 };
+  }
+  function renderRack() {
+    function tubeBtn(i) {
+      var a = ACTS[i], st = state.acts[a.id], done = st.checked || st.revealed;
+      var p = a.total ? st.score / a.total : 0;
+      var level = done ? Math.max(p, 0.06) : 0;
+      var cur = state.view === 'quiz' && state.cur === i;
+      var label = 'Activity ' + (i + 1) + ': ' + a.title + (done ? ', ' + st.score + ' out of ' + a.total : ', not checked yet');
+      return '<button type="button" class="tube' + (cur ? ' current' : '') + '" data-go="' + i + '" aria-label="' + esc(label) + '"' + (cur ? ' aria-current="step"' : '') + '>' +
+        tubeSvg(i, level, done && p >= 1) +
+        '<span class="tlabel"><b>' + (i + 1) + '</b><span class="tname">' + esc(a.short) + '</span></span></button>';
+    }
+    var t = totals(), any = ACTS.some(function (a) { var s = state.acts[a.id]; return s.checked || s.revealed; });
+    var flaskCur = state.view === 'results';
+    var html =
+      '<div class="grp" style="flex:4"><div class="grp-name">Matching</div><div class="tubes">' + [0, 1, 2, 3].map(tubeBtn).join('') + '</div></div>' +
+      '<div class="grp" style="flex:3"><div class="grp-name"><span class="full">Fill in the blanks</span><span class="short">Blanks</span></div><div class="tubes">' + [4, 5, 6].map(tubeBtn).join('') + '</div></div>' +
+      '<div class="grp" style="flex:1.2"><div class="grp-name">Total</div><div class="tubes"><button type="button" class="tube' + (flaskCur ? ' current' : '') + '" data-results="1" aria-label="Results, ' + t.got + ' out of ' + t.tot + ' marks so far"' + (flaskCur ? ' aria-current="step"' : '') + '>' +
+      flaskSvg('nav', any ? Math.max(t.pct, 0.06) : 0, t.pct >= 1, 1) +
+      '<span class="tlabel"><span class="tname" style="display:inline">Results</span></span></button></div></div>';
+    rack.innerHTML = html;
+  }
+  rack.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-go')) goTo(+b.getAttribute('data-go'));
+    else if (b.hasAttribute('data-results')) showResults();
+  });
+
+  /* ------------------------------------------------------------------ feedback */
+  function applyFb(st) {
+    var el = $('#bq-fb'); if (!el) return;
+    if (st.fb) { el.className = 'feedback show ' + st.fb.kind; el.textContent = st.fb.text; }
+    else { el.className = 'feedback'; el.textContent = ''; }
+  }
+  function setFb(st, kind, text) { st.fb = kind ? { kind: kind, text: text } : null; applyFb(st); }
+
+  /* ------------------------------------------------------------------ navigation */
+  function afterNav() {
+    var h = $('#bq-h'); if (h) h.focus({ preventScroll: true });
+    var top = $('#bq-top');
+    if (top && top.scrollIntoView) top.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+  function goTo(i) { state.cur = Math.max(0, Math.min(ACTS.length - 1, i)); state.view = 'quiz'; render(); afterNav(); }
+  function showResults() { state.view = 'results'; render(); afterNav(); }
+
+  function render() {
+    renderRack();
+    if (state.view === 'results') renderResults(); else renderActivity();
+  }
+
+  /* ------------------------------------------------------------------ activity shell */
+  function renderActivity() {
+    var a = ACTS[state.cur], st = state.acts[a.id], isLast = state.cur === ACTS.length - 1;
+    main.innerHTML =
+      '<section class="card" aria-labelledby="bq-h">' +
+        '<p class="kicker">Activity ' + (state.cur + 1) + ' of ' + ACTS.length + ': ' + (a.type === 'match' ? 'matching' : 'fill in the blanks') + '</p>' +
+        '<h2 id="bq-h" tabindex="-1">' + esc(a.title) + '</h2>' +
+        '<p class="instr">' + esc(a.instr) + '</p>' +
+        '<div id="bq-body"></div>' +
+        '<div class="actions">' +
+          '<button type="button" class="btn" id="bq-check">Check answers</button>' +
+          '<button type="button" class="btn ghost" id="bq-show">Show answers</button>' +
+          '<button type="button" class="btn ghost" id="bq-reset">Reset</button>' +
+        '</div>' +
+        '<div id="bq-fb" class="feedback" role="status" aria-live="polite"></div>' +
+      '</section>' +
+      '<div class="nav">' +
+        '<button type="button" class="btn ghost" id="bq-prev"' + (state.cur === 0 ? ' disabled' : '') + '>Previous</button>' +
+        '<button type="button" class="btn" id="bq-next">' + (isLast ? 'See results' : 'Next') + '</button>' +
+      '</div>';
+
+    var body = $('#bq-body');
+    if (a.type === 'match') setupMatch(a, st, body); else setupFill(a, st, body);
+    applyFb(st);
+    syncButtons(st);
+
+    $('#bq-check').onclick = function () {
+      if (a.type === 'match') { checkMatch(a, st); drawMatch(a, st, body); }
+      else checkFill(a, st, body);
+      renderRack(); syncButtons(st);
+    };
+    $('#bq-show').onclick = function () {
+      if (a.type === 'match') { revealMatch(a, st); drawMatch(a, st, body); }
+      else { revealFill(a, st); drawFill(a, st, body); }
+      setFb(st, 'info', 'Answers shown. Select Reset to try this activity again.');
+      renderRack(); syncButtons(st);
+    };
+    $('#bq-reset').onclick = function () {
+      state.acts[a.id] = initAct(a);
+      renderRack(); renderActivity();
+      var first = $('#bq-body button, #bq-body input'); if (first) first.focus({ preventScroll: true });
+    };
+    $('#bq-prev').onclick = function () { goTo(state.cur - 1); };
+    $('#bq-next').onclick = function () { if (isLast) showResults(); else goTo(state.cur + 1); };
+  }
+  function syncButtons(st) {
+    var c = $('#bq-check'), s = $('#bq-show');
+    if (c) c.disabled = !!st.revealed;
+    if (s) s.disabled = !!st.revealed;
+  }
+
+  /* ------------------------------------------------------------------ matching */
+  function ownerOfRight(st, j) {
+    var k = Object.keys(st.pairs).filter(function (x) { return st.pairs[x] === j; })[0];
+    return k === undefined ? undefined : +k;
+  }
+  function matchClick(st, side, i) {
+    var owner = side === 'L' ? (st.pairs[i] !== undefined ? i : undefined) : ownerOfRight(st, i);
+    if (owner !== undefined) {              // already paired: undo it and pick the item up again
+      var r = st.pairs[owner];
+      delete st.pairs[owner]; delete st.status[owner];
+      if (side === 'L') st.selL = owner; else st.selR = r;
+    } else if (side === 'L') { st.selL = st.selL === i ? null : i; }
+    else { st.selR = st.selR === i ? null : i; }
+    if (st.selL !== null && st.selR !== null) {
+      st.pairs[st.selL] = st.selR; delete st.status[st.selL];
+      st.selL = null; st.selR = null;
+    }
+  }
+  function checkMatch(a, st) {
+    var score = 0, bad = 0, miss = 0;
+    st.status = {};
+    a.pairs.forEach(function (_, i) {
+      if (st.pairs[i] === undefined) { st.status[i] = 'miss'; miss++; }
+      else if (st.pairs[i] === i) { st.status[i] = 'ok'; score++; }
+      else { st.status[i] = 'bad'; bad++; }
+    });
+    st.selL = null; st.selR = null; st.checked = true; st.score = score;
+    if (score === a.total) setFb(st, 'good', 'All ' + a.total + ' pairs are correct.');
+    else setFb(st, 'warn', score + ' of ' + a.total + ' correct.' +
+      (bad ? ' Select a pair marked with a cross to change it, then check again.' : '') +
+      (miss ? ' ' + miss + (miss === 1 ? ' item is' : ' items are') + ' not matched yet.' : ''));
+  }
+  function revealMatch(a, st) {
+    st.pairs = {}; st.status = {};
+    a.pairs.forEach(function (_, i) { st.pairs[i] = i; st.status[i] = 'rev'; });
+    st.selL = null; st.selR = null; st.revealed = true;
+  }
+  function setupMatch(a, st, body) {
+    body.addEventListener('click', function (e) {
+      var b = e.target.closest('.item');
+      if (!b || b.getAttribute('aria-disabled') === 'true') return;
+      var side = b.getAttribute('data-side'), i = +b.getAttribute('data-i');
+      matchClick(st, side, i);
+      drawMatch(a, st, body, side + i);
+    });
+    drawMatch(a, st, body);
+  }
+  function drawMatch(a, st, body, focusKey) {
+    var owner = {};
+    Object.keys(st.pairs).forEach(function (l) { owner[st.pairs[l]] = +l; });
+    function pc(l) {
+      var s = st.status[l];
+      if (s === 'ok' || s === 'rev') return 'var(--ok)';
+      if (s === 'bad' || s === 'miss') return 'var(--bad)';
+      return 'var(--p' + (l % 8) + ')';
+    }
+    function mark(s) {
+      if (s === 'ok') return '<span class="mark" aria-hidden="true">&#10003;</span><span class="sr">correct</span>';
+      if (s === 'rev') return '<span class="mark" aria-hidden="true">&#10003;</span><span class="sr">answer</span>';
+      if (s === 'bad') return '<span class="mark" aria-hidden="true">&#10007;</span><span class="sr">incorrect</span>';
+      if (s === 'miss') return '<span class="sr">not matched</span>';
+      return '';
+    }
+    var left = a.pairs.map(function (p, i) {
+      var paired = st.pairs[i] !== undefined, s = st.status[i];
+      var c = ['item'];
+      if (paired) c.push('paired');
+      if (st.selL === i) c.push('sel');
+      if (s) c.push(s);
+      var locked = s === 'ok' || s === 'rev';
+      var label = p[0] + (paired ? ', matched with ' + a.pairs[st.pairs[i]][1] : '');
+      return '<button type="button" class="' + c.join(' ') + '" data-side="L" data-i="' + i + '" style="--pc:' + pc(i) + '" aria-pressed="' + (st.selL === i) + '"' + (locked ? ' aria-disabled="true"' : '') + ' aria-label="' + esc(label) + '">' +
+        '<span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="txt">' + esc(p[0]) + '</span>' + mark(s) + '</button>';
+    }).join('');
+    var right = st.order.map(function (j) {
+      var l = owner[j], paired = l !== undefined, s = paired ? st.status[l] : undefined;
+      var c = ['item'];
+      if (paired) c.push('paired');
+      if (st.selR === j) c.push('sel');
+      if (s && s !== 'miss') c.push(s);
+      var locked = s === 'ok' || s === 'rev';
+      var label = a.pairs[j][1] + (paired ? ', matched with ' + a.pairs[l][0] : '');
+      return '<button type="button" class="' + c.join(' ') + '" data-side="R" data-i="' + j + '"' + (paired ? ' style="--pc:' + pc(l) + '"' : '') + ' aria-pressed="' + (st.selR === j) + '"' + (locked ? ' aria-disabled="true"' : '') + ' aria-label="' + esc(label) + '">' +
+        (paired ? '<span class="num" aria-hidden="true">' + (l + 1) + '</span>' : '') + '<span class="txt">' + esc(a.pairs[j][1]) + '</span>' + (s && s !== 'miss' ? mark(s) : '') + '</button>';
+    }).join('');
+    body.innerHTML =
+      '<div class="match"><div class="col"><div class="col-h">' + esc(a.heads[0]) + '</div>' + left + '</div>' +
+      '<div class="col"><div class="col-h">' + esc(a.heads[1]) + '</div>' + right + '</div></div>';
+    if (focusKey) {
+      var el = body.querySelector('[data-side="' + focusKey.charAt(0) + '"][data-i="' + focusKey.slice(1) + '"]');
+      if (el) el.focus();
+    }
+  }
+
+  /* ------------------------------------------------------------------ fill in the blank */
+  function blankHtml(a, st, b) {
+    var s = st.status[b.k];
+    return '<span class="bw"><input class="blank' + (s ? ' ' + s : '') + '" type="text" data-k="' + b.k + '" value="' + esc(st.values[b.k]) + '" style="width:' + b.w + 'ch" aria-label="Blank ' + (b.k + 1) + ' of ' + a.total + '" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false"' + (st.revealed ? ' readonly' : '') + '>' +
+      '<span class="bmark" aria-hidden="true">' + (s === 'ok' || s === 'rev' ? '&#10003;' : s === 'bad' ? '&#10007;' : '') + '</span></span>';
+  }
+  function drawFill(a, st, body) {
+    body.innerHTML =
+      '<label class="toggle"><input type="checkbox" id="bq-hard"' + (state.hard ? ' checked' : '') + '> Hard mode: hide the word bank</label>' +
+      '<div class="bank" id="bq-bank"' + (state.hard ? ' hidden' : '') + '><div class="bank-label">Word bank</div><div class="chips">' +
+        st.bank.map(function (w) { return '<button type="button" class="chip" data-w="' + esc(w) + '">' + esc(w) + '</button>'; }).join('') +
+      '</div></div>' +
+      '<ol class="fill-list">' + a.parsed.map(function (segs) {
+        return '<li>' + segs.map(function (s) { return s.t !== undefined ? esc(s.t) : blankHtml(a, st, s.b); }).join('') + '</li>';
+      }).join('') + '</ol>';
+    updateChips(st, body);
+  }
+  function updateChips(st, body) {
+    var vals = {};
+    st.values.forEach(function (v) { var n = norm(v); if (n) vals[n] = true; });
+    Array.prototype.forEach.call(body.querySelectorAll('.chip'), function (c) {
+      var used = !!vals[norm(c.getAttribute('data-w'))];
+      c.classList.toggle('used', used);
+      c.setAttribute('aria-disabled', used ? 'true' : 'false');
+    });
+  }
+  function paintBlank(st, body, k) {
+    var inp = body.querySelector('.blank[data-k="' + k + '"]'); if (!inp) return;
+    var s = st.status[k];
+    inp.className = 'blank' + (s ? ' ' + s : '');
+    var m = inp.nextElementSibling;
+    if (m) m.innerHTML = s === 'ok' || s === 'rev' ? '&#10003;' : s === 'bad' ? '&#10007;' : '';
+  }
+  function checkFill(a, st, body) {
+    var score = 0, empty = 0;
+    a.blanks.forEach(function (b) {
+      var v = norm(st.values[b.k]);
+      var ok = !!v && b.alts.some(function (x) { return norm(x) === v; });
+      st.status[b.k] = ok ? 'ok' : 'bad';
+      if (ok) score++;
+      if (!v) empty++;
+      paintBlank(st, body, b.k);
+    });
+    st.checked = true; st.score = score;
+    if (score === a.total) setFb(st, 'good', 'All ' + a.total + ' blanks are correct.');
+    else setFb(st, 'warn', score + ' of ' + a.total + ' correct. Edit the blanks marked with a cross, then check again.' +
+      (empty ? ' ' + empty + (empty === 1 ? ' blank is' : ' blanks are') + ' empty.' : ''));
+  }
+  function revealFill(a, st) {
+    a.blanks.forEach(function (b) { st.values[b.k] = b.primary; st.status[b.k] = 'rev'; });
+    st.revealed = true;
+  }
+  function setupFill(a, st, body) {
+    drawFill(a, st, body);
+    body.addEventListener('input', function (e) {
+      var inp = e.target.closest ? e.target.closest('.blank') : null; if (!inp) return;
+      var k = +inp.getAttribute('data-k');
+      st.values[k] = inp.value;
+      if (st.status[k]) { delete st.status[k]; paintBlank(st, body, k); }
+      updateChips(st, body);
+    });
+    body.addEventListener('focusin', function (e) {
+      var inp = e.target.closest ? e.target.closest('.blank') : null;
+      if (inp) st.last = +inp.getAttribute('data-k');
+    });
+    body.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' || !e.target.classList || !e.target.classList.contains('blank')) return;
+      e.preventDefault();
+      var k = +e.target.getAttribute('data-k');
+      var next = body.querySelector('.blank[data-k="' + (k + 1) + '"]');
+      if (next) next.focus(); else { var c = $('#bq-check'); if (c && !c.disabled) c.click(); }
+    });
+    body.addEventListener('change', function (e) {
+      if (e.target.id === 'bq-hard') { state.hard = e.target.checked; var bk = $('#bq-bank'); if (bk) bk.hidden = state.hard; }
+    });
+    body.addEventListener('click', function (e) {
+      var chip = e.target.closest ? e.target.closest('.chip') : null;
+      if (!chip || st.revealed || chip.classList.contains('used')) return;
+      var inputs = Array.prototype.slice.call(body.querySelectorAll('.blank'));
+      var empties = inputs.filter(function (i) { return !i.value.trim(); });
+      var target = null;
+      if (st.last !== null && inputs[st.last] && !inputs[st.last].value.trim()) target = inputs[st.last];
+      if (!target) target = empties[0] || null;
+      if (!target && st.last !== null) target = inputs[st.last] || null;
+      if (!target) return;
+      target.value = chip.getAttribute('data-w');
+      target.dispatchEvent(new Event('input', { bubbles: true }));
+      st.last = null;
+    });
+  }
+
+  /* ------------------------------------------------------------------ results */
+  function renderResults() {
+    var t = totals(), pct = Math.round(t.pct * 100), attempted = 0;
+    var rows = ACTS.map(function (a, i) {
+      var st = state.acts[a.id], done = st.checked || st.revealed; if (done) attempted++;
+      var p = a.total ? Math.round(st.score / a.total * 100) : 0;
+      var note = !done ? 'Not attempted yet' : st.revealed ? 'Answers were shown' : (p < 70 ? 'Worth revising: ' + a.tip : '');
+      return '<li class="res-row"><div class="res-title">' + (i + 1) + '. ' + esc(a.title) + '</div>' +
+        '<div class="res-score">' + st.score + '/' + a.total + '</div>' +
+        '<button type="button" class="btn ghost small" data-retry="' + i + '">' + (done ? 'Try again' : 'Start') + '</button>' +
+        '<div class="bar" aria-hidden="true"><span class="' + (p >= 100 ? 'full' : '') + '" style="width:' + p + '%"></span></div>' +
+        (note ? '<div class="res-note">' + esc(note) + '</div>' : '') + '</li>';
+    }).join('');
+    var msg = attempted === 0 ? 'You have not checked any activities yet. Start with activity 1.'
+      : pct >= 90 ? 'Excellent. You know this topic well.'
+      : pct >= 70 ? 'Good going. A little more practice on the notes below and you will have it.'
+      : pct >= 50 ? 'A decent start. Try the activities flagged below again.'
+      : 'Keep going. Use Try again on the activities below and lean on the word bank.';
+    if (attempted > 0 && attempted < ACTS.length) msg += ' You have checked ' + attempted + ' of ' + ACTS.length + ' activities.';
+    main.innerHTML =
+      '<section class="card" aria-labelledby="bq-h">' +
+        '<h2 id="bq-h" tabindex="-1">Your results</h2>' +
+        '<div class="res-top">' +
+          '<div class="res-flask">' + flaskSvg('big', attempted ? Math.max(t.pct, 0.06) : 0, t.pct >= 1, 2.6) + '</div>' +
+          '<div><div class="res-pct">' + t.got + '/' + t.tot + '</div><div>' + pct + '% overall</div><p class="res-msg">' + esc(msg) + '</p></div>' +
+        '</div>' +
+        '<ul class="res-list">' + rows + '</ul>' +
+        '<div class="actions"><button type="button" class="btn ghost" id="bq-back">Back to the quiz</button><button type="button" class="btn" id="bq-restart">Start again</button></div>' +
+      '</section>';
+    $('#bq-back').onclick = function () { goTo(state.cur); };
+    $('#bq-restart').onclick = function () {
+      ACTS.forEach(function (a) { state.acts[a.id] = initAct(a); });
+      goTo(0);
+    };
+    Array.prototype.forEach.call(main.querySelectorAll('[data-retry]'), function (b) {
+      b.onclick = function () {
+        var i = +b.getAttribute('data-retry');
+        state.acts[ACTS[i].id] = initAct(ACTS[i]);
+        goTo(i);
+      };
+    });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
