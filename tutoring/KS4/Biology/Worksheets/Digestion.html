@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE Food Tests & Digestive System Quiz</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f3f6fa;
+        color: #1f2937;
+    }
+
+    .quiz-container {
+        max-width: 850px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .quiz-card {
+        background: white;
+        border-radius: 14px;
+        padding: 30px;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    h1 {
+        margin-top: 0;
+        color: #17365d;
+        text-align: center;
+    }
+
+    .intro {
+        text-align: center;
+        color: #64748b;
+        margin-bottom: 30px;
+    }
+
+    .progress-container {
+        background: #e5e7eb;
+        height: 10px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #2563eb;
+        transition: width 0.3s ease;
+    }
+
+    .question-number {
+        font-size: 14px;
+        font-weight: bold;
+        color: #2563eb;
+        margin-bottom: 10px;
+    }
+
+    .question {
+        font-size: 21px;
+        font-weight: bold;
+        margin-bottom: 22px;
+        line-height: 1.4;
+    }
+
+    .options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .option {
+        border: 2px solid #dbe2ea;
+        border-radius: 9px;
+        padding: 14px 16px;
+        cursor: pointer;
+        background: white;
+        transition: 0.2s;
+    }
+
+    .option:hover {
+        border-color: #2563eb;
+        background: #f8fbff;
+    }
+
+    .option.selected {
+        border-color: #2563eb;
+        background: #eff6ff;
+    }
+
+    .option input {
+        margin-right: 10px;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 13px;
+        border: 2px solid #dbe2ea;
+        border-radius: 8px;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .matching-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .matching-label {
+        font-weight: bold;
+    }
+
+    .hint {
+        margin-top: 20px;
+        background: #fff7ed;
+        border-left: 4px solid #f97316;
+        padding: 12px;
+        color: #7c2d12;
+        display: none;
+    }
+
+    .hint-button {
+        background: transparent;
+        border: none;
+        color: #2563eb;
+        cursor: pointer;
+        margin-top: 18px;
+        font-weight: bold;
+    }
+
+    .feedback {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+        line-height: 1.5;
+    }
+
+    .feedback.correct {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .feedback.incorrect {
+        background: #fee2e2;
+        color: #991b1b;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 25px;
+        gap: 10px;
+    }
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 13px 22px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .primary-button {
+        background: #2563eb;
+        color: white;
+    }
+
+    .primary-button:hover {
+        background: #1d4ed8;
+    }
+
+    .secondary-button {
+        background: #e5e7eb;
+        color: #374151;
+    }
+
+    .secondary-button:hover {
+        background: #d1d5db;
+    }
+
+    .result {
+        display: none;
+        text-align: center;
+    }
+
+    .score {
+        font-size: 52px;
+        font-weight: bold;
+        color: #2563eb;
+        margin: 20px 0;
+    }
+
+    .score-message {
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+
+    .review {
+        text-align: left;
+        margin-top: 30px;
+    }
+
+    .review-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+    .review-correct {
+        background: #dcfce7;
+    }
+
+    .review-incorrect {
+        background: #fee2e2;
+    }
+
+    .start-screen {
+        text-align: center;
+    }
+
+    .start-screen p {
+        line-height: 1.6;
+    }
+
+    .badge {
+        display: inline-block;
+        background: #e0ecff;
+        color: #1d4ed8;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 600px) {
+        .quiz-container {
+            margin: 10px auto;
+            padding: 10px;
+        }
+
+        .quiz-card {
+            padding: 20px;
+        }
+
+        .question {
+            font-size: 18px;
+        }
+
+        .matching-row {
+            grid-template-columns: 1fr;
+            gap: 5px;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-card">
+
+        <!-- START SCREEN -->
+        <div id="startScreen" class="start-screen">
+            <span class="badge">GCSE Biology</span>
+            <h1>Food Tests & Digestive System</h1>
+
+            <p>
+                Test your knowledge of food tests, enzymes and the digestive system.
+            </p>
+
+            <p>
+                <strong>15 questions</strong> • Multiple choice • Matching • Fill in the blanks
+            </p>
+
+            <button class="primary-button" onclick="startQuiz()">
+                Start Quiz
+            </button>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quizScreen" style="display:none;">
+
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="questionNumber" class="question-number"></div>
+            <div id="questionText" class="question"></div>
+
+            <div id="answerArea"></div>
+
+            <button class="hint-button" onclick="toggleHint()">
+                💡 Show Hint
+            </button>
+
+            <div id="hint" class="hint"></div>
+
+            <div id="feedback" class="feedback"></div>
+
+            <div class="buttons">
+                <button
+                    id="backButton"
+                    class="secondary-button"
+                    onclick="previousQuestion()">
+                    Back
+                </button>
+
+                <button
+                    id="nextButton"
+                    class="primary-button"
+                    onclick="checkAnswer()">
+                    Check Answer
+                </button>
+            </div>
+
+        </div>
+
+        <!-- RESULTS -->
+        <div id="resultScreen" class="result">
+
+            <span class="badge">Quiz Complete</span>
+
+            <h1>Your Result</h1>
+
+            <div id="score" class="score"></div>
+
+            <div id="scoreMessage" class="score-message"></div>
+
+            <button class="primary-button" onclick="restartQuiz()">
+                Try Again
+            </button>
+
+            <div id="review" class="review"></div>
+
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+const questions = [
+
+    {
+        type: "multiple",
+        question: "Which food test is used to test for starch?",
+        options: [
+            "Benedict's solution",
+            "Iodine solution",
+            "Biuret reagent",
+            "Ethanol"
+        ],
+        answer: "Iodine solution",
+        hint: "A positive result produces a blue-black colour.",
+        feedback: "Iodine solution tests for starch. A positive result turns blue-black."
+    },
+
+    {
+        type: "multiple",
+        question: "What colour is produced when Benedict's test is positive for a high concentration of reducing sugar?",
+        options: [
+            "Purple",
+            "Blue-black",
+            "Brick-red",
+            "Milky white"
+        ],
+        answer: "Brick-red",
+        hint: "The test requires heating.",
+        feedback: "Benedict's solution changes from blue towards green, yellow, orange and finally brick-red as the concentration of reducing sugar increases."
+    },
+
+    {
+        type: "multiple",
+        question: "Which reagent is used to test for protein?",
+        options: [
+            "Iodine solution",
+            "Benedict's solution",
+            "Biuret reagent",
+            "Ethanol"
+        ],
+        answer: "Biuret reagent",
+        hint: "A positive result is purple.",
+        feedback: "Biuret reagent tests for protein and produces a purple colour when protein is present."
+    },
+
+    {
+        type: "multiple",
+        question: "Which food substance is tested using ethanol followed by water?",
+        options: [
+            "Starch",
+            "Protein",
+            "Reducing sugar",
+            "Lipids"
+        ],
+        answer: "Lipids",
+        hint: "The positive result is a cloudy white emulsion.",
+        feedback: "The emulsion test uses ethanol and water to test for lipids. A positive result is a cloudy white emulsion."
+    },
+
+    {
+        type: "blank",
+        question: "Complete the sentence: Iodine solution turns ________ when starch is present.",
+        answer: "blue-black",
+        hint: "It is a dark colour made from two colours.",
+        feedback: "The positive iodine test for starch is blue-black."
+    },
+
+    {
+        type: "multiple",
+        question: "Which organ produces bile?",
+        options: [
+            "Stomach",
+            "Liver",
+            "Pancreas",
+            "Small intestine"
+        ],
+        answer: "Liver",
+        hint: "This organ is also involved in processing substances in the blood.",
+        feedback: "Bile is produced by the liver and stored in the gall bladder."
+    },
+
+    {
+        type: "multiple",
+        question: "Which enzyme breaks down starch into smaller sugars?",
+        options: [
+            "Protease",
+            "Lipase",
+            "Amylase",
+            "Bile"
+        ],
+        answer: "Amylase",
+        hint: "This enzyme is produced in the salivary glands and pancreas.",
+        feedback: "Amylase breaks down starch into smaller sugars."
+    },
+
+    {
+        type: "blank",
+        question: "Complete the sentence: Protease enzymes break down proteins into ________.",
+        answer: "amino acids",
+        hint: "These are the small molecules that make up proteins.",
+        feedback: "Proteases break proteins down into amino acids."
+    },
+
+    {
+        type: "multiple",
+        question: "Where does most absorption of digested food molecules take place?",
+        options: [
+            "Stomach",
+            "Small intestine",
+            "Large intestine",
+            "Oesophagus"
+        ],
+        answer: "Small intestine",
+        hint: "This organ contains millions of villi.",
+        feedback: "Most absorption of digested nutrients takes place in the small intestine."
+    },
+
+    {
+        type: "matching",
+        question: "Match each digestive organ to its main function.",
+        pairs: [
+            {
+                label: "Mouth",
+                answer: "Chews food and mixes it with saliva"
+            },
+            {
+                label: "Stomach",
+                answer: "Uses acid and enzymes to digest food"
+            },
+            {
+                label: "Small intestine",
+                answer: "Digests food and absorbs nutrients"
+            },
+            {
+                label: "Large intestine",
+                answer: "Absorbs water"
+            }
+        ],
+        options: [
+            "Chews food and mixes it with saliva",
+            "Uses acid and enzymes to digest food",
+            "Digests food and absorbs nutrients",
+            "Absorbs water"
+        ],
+        hint: "Think about the main job of each part of the digestive system."
+    },
+
+    {
+        type: "multiple",
+        question: "What is the main function of bile in digestion?",
+        options: [
+            "It breaks proteins into amino acids",
+            "It emulsifies fats and helps neutralise stomach acid",
+            "It converts starch directly into glucose",
+            "It absorbs water from food"
+        ],
+        answer: "It emulsifies fats and helps neutralise stomach acid",
+        hint: "Bile is not an enzyme.",
+        feedback: "Bile emulsifies fats into smaller droplets and helps neutralise acidic food entering the small intestine."
+    },
+
+    {
+        type: "blank",
+        question: "Complete the sentence: The movement of food through the digestive system by waves of muscle contraction is called ________.",
+        answer: "peristalsis",
+        hint: "It begins with 'peri-'.",
+        feedback: "Peristalsis is the wave-like contraction of muscles that moves food through the digestive system."
+    },
+
+    {
+        type: "multiple",
+        question: "Why are villi important in the small intestine?",
+        options: [
+            "They produce hydrochloric acid",
+            "They increase the surface area for absorption",
+            "They store faeces",
+            "They chew food"
+        ],
+        answer: "They increase the surface area for absorption",
+        hint: "Villi help nutrients move from the small intestine into the blood.",
+        feedback: "Villi provide a large surface area, allowing digested nutrients to be absorbed efficiently."
+    },
+
+    {
+        type: "multiple",
+        question: "Which enzyme breaks down lipids?",
+        options: [
+            "Amylase",
+            "Protease",
+            "Lipase",
+            "Maltase"
+        ],
+        answer: "Lipase",
+        hint: "Its name starts with 'lip-', referring to lipids.",
+        feedback: "Lipase breaks down lipids into fatty acids and glycerol."
+    },
+
+    {
+        type: "blank",
+        question: "Complete the sentence: The stomach contains hydrochloric acid, which creates a ________ environment.",
+        answer: "acidic",
+        hint: "The pH is low.",
+        feedback: "Hydrochloric acid creates an acidic environment in the stomach, providing suitable conditions for stomach protease enzymes."
+    }
+
+];
+
+let currentQuestion = 0;
+let userAnswers = [];
+let answered = false;
+
+function startQuiz() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("quizScreen").style.display = "block";
+    currentQuestion = 0;
+    userAnswers = [];
+    showQuestion();
+}
+
+function showQuestion() {
+
+    const q = questions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("questionText").textContent = q.question;
+
+    document.getElementById("progressBar").style.width =
+        ((currentQuestion + 1) / questions.length * 100) + "%";
+
+    const answerArea = document.getElementById("answerArea");
+    answerArea.innerHTML = "";
+
+    document.getElementById("feedback").style.display = "none";
+    document.getElementById("hint").style.display = "none";
+    document.getElementById("hint").textContent = q.hint;
+
+    answered = false;
+
+    if (q.type === "multiple") {
+        q.options.forEach(option => {
+
+            const label = document.createElement("label");
+            label.className = "option";
+
+            label.innerHTML = `
+                <input type="radio"
+                       name="answer"
+                       value="${escapeHTML(option)}">
+                ${escapeHTML(option)}
+            `;
+
+            label.addEventListener("click", function() {
+                document.querySelectorAll(".option").forEach(o => {
+                    o.classList.remove("selected");
+                });
+                label.classList.add("selected");
+            });
+
+            answerArea.appendChild(label);
+        });
+    }
+
+    if (q.type === "blank") {
+
+        const input = document.createElement("input");
+        input.type = "text";
+        input.id = "blankAnswer";
+        input.placeholder = "Type your answer here...";
+
+        if (userAnswers[currentQuestion]) {
+            input.value = userAnswers[currentQuestion];
+        }
+
+        answerArea.appendChild(input);
+    }
+
+    if (q.type === "matching") {
+
+        q.pairs.forEach((pair, index) => {
+
+            const row = document.createElement("div");
+            row.className = "matching-row";
+
+            const label = document.createElement("div");
+            label.className = "matching-label";
+            label.textContent = pair.label;
+
+            const select = document.createElement("select");
+            select.id = "match-" + index;
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Choose...";
+            select.appendChild(defaultOption);
+
+            q.options.forEach(option => {
+                const optionElement = document.createElement("option");
+                optionElement.value = option;
+                optionElement.textContent = option;
+                select.appendChild(optionElement);
+            });
+
+            row.appendChild(label);
+            row.appendChild(select);
+
+            answerArea.appendChild(row);
+        });
+    }
+
+    document.getElementById("backButton").style.visibility =
+        currentQuestion === 0 ? "hidden" : "visible";
+
+    document.getElementById("nextButton").textContent =
+        currentQuestion === questions.length - 1
+            ? "Finish Quiz"
+            : "Check Answer";
+}
+
+
+function checkAnswer() {
+
+    if (answered) {
+        if (currentQuestion < questions.length - 1) {
+            currentQuestion++;
+            showQuestion();
+        } else {
+            showResults();
+        }
+        return;
+    }
+
+    const q = questions[currentQuestion];
+
+    let userAnswer = null;
+    let correct = false;
+
+    if (q.type === "multiple") {
+
+        const selected = document.querySelector(
+            'input[name="answer"]:checked'
+        );
+
+        if (!selected) {
+            alert("Please select an answer.");
+            return;
+        }
+
+        userAnswer = selected.value;
+
+        correct = userAnswer === q.answer;
+    }
+
+    if (q.type === "blank") {
+
+        const input = document.getElementById("blankAnswer");
+
+        if (!input.value.trim()) {
+            alert("Please enter an answer.");
+            return;
+        }
+
+        userAnswer = input.value.trim();
+
+        correct =
+            normalise(userAnswer) === normalise(q.answer);
+    }
+
+    if (q.type === "matching") {
+
+        const answers = [];
+
+        q.pairs.forEach((pair, index) => {
+            const select = document.getElementById("match-" + index);
+
+            if (!select.value) {
+                alert("Please complete all of the matches.");
+                return;
+            }
+
+            answers.push(select.value);
+        });
+
+        if (answers.length !== q.pairs.length) {
+            return;
+        }
+
+        userAnswer = answers;
+
+        correct = q.pairs.every((pair, index) => {
+            return answers[index] === pair.answer;
+        });
+    }
+
+    userAnswers[currentQuestion] = userAnswer;
+
+    showFeedback(correct);
+
+    answered = true;
+
+    document.getElementById("nextButton").textContent =
+        currentQuestion === questions.length - 1
+            ? "See Results"
+            : "Next Question";
+}
+
+
+function showFeedback(correct) {
+
+    const q = questions[currentQuestion];
+    const feedback = document.getElementById("feedback");
+
+    feedback.className =
+        "feedback " + (correct ? "correct" : "incorrect");
+
+    if (correct) {
+
+        feedback.innerHTML =
+            "<strong>✓ Correct!</strong><br>" +
+            getFeedback(q, true);
+
+    } else {
+
+        feedback.innerHTML =
+            "<strong>✗ Not quite.</strong><br>" +
+            getFeedback(q, false);
+    }
+
+    feedback.style.display = "block";
+}
+
+
+function getFeedback(q, correct) {
+
+    if (q.type === "matching") {
+
+        if (correct) {
+            return "All of the digestive organs have been matched correctly.";
+        }
+
+        return "Check the main function of each organ and try again.";
+    }
+
+    if (correct) {
+        return q.feedback;
+    }
+
+    if (q.type === "blank") {
+        return `The expected answer is "${q.answer}". ${q.feedback}`;
+    }
+
+    return q.feedback;
+}
+
+
+function toggleHint() {
+
+    const hint = document.getElementById("hint");
+
+    hint.style.display =
+        hint.style.display === "none" ? "block" : "none";
+}
+
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+    }
+}
+
+
+function showResults() {
+
+    document.getElementById("quizScreen").style.display = "none";
+    document.getElementById("resultScreen").style.display = "block";
+
+    let score = 0;
+
+    questions.forEach((q, index) => {
+
+        if (isCorrect(q, userAnswers[index])) {
+            score++;
+        }
+
+    });
+
+    document.getElementById("score").textContent =
+        `${score} / ${questions.length}`;
+
+    let message = "";
+
+    const percentage = (score / questions.length) * 100;
+
+    if (percentage === 100) {
+        message = "Excellent! Full marks.";
+    } else if (percentage >= 80) {
+        message = "Great work! You have a strong understanding of the topic.";
+    } else if (percentage >= 60) {
+        message = "Good effort. A little more revision will help.";
+    } else if (percentage >= 40) {
+        message = "Keep practising. Review the food tests and digestive system.";
+    } else {
+        message = "Keep going! Use the quiz feedback to revise the key ideas.";
+    }
+
+    document.getElementById("scoreMessage").textContent = message;
+
+    createReview();
+}
+
+
+function isCorrect(q, answer) {
+
+    if (q.type === "multiple") {
+        return answer === q.answer;
+    }
+
+    if (q.type === "blank") {
+        return answer &&
+            normalise(answer) === normalise(q.answer);
+    }
+
+    if (q.type === "matching") {
+
+        return answer &&
+            q.pairs.every((pair, index) => {
+                return answer[index] === pair.answer;
+            });
+    }
+
+    return false;
+}
+
+
+function createReview() {
+
+    const review = document.getElementById("review");
+    review.innerHTML = "<h2>Review</h2>";
+
+    questions.forEach((q, index) => {
+
+        const correct = isCorrect(q, userAnswers[index]);
+
+        const item = document.createElement("div");
+
+        item.className =
+            "review-item " +
+            (correct ? "review-correct" : "review-incorrect");
+
+        let answerText = "";
+
+        if (q.type === "matching") {
+            answerText = "See the correct matches in the question.";
+        } else {
+            answerText = `Correct answer: ${q.answer}`;
+        }
+
+        item.innerHTML = `
+            <strong>Question ${index + 1}</strong>
+            <br>
+            ${correct ? "✓ Correct" : "✗ Incorrect"}
+            <br>
+            ${answerText}
+        `;
+
+        review.appendChild(item);
+    });
+}
+
+
+function restartQuiz() {
+
+    document.getElementById("resultScreen").style.display = "none";
+    document.getElementById("startScreen").style.display = "block";
+
+    currentQuestion = 0;
+    userAnswers = [];
+}
+
+
+function normalise(text) {
+
+    return text
+        .toLowerCase()
+        .trim()
+        .replace(/[.,!?]/g, "")
+        .replace(/\s+/g, " ");
+}
+
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+</script>
+
+</body>
+</html>
