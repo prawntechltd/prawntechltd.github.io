@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revision Checklist — AQA Combined Science: Trilogy (pp. 20–120)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f5f0;
+    --paper-raised:#fffefb;
+    --ink:#1c211d;
+    --ink-soft:#565f57;
+    --rule:#dcd9cd;
+    --bio:#2f5233;
+    --bio-tint:#e7ede4;
+    --chem:#1f4e6b;
+    --chem-tint:#e5edf1;
+    --amber:#a5641c;
+    --amber-tint:#f3e6d3;
+    --done:#2f6b3d;
+    --done-tint:#e2ede2;
+    --focus:#1f4e6b;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.5;
+    padding-bottom:80px;
+  }
+  a{color:inherit;}
+
+  /* ---------- header ---------- */
+  header{
+    position:sticky;
+    top:0;
+    z-index:20;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    padding:20px 24px 16px;
+  }
+  .header-inner{max-width:740px;margin:0 auto;}
+  .eyebrow-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;}
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.5rem;
+    margin:0 0 2px;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    color:var(--ink-soft);
+    font-size:0.88rem;
+    margin:0;
+  }
+  .spec-code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  .progress-wrap{margin-top:14px;}
+  .progress-track{
+    height:8px;
+    background:var(--rule);
+    border-radius:5px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--bio),var(--chem));
+    border-radius:5px;
+    transition:width .35s ease;
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    margin-top:6px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+
+  /* ---------- controls ---------- */
+  .controls{
+    max-width:740px;
+    margin:16px auto 0;
+    padding:0 24px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  button.ctrl{
+    font-family:'Inter',sans-serif;
+    font-size:0.8rem;
+    font-weight:600;
+    background:var(--paper-raised);
+    border:1px solid var(--rule);
+    color:var(--ink);
+    padding:7px 14px;
+    border-radius:7px;
+    cursor:pointer;
+  }
+  button.ctrl:hover{border-color:var(--ink-soft);}
+  button.ctrl:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  button.ctrl.danger{color:#8a3324;}
+
+  /* ---------- main ---------- */
+  main{max-width:740px;margin:0 auto;padding:22px 24px 0;}
+
+  .subject-heading{
+    font-family:'Fraunces',serif;
+    font-size:1.05rem;
+    font-weight:600;
+    margin:34px 0 12px;
+    padding-bottom:6px;
+    border-bottom:2px solid var(--rule);
+  }
+  .subject-heading.bio{color:var(--bio);}
+  .subject-heading.chem{color:var(--chem);}
+  .subject-heading:first-child{margin-top:0;}
+
+  .section{
+    background:var(--paper-raised);
+    border:1px solid var(--rule);
+    border-left:4px solid var(--section-color, var(--bio));
+    border-radius:9px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  .section.bio{--section-color:var(--bio);}
+  .section.chem{--section-color:var(--chem);}
+
+  .section-head{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+    font-family:inherit;
+  }
+  .section-head:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;}
+  .section-code{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--section-color);
+    background:var(--tint, var(--bio-tint));
+    padding:2px 7px;
+    border-radius:5px;
+    flex-shrink:0;
+  }
+  .section.bio .section-code{--tint:var(--bio-tint);}
+  .section.chem .section-code{--tint:var(--chem-tint);}
+
+  .section-title{
+    font-weight:600;
+    font-size:0.94rem;
+    flex:1;
+  }
+  .section-count{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.74rem;
+    color:var(--ink-soft);
+    flex-shrink:0;
+  }
+  .chevron{
+    width:9px;height:9px;
+    border-right:2px solid var(--ink-soft);
+    border-bottom:2px solid var(--ink-soft);
+    transform:rotate(-45deg);
+    transition:transform .2s ease;
+    flex-shrink:0;
+    margin-right:2px;
+  }
+  .section.open .chevron{transform:rotate(45deg);}
+
+  .section-body{
+    display:none;
+    padding:0 16px 14px;
+    border-top:1px solid var(--rule);
+  }
+  .section.open .section-body{display:block;}
+
+  .topic{margin-top:14px;}
+  .topic-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:6px 0;
+  }
+  .topic-label{
+    font-weight:600;
+    font-size:0.9rem;
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    flex-wrap:wrap;
+  }
+  .topic-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.76rem;
+    color:var(--section-color);
+    font-weight:600;
+  }
+
+  .sub-list{
+    list-style:none;
+    margin:2px 0 0;
+    padding:0 0 0 26px;
+    border-left:1px solid var(--rule);
+  }
+  .sub-item{padding:5px 0 5px 12px;}
+  .sub-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    cursor:pointer;
+  }
+  .sub-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    padding-top:1px;
+    flex-shrink:0;
+    min-width:52px;
+  }
+  .sub-text{font-size:0.88rem;}
+  .ht-badge{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;
+    font-weight:600;
+    color:var(--amber);
+    background:var(--amber-tint);
+    padding:1px 5px;
+    border-radius:4px;
+    margin-left:6px;
+    vertical-align:1px;
+    letter-spacing:0.02em;
+  }
+
+  input[type=checkbox]{
+    appearance:none;
+    -webkit-appearance:none;
+    width:18px;height:18px;
+    border:1.5px solid var(--ink-soft);
+    border-radius:5px;
+    flex-shrink:0;
+    margin:1px 0 0;
+    cursor:pointer;
+    position:relative;
+    background:var(--paper-raised);
+  }
+  input[type=checkbox]:checked{
+    background:var(--done);
+    border-color:var(--done);
+  }
+  input[type=checkbox]:checked::after{
+    content:'';
+    position:absolute;
+    left:5px;top:1px;
+    width:5px;height:9px;
+    border:solid #fff;
+    border-width:0 2px 2px 0;
+    transform:rotate(40deg);
+  }
+  input[type=checkbox]:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  .sub-item.done .sub-text{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--rule);}
+  .topic.done .topic-label{color:var(--ink-soft);}
+  .topic.done .topic-num{color:var(--ink-soft);}
+
+  .topic-progress{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;
+    color:var(--ink-soft);
+    margin-left:auto;
+    flex-shrink:0;
+    padding-top:2px;
+  }
+
+  footer{
+    max-width:740px;
+    margin:36px auto 0;
+    padding:0 24px;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width:480px){
+    .section-count{display:none;}
+    .sub-num{min-width:44px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow-row">
+      <div>
+        <h1>Revision checklist</h1>
+        <p class="subtitle">AQA GCSE Combined Science: Trilogy (8464) — spec pages 20–120</p>
+      </div>
+      <span class="spec-code">4.1 · 4.2 · 4.3 · 4.4 · 4.5 · 4.6 · 4.7 · 4.8 · 5.1–5.11</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label">
+        <span id="progressText">0 of 0 checked</span>
+        <span id="progressPct">0%</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <button class="ctrl" id="expandAll">Expand all</button>
+  <button class="ctrl" id="collapseAll">Collapse all</button>
+  <button class="ctrl" id="syncNow">Sync now</button>
+  <button class="ctrl" id="saveToFile">Download backup</button>
+  <button class="ctrl" id="loadFromFile">Restore backup</button>
+  <button class="ctrl danger" id="resetAll">Reset progress</button>
+</div>
+<div class="controls" style="margin-top:0;">
+  <span id="fileStatus" style="font-size:0.76rem;color:var(--ink-soft);"></span>
+</div>
+
+<main id="main"></main>
+
+<footer>
+  Covers Biology topics 4.1–4.8 (Cell biology through Key ideas) and Chemistry topics 5.1–5.11, as printed on pages 20–120 of the AQA Combined Science: Trilogy specification (8464). Progress auto-saves to <code>checklist-progress.json</code> on the server via <code>checklist-api.php</code> (same folder), with a browser-storage and downloadable-file backup as well.
+</footer>
+
+<script>
+// ---------- data ----------
+// Each section = a numbered spec heading (e.g. "4.7", "5.3").
+// Each topic = a three/two-level heading (e.g. "4.7.1").
+// Each topic has subtopics (leaf checklist items) OR, if "subs" is empty,
+// the topic itself is the leaf (e.g. "Key ideas" summaries).
+const DATA = [
+  {subject:"bio", code:"4.1", title:"Cell biology", topics:[
+    {num:"4.1.1", title:"Cell structure", subs:[
+      ["4.1.1.1","Eukaryotes and prokaryotes"],
+      ["4.1.1.2","Animal and plant cells"],
+      ["4.1.1.3","Cell specialisation"],
+      ["4.1.1.4","Cell differentiation"],
+      ["4.1.1.5","Microscopy"]
+    ]},
+    {num:"4.1.2", title:"Cell division", subs:[
+      ["4.1.2.1","Chromosomes"],
+      ["4.1.2.2","Mitosis and the cell cycle"],
+      ["4.1.2.3","Stem cells"]
+    ]},
+    {num:"4.1.3", title:"Transport in cells", subs:[
+      ["4.1.3.1","Diffusion"],
+      ["4.1.3.2","Osmosis"],
+      ["4.1.3.3","Active transport"]
+    ]}
+  ]},
+  {subject:"bio", code:"4.2", title:"Organisation", topics:[
+    {num:"4.2.1", title:"Principles of organisation", subs:[]},
+    {num:"4.2.2", title:"Animal tissues, organs and organ systems", subs:[
+      ["4.2.2.1","The human digestive system"],
+      ["4.2.2.2","The heart and blood vessels"],
+      ["4.2.2.3","Blood"],
+      ["4.2.2.4","Coronary heart disease: a non-communicable disease"],
+      ["4.2.2.5","Health issues"],
+      ["4.2.2.6","The effect of lifestyle on some non-communicable diseases"],
+      ["4.2.2.7","Cancer"]
+    ]},
+    {num:"4.2.3", title:"Plant tissues, organs and systems", subs:[
+      ["4.2.3.1","Plant tissues"],
+      ["4.2.3.2","Plant organ system"]
+    ]}
+  ]},
+  {subject:"bio", code:"4.3", title:"Infection and response", topics:[
+    {num:"4.3.1", title:"Communicable diseases", subs:[
+      ["4.3.1.1","Communicable (infectious) diseases"],
+      ["4.3.1.2","Viral diseases"],
+      ["4.3.1.3","Bacterial diseases"],
+      ["4.3.1.4","Fungal diseases"],
+      ["4.3.1.5","Protist diseases"],
+      ["4.3.1.6","Human defence systems"],
+      ["4.3.1.7","Vaccination"],
+      ["4.3.1.8","Antibiotics and painkillers"],
+      ["4.3.1.9","Discovery and development of drugs"]
+    ]}
+  ]},
+  {subject:"bio", code:"4.4", title:"Bioenergetics", topics:[
+    {num:"4.4.1", title:"Photosynthesis", subs:[
+      ["4.4.1.1","Photosynthetic reaction"],
+      ["4.4.1.2","Rate of photosynthesis"],
+      ["4.4.1.3","Uses of glucose from photosynthesis"]
+    ]},
+    {num:"4.4.2", title:"Respiration", subs:[
+      ["4.4.2.1","Aerobic and anaerobic respiration"],
+      ["4.4.2.2","Response to exercise"],
+      ["4.4.2.3","Metabolism"]
+    ]}
+  ]},
+  {subject:"bio", code:"4.5", title:"Homeostasis and response", topics:[
+    {num:"4.5.1", title:"Homeostasis", subs:[]},
+    {num:"4.5.2", title:"The human nervous system", subs:[]},
+    {num:"4.5.3", title:"Hormonal coordination in humans", subs:[
+      ["4.5.3.1","Human endocrine system"],
+      ["4.5.3.2","Control of blood glucose concentration"],
+      ["4.5.3.3","Hormones in human reproduction"],
+      ["4.5.3.4","Contraception"],
+      ["4.5.3.5","The use of hormones to treat infertility",true],
+      ["4.5.3.6","Feedback systems",true]
+    ]}
+  ]},
+  {subject:"bio", code:"4.6", title:"Inheritance, variation and evolution", topics:[
+    {num:"4.6.1", title:"Reproduction", subs:[
+      ["4.6.1.1","Sexual and asexual reproduction"],
+      ["4.6.1.2","Meiosis"],
+      ["4.6.1.3","DNA and the genome"],
+      ["4.6.1.4","Genetic inheritance"],
+      ["4.6.1.5","Inherited disorders"],
+      ["4.6.1.6","Sex determination"]
+    ]},
+    {num:"4.6.2", title:"Variation and evolution", subs:[
+      ["4.6.2.1","Variation"],
+      ["4.6.2.2","Evolution"],
+      ["4.6.2.3","Selective breeding"],
+      ["4.6.2.4","Genetic engineering"]
+    ]},
+    {num:"4.6.3", title:"The development of understanding of genetics and evolution", subs:[
+      ["4.6.3.1","Evidence for evolution"],
+      ["4.6.3.2","Fossils"],
+      ["4.6.3.3","Extinction"],
+      ["4.6.3.4","Resistant bacteria"]
+    ]},
+    {num:"4.6.4", title:"Classification of living organisms", subs:[]}
+  ]},
+  {subject:"bio", code:"4.7", title:"Ecology", topics:[
+    {num:"4.7.1", title:"Adaptations, interdependence and competition", subs:[
+      ["4.7.1.1","Communities"],
+      ["4.7.1.2","Abiotic factors"],
+      ["4.7.1.3","Biotic factors"],
+      ["4.7.1.4","Adaptations"]
+    ]},
+    {num:"4.7.2", title:"Organisation of an ecosystem", subs:[
+      ["4.7.2.1","Levels of organisation"],
+      ["4.7.2.2","How materials are cycled"]
+    ]},
+    {num:"4.7.3", title:"Biodiversity and the effect of human interaction on ecosystems", subs:[
+      ["4.7.3.1","Biodiversity"],
+      ["4.7.3.2","Waste management"],
+      ["4.7.3.3","Land use"],
+      ["4.7.3.4","Deforestation"],
+      ["4.7.3.5","Global warming"],
+      ["4.7.3.6","Maintaining biodiversity"]
+    ]}
+  ]},
+  {subject:"bio", code:"4.8", title:"Key ideas (Biology)", topics:[
+    {num:"4.8", title:"Key ideas summary", subs:[]}
+  ]},
+  {subject:"chem", code:"5.1", title:"Atomic structure and the periodic table", topics:[
+    {num:"5.1.1", title:"A simple model of the atom, symbols, relative atomic mass, electronic structure and the periodic table", subs:[
+      ["5.1.1.1","Atoms, elements and compounds"],
+      ["5.1.1.2","Mixtures"],
+      ["5.1.1.3","The development of the model of the atom"],
+      ["5.1.1.4","Relative electrical charges of subatomic particles"],
+      ["5.1.1.5","Size and mass of atoms"],
+      ["5.1.1.6","Relative atomic mass"],
+      ["5.1.1.7","Electronic structure"]
+    ]},
+    {num:"5.1.2", title:"The periodic table", subs:[
+      ["5.1.2.1","The periodic table"],
+      ["5.1.2.2","Development of the periodic table"],
+      ["5.1.2.3","Metals and non-metals"],
+      ["5.1.2.4","Group 0"],
+      ["5.1.2.5","Group 1"],
+      ["5.1.2.6","Group 7"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.2", title:"Bonding, structure, and the properties of matter", topics:[
+    {num:"5.2.1", title:"Chemical bonds, ionic, covalent and metallic", subs:[
+      ["5.2.1.1","Chemical bonds"],
+      ["5.2.1.2","Ionic bonding"],
+      ["5.2.1.3","Ionic compounds"],
+      ["5.2.1.4","Covalent bonding"],
+      ["5.2.1.5","Metallic bonding"]
+    ]},
+    {num:"5.2.2", title:"How bonding and structure are related to the properties of substances", subs:[
+      ["5.2.2.1","The three states of matter"],
+      ["5.2.2.2","State symbols"],
+      ["5.2.2.3","Properties of ionic compounds"],
+      ["5.2.2.4","Properties of small molecules"],
+      ["5.2.2.5","Polymers"],
+      ["5.2.2.6","Giant covalent structures"],
+      ["5.2.2.7","Properties of metals and alloys"],
+      ["5.2.2.8","Metals as conductors"]
+    ]},
+    {num:"5.2.3", title:"Structure and bonding of carbon", subs:[
+      ["5.2.3.1","Diamond"],
+      ["5.2.3.2","Graphite"],
+      ["5.2.3.3","Graphene and fullerenes"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.3", title:"Quantitative chemistry", topics:[
+    {num:"5.3.1", title:"Chemical measurements, conservation of mass and the quantitative interpretation of chemical equations", subs:[
+      ["5.3.1.1","Conservation of mass and balanced chemical equations"],
+      ["5.3.1.2","Relative formula mass"],
+      ["5.3.1.3","Mass changes when a reactant or product is a gas"],
+      ["5.3.1.4","Chemical measurements"]
+    ]},
+    {num:"5.3.2", title:"Use of amount of substance in relation to masses of pure substances", subs:[
+      ["5.3.2.1","Moles",true],
+      ["5.3.2.2","Amounts of substances in equations",true],
+      ["5.3.2.3","Using moles to balance equations",true],
+      ["5.3.2.4","Limiting reactants",true],
+      ["5.3.2.5","Concentration of solutions"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.4", title:"Chemical changes", topics:[
+    {num:"5.4.1", title:"Reactivity of metals", subs:[
+      ["5.4.1.1","Metal oxides"],
+      ["5.4.1.2","The reactivity series"],
+      ["5.4.1.3","Extraction of metals and reduction"],
+      ["5.4.1.4","Oxidation and reduction in terms of electrons",true]
+    ]},
+    {num:"5.4.2", title:"Reactions of acids", subs:[
+      ["5.4.2.1","Reactions of acids with metals"],
+      ["5.4.2.2","Neutralisation of acids and salt production"],
+      ["5.4.2.3","Soluble salts"],
+      ["5.4.2.4","The pH scale and neutralisation"],
+      ["5.4.2.5","Strong and weak acids",true]
+    ]},
+    {num:"5.4.3", title:"Electrolysis", subs:[
+      ["5.4.3.1","The process of electrolysis"],
+      ["5.4.3.2","Electrolysis of molten ionic compounds"],
+      ["5.4.3.3","Using electrolysis to extract metals"],
+      ["5.4.3.4","Electrolysis of aqueous solutions"],
+      ["5.4.3.5","Representation of reactions at electrodes as half equations",true]
+    ]}
+  ]},
+  {subject:"chem", code:"5.5", title:"Energy changes", topics:[
+    {num:"5.5.1", title:"Exothermic and endothermic reactions", subs:[
+      ["5.5.1.1","Energy transfer during exothermic and endothermic reactions"],
+      ["5.5.1.2","Reaction profiles"],
+      ["5.5.1.3","The energy change of reactions",true]
+    ]}
+  ]},
+  {subject:"chem", code:"5.6", title:"The rate and extent of chemical change", topics:[
+    {num:"5.6.1", title:"Rate of reaction", subs:[
+      ["5.6.1.1","Calculating rates of reactions"],
+      ["5.6.1.2","Factors which affect the rates of chemical reactions"],
+      ["5.6.1.3","Collision theory and activation energy"],
+      ["5.6.1.4","Catalysts"]
+    ]},
+    {num:"5.6.2", title:"Reversible reactions and dynamic equilibrium", subs:[
+      ["5.6.2.1","Reversible reactions"],
+      ["5.6.2.2","Energy changes and reversible reactions"],
+      ["5.6.2.3","Equilibrium"],
+      ["5.6.2.4","The effect of changing conditions on equilibrium",true],
+      ["5.6.2.5","The effect of changing concentration",true],
+      ["5.6.2.6","The effect of temperature changes on equilibrium",true],
+      ["5.6.2.7","The effect of pressure changes on equilibrium",true]
+    ]}
+  ]},
+  {subject:"chem", code:"5.7", title:"Organic chemistry", topics:[
+    {num:"5.7.1", title:"Carbon compounds as fuels and feedstock", subs:[
+      ["5.7.1.1","Crude oil, hydrocarbons and alkanes"],
+      ["5.7.1.2","Fractional distillation and petrochemicals"],
+      ["5.7.1.3","Properties of hydrocarbons"],
+      ["5.7.1.4","Cracking and alkenes"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.8", title:"Chemical analysis", topics:[
+    {num:"5.8.1", title:"Purity, formulations and chromatography", subs:[
+      ["5.8.1.1","Pure substances"],
+      ["5.8.1.2","Formulations"],
+      ["5.8.1.3","Chromatography"]
+    ]},
+    {num:"5.8.2", title:"Identification of common gases", subs:[
+      ["5.8.2.1","Test for hydrogen"],
+      ["5.8.2.2","Test for oxygen"],
+      ["5.8.2.3","Test for carbon dioxide"],
+      ["5.8.2.4","Test for chlorine"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.9", title:"Chemistry of the atmosphere", topics:[
+    {num:"5.9.1", title:"The composition and evolution of the Earth's atmosphere", subs:[
+      ["5.9.1.1","The proportions of different gases in the atmosphere"],
+      ["5.9.1.2","The Earth's early atmosphere"],
+      ["5.9.1.3","How oxygen increased"],
+      ["5.9.1.4","How carbon dioxide decreased"]
+    ]},
+    {num:"5.9.2", title:"Carbon dioxide and methane as greenhouse gases", subs:[
+      ["5.9.2.1","Greenhouse gases"],
+      ["5.9.2.2","Human activities which increase greenhouse gases in the atmosphere"],
+      ["5.9.2.3","Global climate change"],
+      ["5.9.2.4","The carbon footprint and its reduction"]
+    ]},
+    {num:"5.9.3", title:"Common atmospheric pollutants and their sources", subs:[
+      ["5.9.3.1","Atmospheric pollutants from fuels"],
+      ["5.9.3.2","Properties and effects of atmospheric pollutants"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.10", title:"Using resources", topics:[
+    {num:"5.10.1", title:"Using the Earth's resources and obtaining potable water", subs:[
+      ["5.10.1.1","Using the Earth's resources and sustainable development"],
+      ["5.10.1.2","Potable water"],
+      ["5.10.1.3","Waste water treatment"],
+      ["5.10.1.4","Alternative methods of extracting metals",true]
+    ]},
+    {num:"5.10.2", title:"Life cycle assessment and recycling", subs:[
+      ["5.10.2.1","Life cycle assessment"],
+      ["5.10.2.2","Ways of reducing the use of resources"]
+    ]}
+  ]},
+  {subject:"chem", code:"5.11", title:"Key ideas (Chemistry)", topics:[
+    {num:"5.11", title:"Key ideas summary", subs:[]}
+  ]}
+];
+
+// ---------- storage ----------
+const STORAGE_KEY = "aqa-8464-checklist-p20-120";
+const SERVER_ENDPOINT = "checklist-api.php"; // same folder as this HTML file
+let state = {};
+try{
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw) state = JSON.parse(raw);
+}catch(e){ state = {}; }
+
+function save(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){ /* ignore */ }
+}
+
+// ---------- build DOM ----------
+const main = document.getElementById('main');
+let lastSubject = null;
+
+DATA.forEach((section, sIdx) => {
+  if(section.subject !== lastSubject){
+    const h = document.createElement('div');
+    h.className = 'subject-heading ' + section.subject;
+    h.textContent = section.subject === 'bio' ? 'Biology' : 'Chemistry';
+    main.appendChild(h);
+    lastSubject = section.subject;
+  }
+
+  const sectionEl = document.createElement('div');
+  sectionEl.className = 'section ' + section.subject;
+  sectionEl.id = 'sec-' + sIdx;
+
+  const head = document.createElement('button');
+  head.className = 'section-head';
+  head.innerHTML = `
+    <span class="chevron"></span>
+    <span class="section-code">${section.code}</span>
+    <span class="section-title">${section.title}</span>
+    <span class="section-count" data-count></span>
+  `;
+  sectionEl.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'section-body';
+
+  section.topics.forEach((topic, tIdx) => {
+    const topicEl = document.createElement('div');
+    topicEl.className = 'topic';
+    const topicId = 'topic-' + sIdx + '-' + tIdx;
+
+    if(topic.subs.length === 0){
+      // leaf topic itself is checkable
+      const row = document.createElement('div');
+      row.className = 'topic-row';
+      row.style.cursor = 'pointer';
+      row.innerHTML = `
+        <input type="checkbox" id="${topicId}">
+        <label class="topic-label" for="${topicId}">
+          <span class="topic-num">${topic.num}</span>${topic.title}
+        </label>
+      `;
+      topicEl.appendChild(row);
+      const cb = row.querySelector('input');
+      cb.checked = !!state[topicId];
+      cb.addEventListener('change', () => {
+        state[topicId] = cb.checked;
+        topicEl.classList.toggle('done', cb.checked);
+        save(); refresh(); scheduleServerSync();
+      });
+      topicEl.classList.toggle('done', cb.checked);
+    } else {
+      const row = document.createElement('div');
+      row.className = 'topic-row';
+      row.innerHTML = `
+        <span class="topic-label" style="padding-left:28px;">
+          <span class="topic-num">${topic.num}</span>${topic.title}
+        </span>
+        <span class="topic-progress" data-topic-progress></span>
+      `;
+      topicEl.appendChild(row);
+
+      const list = document.createElement('ul');
+      list.className = 'sub-list';
+      topic.subs.forEach((sub, subIdx) => {
+        const [num, title, ht] = sub;
+        const subId = 'sub-' + sIdx + '-' + tIdx + '-' + subIdx;
+        const li = document.createElement('li');
+        li.className = 'sub-item';
+        li.innerHTML = `
+          <label class="sub-row">
+            <input type="checkbox" id="${subId}">
+            <span class="sub-num">${num}</span>
+            <span class="sub-text">${title}${ht ? '<span class="ht-badge">HT only</span>' : ''}</span>
+          </label>
+        `;
+        list.appendChild(li);
+        const cb = li.querySelector('input');
+        cb.checked = !!state[subId];
+        li.classList.toggle('done', cb.checked);
+        cb.addEventListener('change', () => {
+          state[subId] = cb.checked;
+          li.classList.toggle('done', cb.checked);
+          save(); refresh(); scheduleServerSync();
+        });
+      });
+      topicEl.appendChild(list);
+    }
+
+    body.appendChild(topicEl);
+  });
+
+  sectionEl.appendChild(body);
+  main.appendChild(sectionEl);
+
+  head.addEventListener('click', () => {
+    sectionEl.classList.toggle('open');
+  });
+});
+
+// ---------- progress calc ----------
+function refresh(){
+  let total = 0, checked = 0;
+
+  DATA.forEach((section, sIdx) => {
+    let secTotal = 0, secChecked = 0;
+    section.topics.forEach((topic, tIdx) => {
+      if(topic.subs.length === 0){
+        const id = 'topic-' + sIdx + '-' + tIdx;
+        secTotal++;
+        if(state[id]) secChecked++;
+      } else {
+        let tTotal = topic.subs.length, tChecked = 0;
+        topic.subs.forEach((sub, subIdx) => {
+          const id = 'sub-' + sIdx + '-' + tIdx + '-' + subIdx;
+          if(state[id]) tChecked++;
+        });
+        secTotal += tTotal; secChecked += tChecked;
+        const progEl = document.querySelector(`#sec-${sIdx} .topic:nth-of-type(${tIdx+1}) [data-topic-progress]`);
+        if(progEl) progEl.textContent = `${tChecked}/${tTotal}`;
+        const topicEl = progEl ? progEl.closest('.topic') : null;
+        if(topicEl) topicEl.classList.toggle('done', tChecked === tTotal);
+      }
+    });
+    total += secTotal; checked += secChecked;
+    const countEl = document.querySelector(`#sec-${sIdx} [data-count]`);
+    if(countEl) countEl.textContent = `${secChecked}/${secTotal}`;
+  });
+
+  const pct = total ? Math.round((checked/total)*100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${checked} of ${total} checked`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+
+refresh();
+
+// ---------- controls ----------
+document.getElementById('expandAll').addEventListener('click', () => {
+  document.querySelectorAll('.section').forEach(s => s.classList.add('open'));
+});
+document.getElementById('collapseAll').addEventListener('click', () => {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('open'));
+});
+document.getElementById('resetAll').addEventListener('click', () => {
+  if(!confirm('Clear all checked progress on this device?')) return;
+  state = {};
+  save();
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('.done').forEach(el => el.classList.remove('done'));
+  refresh();
+  scheduleServerSync();
+});
+
+// open first section by default
+document.querySelector('.section')?.classList.add('open');
+
+// ---------- server sync ----------
+const fileStatus = document.getElementById('fileStatus');
+function setStatus(msg){ fileStatus.textContent = msg; }
+
+// Apply a loaded state object to the checkboxes on screen.
+function applyState(newState){
+  state = newState || {};
+  document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+    cb.checked = !!state[cb.id];
+    const container = cb.closest('.sub-item') || cb.closest('.topic');
+    if(container) container.classList.toggle('done', cb.checked);
+  });
+  save();
+  refresh();
+}
+
+async function loadFromServer(showStatus){
+  try{
+    const res = await fetch(SERVER_ENDPOINT, {cache:'no-store'});
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if(data && Object.keys(data).length){
+      applyState(data);
+    }
+    if(showStatus) setStatus('Synced from server at ' + new Date().toLocaleTimeString());
+    return true;
+  }catch(err){
+    if(showStatus) setStatus('Could not reach ' + SERVER_ENDPOINT + ' — using this browser\'s saved copy instead.');
+    return false;
+  }
+}
+
+async function saveToServer(showStatus){
+  try{
+    const res = await fetch(SERVER_ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(state)
+    });
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    setStatus('Saved to server at ' + new Date().toLocaleTimeString());
+    return true;
+  }catch(err){
+    setStatus('Could not save to server (' + err.message + ') — your progress is still kept in this browser.');
+    return false;
+  }
+}
+
+let syncTimer = null;
+function scheduleServerSync(){
+  clearTimeout(syncTimer);
+  setStatus('Saving…');
+  syncTimer = setTimeout(() => saveToServer(false), 600);
+}
+
+document.getElementById('syncNow').addEventListener('click', () => saveToServer(true));
+
+// On page load: try the server first, then fall back to whatever's in
+// localStorage (already applied above) if the server can't be reached —
+// e.g. when this file is opened directly as file:// rather than served.
+loadFromServer(true);
+
+// ---------- local backup (download / restore a JSON file) ----------
+let fileHandle = null; // remembered for repeat saves in the same session (Chrome/Edge)
+
+async function downloadBackup(){
+  const data = JSON.stringify(state, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'checklist-progress-backup.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  setStatus('Downloaded a local backup file.');
+}
+
+function restoreBackup(){
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json';
+  input.addEventListener('change', () => {
+    const file = input.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        applyState(JSON.parse(reader.result));
+        setStatus('Restored from ' + file.name + ' — click "Sync now" to push it to the server.');
+      }catch(e){
+        setStatus('Could not read that file — is it a checklist backup .json?');
+      }
+    };
+    reader.readAsText(file);
+  });
+  input.click();
+}
+
+document.getElementById('saveToFile').addEventListener('click', downloadBackup);
+document.getElementById('loadFromFile').addEventListener('click', restoreBackup);
+</script>
+</body>
+</html>
