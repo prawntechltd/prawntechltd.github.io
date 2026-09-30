@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Word Roller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Word Roller</h1>
+        <p class="sub">Roll a random proper noun, verb, adjective and object. Lock any word you like and roll the rest.</p>
+      </div>
+      <button class="roll" id="roll" type="button">Roll all <kbd>Space</kbd></button>
+    </header>
+
+    <section class="tiles" id="tiles" aria-live="polite"></section>
+
+    <section class="history">
+      <h2>Recent rolls</h2>
+      <ol id="history"></ol>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
